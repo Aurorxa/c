@@ -25,7 +25,7 @@ head:
 hero: 
   name: "计算机知识"
   text: "大、全、细"
-  tagline: "『这个世纪疯狂，没人性，腐败；你却一直清醒，温柔，一尘不染。』"
+  tagline: "『C 是一种高效的通用编程语言，适合底层开发；C++ 是 C 的扩展，支持面向对象编程，适用于复杂系统和高性能应用。』"
   image:  # text 和 tagline 区域旁的图片
     src: /logo.svg
     alt: "许大仙"
