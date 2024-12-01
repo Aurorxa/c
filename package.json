@@ -13,10 +13,10 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "^1.23.1",
+    "@shikijs/vitepress-twoslash": "^1.24.0",
     "@types/dom-view-transitions": "^1.0.5",
     "@types/express": "^5.0.0",
-    "@types/node": "^22.10.0",
+    "@types/node": "^22.10.1",
     "canvas-confetti": "^1.9.3",
     "feed": "^4.2.2",
     "markdown-it-mathjax3": "^4.3.2",
