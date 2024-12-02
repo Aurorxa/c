@@ -73,10 +73,10 @@ export default {
     )
     // giscus配置
     giscusTalk({
-      repo: 'Aexiar/Aexiar.github.io', //仓库
-      repoId: 'R_kgDOK820xg', //仓库ID
+      repo: 'Aurorxa/c', //仓库
+      repoId: 'R_kgDONXPdBg', //仓库ID
       category: 'Announcements', // 讨论分类
-      categoryId: 'DIC_kwDOK820xs4Cb8sS', //讨论分类ID
+      categoryId: 'DIC_kwDONXPdBs4CkzEP', //讨论分类ID
       mapping: 'pathname',
       inputPosition: 'bottom',
       lang: 'zh-CN',
