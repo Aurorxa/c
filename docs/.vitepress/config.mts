@@ -57,7 +57,7 @@ export default defineConfig({
     plugins: [
       groupIconVitePlugin({
         customIcon: {
-          c: localIconLoader(import.meta.url, '../public/svg/c.svg'),
+          c: localIconLoader(import.meta.url, '../public/iconify/c.svg'),
         },
       }) //代码组图标
     ],
