@@ -1426,7 +1426,7 @@ gcc -E main.c -o  main.i
 > ```
 >
 > * ③ **不能包含构造器**：接口无法实例化，因此接口不能包含构造器。
-> * ④ **接口之间支持多继承：**一个接口可以继承多个接口，用 `extends` 关键字。
+> * ④ **接口之间支持多继承：** 一个接口可以继承多个接口，用 `extends` 关键字。
 >
 > ```java
 > public interface A {
@@ -1442,7 +1442,7 @@ gcc -E main.c -o  main.i
 > }
 > ```
 >
-> * ⑤ **实现类的要求：**一个类实现接口后，必须实现接口中的所有抽象方法。
+> * ⑤ **实现类的要求：** 一个类实现接口后，必须实现接口中的所有抽象方法。
 >
 > ```java
 > public class CreditCardPaymentProcessor implements PaymentProcessor {
