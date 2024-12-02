@@ -1462,9 +1462,13 @@ gcc -E main.c -o  main.i
 
 
 
-* UML 类图，如下所示：
-
-![](./assets/21.png)
+> [!NOTE]
+>
+> ::: details 点我查看 模拟 USB 代码的 UML 类图
+>
+> ![](./assets/21.png)
+>
+> :::
 
 
 
