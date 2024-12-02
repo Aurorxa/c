@@ -9,8 +9,8 @@ import Confetti from "./components/Confetti.vue"
 import SwitchLayout from './components/SwitchLayout.vue'
 import HomeUnderline from "./components/HomeUnderline.vue"
 import "vitepress-markdown-timeline/dist/theme/index.css"
-import './style/index.css'
 import 'virtual:group-icons.css' //代码组样式
+import './style/index.css'
 
 export default {
   extends: DefaultTheme,

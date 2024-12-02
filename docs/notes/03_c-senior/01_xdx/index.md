@@ -1375,3 +1375,232 @@ gcc -E main.c -o  main.i
 
 ![](./assets/20.gif)
 
+## 3.6 C 语言中的面向接口编程
+
+### 3.6.1  概述
+
+* 在实际开发中，我们尽量做到`面向接口`编程，即：通过依赖抽象（接口）而不是具体实现，增强代码的灵活性和可扩展性。
+
+> [!NOTE]
+>
+> ::: details 点我查看 生活中的举例
+>
+> * 在生活中，最为常见的就是笔记本电脑上的 USB 接口了，其是一种规范，即：不同的版本有不同的要求，如：USB 2.1 、USB 3 等）。
+> * 如果某种设备实现了 USB 接口，那么该设备就可以插入到电脑上的 USB 接口上使用，如：键盘、U 盘等。
+>
+> :::
+
+
+
+### 3.6.2 Java 语言中的面向接口编程
+
+* `面向接口编程`（Programming to Interface） 是 Java 编程中的一种设计原则，强调使用接口来定义系统中的行为规范，而不是依赖具体实现类。其核心思想是“面向抽象，而非面向具体编程”。
+* `面向接口编程`的核心原则：
+  * ① **依赖抽象**：高层模块（业务逻辑）和低层模块（具体实现）都应该依赖接口，而不是直接依赖具体实现。
+  * ② **接口隔离**：使用接口定义行为，使得代码具有更好的可扩展性和可维护性。
+  * ③ **松耦合**：通过接口实现类之间的松耦合，便于模块之间的解耦和替换。
+  * ④ **多态性**：利用接口可以实现运行时的动态行为替换。
+
+> [!NOTE]
+>
+> ::: details 点我查看 JDK8 之前的接口的要求
+>
+> JDK 8 之前的接口是一个完全抽象的蓝图，用于定义实现类必须提供的方法行为，但它自身不包含任何实现细节。
+>
+> * ① **只能定义抽象方法**：接口中的方法默认是 `public abstract` 的，不能包含具体实现（即方法体）。
+>
+> ```java
+> public interface PaymentProcessor {
+>     void method1();
+>     void method2();
+> }
+> ```
+>
+> * ② **只能定义常量**：接口中只能定义 `public static final` 修饰的常量（隐式修饰，不需要显式声明）。
+>
+> ```java
+> public interface PaymentProcessor {
+>     // 等同于 public static final int CONSTANT = 100;
+>     int CONSTANT = 100; 
+> }
+> ```
+>
+> * ③ **不能包含构造器**：接口无法实例化，因此接口不能包含构造器。
+> * ④ **接口之间支持多继承：**一个接口可以继承多个接口，用 `extends` 关键字。
+>
+> ```java
+> public interface A {
+>     void methodA();
+> }
+> 
+> public interface B {
+>     void methodB();
+> }
+> 
+> public interface C extends A, B {
+>     void methodC();
+> }
+> ```
+>
+> * ⑤ **实现类的要求：**一个类实现接口后，必须实现接口中的所有抽象方法。
+>
+> ```java
+> public class CreditCardPaymentProcessor implements PaymentProcessor {
+>     @Override
+>     public void method1() {
+>         System.out.println("Method1 implemented");
+>     }
+> 
+>     @Override
+>     public void method2() {
+>         System.out.println("Method2 implemented");
+>     }
+> }
+> ```
+>
+> :::
+
+
+
+* UML 类图，如下所示：
+
+![](./assets/21.png)
+
+
+
+* 示例：
+
+```java [USB.java]
+// 定义 USB 接口
+public interface USB {
+    void connect();  // 连接 USB 设备
+    void disconnect(); // 断开 USB 设备
+}
+```
+
+```java [Keyboard.java]
+// 实现 USB 接口：键盘
+public class Keyboard implements USB {
+    @Override
+    public void connect() {
+        System.out.println("Keyboard connected.");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println("Keyboard disconnected.");
+    }
+}
+```
+
+```java [FlashDrive.java]
+// 实现 USB 接口：U盘
+public class FlashDrive implements USB {
+    @Override
+    public void connect() {
+        System.out.println("FlashDrive connected.");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println("FlashDrive disconnected.");
+    }
+}
+```
+
+```java [Computer.java]
+// 模拟电脑类
+public class Computer {
+    // 模拟插入 USB 设备
+    public void plugInUSB(USB device) {
+        device.connect();  // 调用设备的 connect 方法
+    }
+
+    // 模拟拔出 USB 设备
+    public void unplugUSB(USB device) {
+        device.disconnect(); // 调用设备的 disconnect 方法
+    }
+}
+```
+
+```java [Test.java]
+// 测试类
+public class Test {
+    public static void main(String[] args) {
+        Computer computer = new Computer();
+
+        // 创建键盘设备
+        USB keyboard = new Keyboard();
+        computer.plugInUSB(keyboard);  // 连接键盘
+        computer.unplugUSB(keyboard); // 断开键盘
+
+        System.out.println();
+
+        // 创建 U盘设备
+        USB flashDrive = new FlashDrive();
+        computer.plugInUSB(flashDrive);  // 连接 U盘
+        computer.unplugUSB(flashDrive); // 断开 U盘
+    }
+}
+```
+
+### 3.6.3 C 语言中的面向接口编程
+
+* 在 C 语言中，并没有 `interface` 等关键字；但是，在 C 语言中，`头文件`就是一个`接口`。
+* 之前的多文件编译，如下所示：
+
+```txt
+├─📁 include/---- # 头文件目录
+│ └─📄 add.h
+├─📁 module/----- # 函数实现目录
+│ └─📄 add.c
+└─📄 main.c------ # 主函数
+```
+
+* 其对应的逻辑，如下所示：
+
+![](./assets/22.svg)
+
+
+
+* 示例：
+
+```c [include/add.h]{5}
+#ifndef ADD_H
+#define ADD_H
+
+// 函数原型
+int add(int a, int b);
+
+#endif // ADD_H
+```
+
+```c [module/add.c] {1,4-6}
+#include "./include/add.h" // 导入自定义函数的头文件
+
+// 函数声明或函数实现
+int add(int a,int b) {
+  return a + b;
+}
+```
+
+```c [main.c] {1,2,9}
+#include <stdio.h> // 导入标准库函数的头文件
+#include "./include/add.h" // 导入自定义函数的头文件
+
+int main() {
+
+    int a = 5;
+    int b = 10;
+
+    int result = add(a, b);
+    printf("%d + %d = %d\n", a, b, result);
+
+    return 0;
+}
+```
+
+
+
+
+
