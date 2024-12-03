@@ -45,7 +45,7 @@ export const sharedConfig = defineConfig({
   //     return match
   //   })
   // },
-  // lastUpdated: true, // 上次更新
+  lastUpdated: true, // 上次更新
   vite: {
     build: {
       chunkSizeWarningLimit: 1600
