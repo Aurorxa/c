@@ -19,8 +19,6 @@ head:
     - name: keywords
       content: 许大仙,许大仙的博客
 
-
-
 # 网站的居中文案
 hero: 
   name: "C/C++"
@@ -36,7 +34,7 @@ hero:
       link: "/"        
     - theme: alt
       text: "🎉快速开始"
-      link: "/notes/"
+      link: "/01_c-basic/01_xdx/"
 
 # 按钮下方的描述
 features:
