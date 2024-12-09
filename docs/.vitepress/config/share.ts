@@ -106,7 +106,7 @@ export const sharedConfig = defineConfig({
   themeConfig: { // 主题设置
     logo: '/logo.svg',  // 左上角logo
     editLink: {
-      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
+      pattern: 'https://github.com/Aurorxa/c/edit/master/docs/:path',
       text: 'Edit this page on GitHub'
     }
   }
