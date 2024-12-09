@@ -27,9 +27,6 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
       pattern: 'https://github.com/Aurorxa/c/edit/master/docs/:path',
       text: '在 GitHub 编辑本页'
     },
-    //社交链接
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/Aurorxa/c' },
-    ],
+   
   }
 }
