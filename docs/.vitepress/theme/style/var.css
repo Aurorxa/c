@@ -18,8 +18,9 @@
 
 /* 禁止双指缩放 */
 body, html {
-    touch-action: manipulation;
-    -webkit-touch-callout: none;
-    -ms-touch-action: manipulation;
+  font-family: 'Fira Code';
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -ms-touch-action: manipulation;
 }
 
