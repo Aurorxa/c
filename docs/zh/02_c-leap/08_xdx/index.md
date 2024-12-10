@@ -2082,11 +2082,11 @@ int main() {
 > }
 > 
 > int main() {
->     
+> 
 >     int* ptr = get_static_var_pointer();
->     
+> 
 >     printf("%d\n", *ptr);  // 输出 42
->     
+> 
 >     return 0;
 > }
 > ```
@@ -2106,13 +2106,48 @@ int main() {
 > int main() {
 >     int value = 42;
 >     printf("Before: %d\n", value);  // 输出 42
->     
+> 
 >     // 获取返回的指针
 >     int* updated_ptr = update_value(&value);
->     
+> 
 >     // 使用返回的指针进行输出
 >     printf("After: %d\n", *updated_ptr);  // 输出 100
->     
+> 
+>     return 0;
+> }
+> ```
+>
+> * ③ 返回堆区动态内存分配的指针，需要注意手动管理内存（大多数情况）。
+>
+> ```c
+> #include <stdio.h>
+> #include <stdlib.h>
+> 
+> // 函数声明，返回一个整型指针
+> int* createArray(int size) {
+>     // 从堆中分配内存
+>     int* arr = malloc(size * sizeof(int));   // [!code highlight]     
+>     if (arr == NULL) {
+>         printf("Memory allocation failed.\n");
+>         return NULL;  // 内存分配失败时返回 NULL
+>     }
+>     for (int i = 0; i < size; i++) {
+>         arr[i] = i * i;  // 初始化数组元素
+>     }
+>     // 返回指向数组的指针 
+>     return arr;  // [!code highlight]     
+> }
+> 
+> int main() {
+>     int n = 5;
+>     int* myArray = createArray(n);  // 调用函数并接收返回的指针
+>     if (myArray != NULL) {
+>         for (int i = 0; i < n; i++) {
+>             printf("%d ", myArray[i]);  // 打印数组元素
+>         }
+>         printf("\n");
+>         free(myArray);  // 释放内存
+>     }
 >     return 0;
 > }
 > ```
