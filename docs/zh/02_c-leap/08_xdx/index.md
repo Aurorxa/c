@@ -1769,7 +1769,7 @@ int main() {
 
 #### 6.5.2.1 概述
 
-* 在 C 语言中，空指针通常通过 `NULL` 来表示。`NULL` 是一个常量，表示指针没有指向任何有效的内存位置。
+* 在 C 语言中，`空指针`通常通过 `NULL` 来表示。`NULL` 是一个常量，表示指针没有指向任何有效的内存位置。
 
 > [!NOTE]
 >
@@ -1797,9 +1797,10 @@ int main() {
     setbuf(stdout, NULL);
     
     // 初始化为空指针
-    int *ptr = NULL;  
-    if (ptr == NULL) {
-        printf("ptr is null\n");  // 检查指针是否为空
+    int *ptr = NULL;  // [!code highlight]
+    // 检查指针是否为空
+    if (ptr == NULL) { 
+        printf("ptr is null\n");  
     }
 
     return 0;
@@ -1840,7 +1841,7 @@ int main() {
 
 void printValue(const int *ptr) {
     // 检查指针是否为空
-    if (ptr != NULL) {
+    if (ptr != NULL) { // [!code highlight]
         printf("Value: %d\n", *ptr);
     } else {
         printf("Error: Pointer is NULL.\n");
@@ -1878,10 +1879,12 @@ int main() {
 int *getPointer(int condition) {
     if (condition) {
         int *ptr = (int *)malloc(sizeof(int));
-        *ptr = 100; // 返回一个指向有效数据的指针
-        return ptr;
+        *ptr = 100; 
+        // 返回一个指向有效数据的指针
+        return ptr; // [!code highlight]
     } else {
-        return NULL; // 返回空指针
+        // 返回空指针
+        return NULL; // [!code highlight]
     }
 }
 
@@ -1914,7 +1917,7 @@ int main() {
 
 #### 6.5.3.1 概述
 
-* **野指针**是一个指针，它没有被初始化，或者指向了一个已经被释放的内存区域，或者指向了一个非法的内存地址。
+* `野指针`是一个指针，它没有被初始化，或者指向了一个已经被释放的内存区域，或者指向了一个非法的内存地址。
 
 > [!NOTE]
 >
@@ -1943,7 +1946,7 @@ int main() {
     // 声明了一个指针，但没有初始化
     int *ptr;  // [!code highlight]
     // 此时 ptr 是野指针，访问未知地址
-    *ptr = 10; // [!code highlight]
+    *ptr = 10; // [!code error]
 
     return 0;
 }
@@ -1992,19 +1995,156 @@ int main() {
     // 禁用 stdout 缓冲区
     setbuf(stdout, NULL);
 
-    // 分配内存给指针
-    int *ptr = (int *)malloc(sizeof(int));
+    // 初始化为 NULL
+    int *ptr = NULL;  // [!code highlight]
+
+    // 判 NULL
     if (ptr == NULL) { // [!code highlight]
-        fprintf(stderr, "内存分配失败\n");
-        return 1;
+        printf("Pointer is uninitialized (NULL).\n");
+    } else {
+        printf("Pointer is initialized.\n");
     }
 
-    // 使用指针
-    *ptr = 10;
-    printf("ptr 的值: %d\n", *ptr);
+    return 0;
+}
+```
 
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void safeDereference(const int *ptr) {
+    if (ptr != NULL) { // [!code highlight]
+        printf("Value: %d\n", *ptr); // 安全解引用
+    } else {
+        printf("Error: Cannot dereference a NULL pointer.\n");
+    }
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 空指针
+    int *ptr1 = NULL; // [!code highlight]
+    int value = 10;
+    // 有效指针
+    int *ptr2 = &value;
+
+    safeDereference(ptr1); // 尝试解引用空指针
+    safeDereference(ptr2); // 安全解引用有效指针
+
+
+    return 0;
+}
+```
+
+### 6.5.4 悬空指针
+
+#### 6.5.4.1 概述
+
+* `悬空指针`是一个指向已经被释放或超出作用域的内存区域的指针。当一个指针指向的内存已经释放（如使用 `free`），但指针仍然保持原来的地址，它就变成了悬空指针。
+
+> [!NOTE]
+>
+> 原因：
+>
+> * ① 函数返回一个指向局部变量的指针，局部变量的生命周期结束后，该指针就变成了悬空指针。
+> * ② 指针指向一个手动分配的内存区域（malloc），之后被 free 了，该指针就变成了悬空指针。
+
+> [!CAUTION]
+>
+> * ① 访问悬空指针会导致程序访问无效的内存，可能引发`段错误`或者`未定义行为`。
+> * ② 悬空指针尤其在动态内存管理中常见，是内存泄漏和程序崩溃的常见原因之一。
+> * ③ 悬空指针是野指针的一种特殊的情况，悬空指针就是野指针。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int *getPointer() {
+    int num = 10;
+    // 返回指向局部变量的指针，局部变量超出作用域后指针悬空
+    return &num; // [!code error]
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    int *p = getPointer();
+    printf("p = %d\n", *p);
+
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 动态分配内存
+    int *ptr = (int *)malloc(sizeof(int));
     // 释放内存
     free(ptr);
+    // ptr 成为悬空指针，访问已释放的内存
+    *ptr = 20; // [!code error]
+
+    return 0;
+}
+```
+
+#### 6.5.4.2 解决方案
+
+* ① 千万不要返回当前栈区的指针，它一定是一个野指针。
+* ② 在释放指针指向的内存后，应立即将指针设置为 `NULL`，避免指针变成悬空指针。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 动态分配内存
+    int *ptr = (int *)malloc(sizeof(int));
+    // 释放内存
+    free(ptr);
+    // 防止悬空指针
+    ptr = NULL; // [!code highlight]
+    // ptr 是空指针
+    if (ptr != NULL) {
+        *ptr = 20;
+        printf("ptr = %d\n", *ptr);
+    } else {
+        printf("ptr is NULL\n");
+    }
+
 
     return 0;
 }
