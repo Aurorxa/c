@@ -1767,7 +1767,248 @@ int main() {
 
 ### 6.5.2 空指针
 
+#### 6.5.2.1 概述
 
+* 在 C 语言中，空指针通常通过 `NULL` 来表示。`NULL` 是一个常量，表示指针没有指向任何有效的内存位置。
+
+> [!NOTE]
+>
+> 使用场景：
+>
+> * ① 空指针常用于初始化指针，表明指针尚未指向任何有效的内存。
+> * ② 空指针可以作为函数返回值，表示“无效”或“错误”。
+> * ③ 空指针可以作为“结束标志”或“未找到”的标识。
+
+> [!CAUTION]
+>
+> * ① 空指针本身不会引发问题，但如果程序尝试访问或解引用空指针，就会导致`段错误`，进而使得程序崩溃！！！
+> * ② 空指针并不可怕，因为现代的编译平台会使得程序直接崩溃，并不会引起`未定义行为`。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+    
+    // 初始化为空指针
+    int *ptr = NULL;  
+    if (ptr == NULL) {
+        printf("ptr is null\n");  // 检查指针是否为空
+    }
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    int *ptr = NULL;
+    // 错误：解引用空指针，程序崩溃
+    *ptr = 10; // [!code error]
+
+    return 0;
+}
+```
+
+#### 6.5.2.2 解决方案
+
+* ① 在使用指针之前，始终检查指针是否为空。
+* ② 在函数中返回空指针的时候，调用者应该处理返回值为 `NULL` 的情况。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+void printValue(const int *ptr) {
+    // 检查指针是否为空
+    if (ptr != NULL) {
+        printf("Value: %d\n", *ptr);
+    } else {
+        printf("Error: Pointer is NULL.\n");
+    }
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    int num = 10;
+    
+    // 正常情况，指针指向有效地址
+    int *ptr = &num; // [!code highlight]
+    printValue(ptr); // [!code highlight]
+
+    // 空指针情况
+    ptr = NULL; // [!code highlight]
+    printValue(ptr); // [!code highlight]
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+// 返回一个指向整数的指针，模拟在某些条件下返回 NULL
+int *getPointer(int condition) {
+    if (condition) {
+        int *ptr = (int *)malloc(sizeof(int));
+        *ptr = 100; // 返回一个指向有效数据的指针
+        return ptr;
+    } else {
+        return NULL; // 返回空指针
+    }
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    int *ptr = getPointer(1); // 尝试获取一个有效的指针
+    if (ptr != NULL) { // [!code highlight]
+        printf("Got pointer with value: %d\n", *ptr);
+        free(ptr); // 记得释放内存
+    } else {
+        printf("Error: No valid pointer returned.\n");
+    }
+
+    ptr = getPointer(0); // 此次会返回空指针
+    if (ptr != NULL) { // [!code highlight]
+        printf("Got pointer with value: %d\n", *ptr);
+        free(ptr); // 记得释放内存
+    } else {
+        printf("Error: No valid pointer returned.\n");
+    }
+
+    return 0;
+}
+```
+
+### 6.5.3 野指针
+
+#### 6.5.3.1 概述
+
+* **野指针**是一个指针，它没有被初始化，或者指向了一个已经被释放的内存区域，或者指向了一个非法的内存地址。
+
+> [!NOTE]
+>
+> 原因：
+>
+> * ① 未初始化的指针：指针在声明时没有被初始化，指向一个未知的内存地址，可能是随机值。
+> * ② 释放后的指针：指针指向的内存已经被释放（调用 `free` ），但指针仍然保持着原来的值。
+
+> [!CAUTION]
+>
+> * ① 野指针会导致程序访问非法内存，可能引发`段错误`或者`未定义行为`。
+> * ② 由于它指向的内存地址是不确定的，任何对其的访问都可能导致程序崩溃或错误的数据操作。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 声明了一个指针，但没有初始化
+    int *ptr;  // [!code highlight]
+    // 此时 ptr 是野指针，访问未知地址
+    *ptr = 10; // [!code highlight]
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int arr[10] = {0};
+
+    int *p = arr;
+
+    for (int i = 0; i <= 10; i++, p++) { // [!code error]
+        *p = i; // i=10 时越界
+        printf("arr[%d] = %d ", i, *p);
+    }
+
+    return 0;
+}
+```
+
+#### 6.5.3.2 解决方案
+
+* ① 在声明指针时，要进行初始化；如果不知道初始化什么地址，最好先初始化为 `NULL`。
+* ② 在解引用一个指针变量之前，如果不确定它是否为 `NULL`，可以先判 `NULL`。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 分配内存给指针
+    int *ptr = (int *)malloc(sizeof(int));
+    if (ptr == NULL) { // [!code highlight]
+        fprintf(stderr, "内存分配失败\n");
+        return 1;
+    }
+
+    // 使用指针
+    *ptr = 10;
+    printf("ptr 的值: %d\n", *ptr);
+
+    // 释放内存
+    free(ptr);
+
+    return 0;
+}
+```
 
 
 
