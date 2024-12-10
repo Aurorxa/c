@@ -65,10 +65,17 @@ export const zhSidebar: DefaultTheme.Sidebar = {
       ]
     },
     {
-      text: 'Linux 编程',
+      text: 'Linux 快速上手',
       collapsed: true,
       items: [
         { text: 'Linux 初识和安装', link: `/06_linux/01_${commonDirectoryName}/` },
+      ]
+    },
+    {
+      text: 'Linux 系统编程',
+      collapsed: true,
+      items: [
+
       ]
     },
     {
