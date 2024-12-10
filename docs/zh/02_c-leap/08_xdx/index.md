@@ -1919,7 +1919,7 @@ int main() {
 
 ### 7.3.1 概述
 
-* `野指针`是一个指针，它没有被初始化，或者指向了一个已经被释放的内存区域，或者指向了一个非法的内存地址。
+* 在 C 语言中，任何指向随机、未知、非法的内存区域的指针都是`野指针`。
 
 > [!NOTE]
 >
@@ -2050,7 +2050,7 @@ int main() {
 
 ### 7.4.1 概述
 
-* `悬空指针`是一个指向已经被释放或超出作用域的内存区域的指针。当一个指针指向的内存已经释放（如使用 `free`），但指针仍然保持原来的地址，它就变成了悬空指针。
+* 在 C 语言中，`悬空指针`指的是“曾经指向有效内存区域，但是由于内存被释放销毁而没有改变指向，从而指向非法内存区域的指针”。
 
 > [!NOTE]
 >
@@ -2076,7 +2076,7 @@ int main() {
 > 
 > int* get_static_var_pointer() {
 >     // 静态变量
->     static int static_var = 42;  
+>     static int static_var = 42; // [!code highlight]     
 >     // 返回指向静态变量的指针
 >     return &static_var; // [!code highlight]      
 > }
@@ -2092,6 +2092,30 @@ int main() {
 > ```
 >
 > * ② 返回参数传递的指针：因为参数传递进行的指针，它指向的数据，一定是函数调用者可以访问到的。
+>
+> ```c
+> #include <stdio.h>
+> 
+> int* update_value(int* ptr) { // [!code highlight]
+>     // 修改指针指向的数据
+>     *ptr = 100;  
+>     // 返回传递的指针 
+>     return ptr;  // [!code highlight]     
+> }
+> 
+> int main() {
+>     int value = 42;
+>     printf("Before: %d\n", value);  // 输出 42
+>     
+>     // 获取返回的指针
+>     int* updated_ptr = update_value(&value);
+>     
+>     // 使用返回的指针进行输出
+>     printf("After: %d\n", *updated_ptr);  // 输出 100
+>     
+>     return 0;
+> }
+> ```
 >
 > :::
 
