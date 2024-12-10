@@ -492,17 +492,17 @@ ifconfig
 
 ![](./assets/80.png)
 
+> [!NOTE]
+>
+> ::: details 点我查看 `网关`和`子网`配置
+>
+> ![](./assets/83.png)
+>
+> :::
+
 ![](./assets/81.png)
 
 ![](./assets/82.png)
-
-> [!CAUTION]
->
-> ::: details 点我查看 本人的`网关`和`子网`配置
->
-> ![](./assets/83.png)
-> 
-> :::
 
 - ⑦ 配置代理，下一步即可：
 
