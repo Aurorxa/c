@@ -2065,6 +2065,36 @@ int main() {
 > * ② 悬空指针尤其在动态内存管理中常见，是内存泄漏和程序崩溃的常见原因之一。
 > * ③ 悬空指针是野指针的一种特殊的情况，悬空指针就是野指针。
 
+> [!NOTE]
+>
+> ::: details 点我查看 C 语言中函数返回指针，应该怎样返回？
+>
+> * ① 返回一个静态存储期限的变量或常量的指针。
+>
+> ```c
+> #include <stdio.h>
+> 
+> int* get_static_var_pointer() {
+>     // 静态变量
+>     static int static_var = 42;  
+>     // 返回指向静态变量的指针
+>     return &static_var; // [!code highlight]      
+> }
+> 
+> int main() {
+>     
+>     int* ptr = get_static_var_pointer();
+>     
+>     printf("%d\n", *ptr);  // 输出 42
+>     
+>     return 0;
+> }
+> ```
+>
+> * ② 返回参数传递的指针：因为参数传递进行的指针，它指向的数据，一定是函数调用者可以访问到的。
+>
+> :::
+
 
 
 * 示例：
