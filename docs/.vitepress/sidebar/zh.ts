@@ -32,7 +32,7 @@ export const zhSidebar: DefaultTheme.Sidebar = {
         { text: '指针一', link: `/02_c-leap/07_${commonDirectoryName}/` },
         { text: '指针二', link: `/02_c-leap/08_${commonDirectoryName}/` },
         { text: '指针三', link: `/02_c-leap/09_${commonDirectoryName}/` },
-        { text: '字符串', link: `/02_c-leap/10_${commonDirectoryName}/` },
+        { text: '变量', link: `/02_c-leap/10_${commonDirectoryName}/` },
 
       ]
     },
@@ -42,7 +42,7 @@ export const zhSidebar: DefaultTheme.Sidebar = {
       items: [
         { text: '函数一', link: `/03_c-senior/01_${commonDirectoryName}/` },
         { text: '函数二', link: `/03_c-senior/02_${commonDirectoryName}/` },
-        { text: '变量', link: `/03_c-senior/03_${commonDirectoryName}/` },
+        { text: '字符串', link: `/03_c-senior/03_${commonDirectoryName}/` },
         { text: 'const 关键字', link: `/03_c-senior/04_${commonDirectoryName}/` },
         { text: '预处理器', link: `/03_c-senior/05_${commonDirectoryName}/` },
         { text: '自定义数据类型一', link: `/03_c-senior/06_${commonDirectoryName}/` },
