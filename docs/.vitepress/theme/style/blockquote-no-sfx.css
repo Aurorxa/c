@@ -25,6 +25,9 @@
   /* --vp-c-brand-1: #3dd68c;
   --vp-c-brand-2: #30a46c;
   --vp-c-brand-3: #298459; */
+  --vp-c-brand-1: #42b883; /* Vue 3 主色 */
+  --vp-c-brand-2: #35495e; /* Vue 3 辅助色 */
+  --vp-c-brand-3: #41b883; /* Vue 3 高亮色 */
 
   --vp-custom-block-info: #cccccc;
   --vp-custom-block-info-bg: #474748;
