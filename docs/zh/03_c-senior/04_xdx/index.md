@@ -71,3 +71,176 @@
 > - ③ 冯·诺依曼体系结构中的`程序`，也被称为`存储式程序`，需要通过加载器（Loader），将程序从硬盘加载到内存中运行。
 > - ④ `存储式程序`中的`程序`分为`指令`和`数据`；其中，`代码段`中保存的是`指令`，`数据段`中保存的是`数据`。
 
+
+
+# 第二章：C 语言中的字符串和字符数组（⭐）
+
+## 2.1 概述
+
+* 在实际开发中，我们除了经常处理整数、浮点数、字符、数组等，还需要经常和`字符串`打交道，如：`"Hello World"`、`"Hi"` 等。
+
+## 2.2 字符串和字符数组
+
+* 和其他编程语言（如：Java 中的 String、TS 中的 string 等）不同，C 语言其实是没有专门的`字符串类型`的。
+* 在 C 语言中，`字符串`是通过`字符数组`来进行存储的，以空字符 `\0` 作为结尾，这样的字符串也被称为 `C 风格的字符串`。
+
+* 假设 C 程序中的字符串是 `"Hello World!"`，如下所示：
+
+```c
+"Hello World!" // 在 C 语言中，底层存储就是 Hello World!\0
+```
+
+* 其底层就是这样存储的，如下所示：
+
+![](./assets/5.png)
+
+## 2.3 字符串和字符数组的区别
+
+* `在 C 语言中，字符串就是字符数组；但是，字符数组却不一定是字符串。`
+* 对于 `“Hello”` 这样的字符串，我们可以这些定义，如下所示：
+
+```c
+char str[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
+```
+
+* 在 C 语言中，如果没有给出数组中元素的个数，却给出了初始化的元素，将由系统自动推断出数组中元素的个数，如下所示：
+
+```c
+char str[] = {'H', 'e', 'l', 'l', 'o', '\0'};
+```
+
+* 但是，上述的写法实在太繁琐，C 语言给我们提供了语法糖，如下所示：
+
+```c
+char str[] = "Hello";
+```
+
+> [!CAUTION]
+>
+> * ① `语法糖`是编程语言中的一种术语，指的是一些让程序更加简洁易懂、表达更直观的语法特性。它们不会增加语言的功能或表达能力，而是提供更方便或更易读的方式来实现某些操作。可以理解为，它是一种编程语言设计上的便利，它使得写代码时的语法更加简洁、易懂，但本质上与原本的功能没有区别。
+> * ② 对于`char str[] = "Hello";`，其底层存储的依然是`'H'`、`'e'`、`'l'`、`'l'` 、`'o'`、`'\0'`。
+
+* 如果我们将 `'\0'` 放在中间，如：`"He\0llo"`，就不再表示 `"Hello"`，而是表示 `"He"`，如下所示：
+
+```c
+char str[] = "He\0llo"; // He
+```
+
+```c
+char str[] = {'H', 'e','\0', 'l', 'l', 'o', '\0'}; // He
+```
+
+## 3.4 打印字符串
+
+* 在 C 语言中，可以通过 `printf` 函数来打印字符串，并通过格式占位符 `%s` 来代表字符串。
+
+> [!CAUTION]
+>
+> * ① `%s`会忽略字符串前面的空白字符，并一直匹配到空字符`'\0'`为止。
+> * ② 如果一直没有`'\0'`，就会越界访问，直到访问到`'\0'`为止，即：会产生野指针。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
+
+    // str = Hello
+    printf("str = %s\n", str); // [!code highlight]
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = {'H', 'e', 'l', 'l', 'o', '\0'};
+
+    // str = Hello
+    printf("str = %s\n", str); // [!code highlight]
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = "Hello";
+
+    // str = Hello
+    printf("str = %s\n", str); // [!code highlight]
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = {'H', 'e','\0', 'l', 'l', 'o', '\0'};
+
+    // str = He
+    printf("str = %s\n", str); // [!code highlight]
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = "He\0llo";
+
+    // str = He
+    printf("str = %s\n", str); // [!code highlight]
+
+    return 0;
+}
+```
+
