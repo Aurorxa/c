@@ -3,7 +3,7 @@
 }
 
 .medium-zoom-image {
-  z-index: 9999 !important;/* 给的值是21，但是实测盖不住，直接999 */
+  z-index: 9999 !important; /* 给的值是21，但是实测盖不住，直接999 */
 }
 
 :root {
@@ -26,9 +26,17 @@
 
   /* hero标题渐变色 */
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe, #41d1ff);
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #bd34fe,
+    #41d1ff
+  );
   /* hero logo 背景渐变色 */
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #47caff 50%);
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #bd34fe 50%,
+    #47caff 50%
+  );
   --vp-home-hero-image-filter: blur(40px);
 }
 
@@ -52,16 +60,17 @@
 }
 
 /* 禁止双指缩放 */
-body, html {
+body,
+html {
   touch-action: manipulation;
   -webkit-touch-callout: none;
   -ms-touch-action: manipulation;
-  /* 设置字体 */
-  --vp-font-family-base: Quotes, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC",
+    "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 
 .VPSidebarItem.is-link.is-active.has-active .text {
   font-weight: 600 !important;
   color: var(--vp-c-brand-1) !important;
-  transition: color .25s !important;
+  transition: color 0.25s !important;
 }

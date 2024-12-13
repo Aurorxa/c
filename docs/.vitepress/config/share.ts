@@ -24,7 +24,10 @@ export const sharedConfig = defineConfig({
     // 引入 Google Fonts
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    ['link', { href: 'https://fonts.googleapis.com/css2?family=Roboto&display=swap', rel: 'stylesheet' }],
+    // ['link', { href: 'https://fonts.googleapis.com/css2?family=Roboto&display=swap', rel: 'stylesheet' }],
+    // ['link', { href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600&family=IBM+Plex+Mono:wght@400&display=swap', rel: 'stylesheet' }],
+    // ['link', { href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600&family=IBM+Plex+Mono:wght@400&display=swap', rel: 'stylesheet' }],
+    ['link', { href: 'https://www.apple.com.cn/wss/fonts?families=SF+Pro+SC,v1:400,600|SF+Pro+Text,v3:400,600|SF+Pro+Display,v3:500|SF+Pro+Icons,v3|Apple+Monochrome+Emoji,v3|Apple+Monochrome+Emoji+Ind,v2|PingHei,v1', rel: 'stylesheet' }],
     // 网页视口
     ['meta', { name: "viewport", content: "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,shrink-to-fit=no" }],
     // 关键词和描述
