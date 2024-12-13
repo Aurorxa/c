@@ -1,6 +1,7 @@
-import {defineConfig} from 'vitepress'
-import {sharedConfig} from './config/share'
-import {zhConfig} from './config/zh'
+import { defineConfig } from 'vitepress'
+import { sharedConfig } from './config/share'
+import { zhConfig } from './config/zh'
+import { enConfig } from './config/en'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
