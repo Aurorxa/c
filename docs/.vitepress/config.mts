@@ -1,7 +1,6 @@
-import { defineConfig } from 'vitepress'
-import { sharedConfig } from './config/share'
-import { zhConfig } from './config/zh'
-import { enConfig } from './config/en'
+import {defineConfig} from 'vitepress'
+import {sharedConfig} from './config/share'
+import {zhConfig} from './config/zh'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -13,12 +12,12 @@ export default defineConfig({
       title: '许大仙',
       ...zhConfig
     },
-    en: {
-      label: 'English',
-      lang: 'en',
-      link: '/en/',
-      title: 'C/C++',
-      ...enConfig
-    },
+    // en: {
+    //   label: 'English',
+    //   lang: 'en',
+    //   link: '/en/',
+    //   title: 'C/C++',
+    //   ...enConfig
+    // },
   },
 })
