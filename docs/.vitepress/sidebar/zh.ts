@@ -42,8 +42,8 @@ export const zhSidebar: DefaultTheme.Sidebar = {
       items: [
         { text: '函数一', link: `/03_c-senior/01_${commonDirectoryName}/` },
         { text: '函数二', link: `/03_c-senior/02_${commonDirectoryName}/` },
-        { text: '字符串', link: `/03_c-senior/03_${commonDirectoryName}/` },
-        { text: 'const 关键字', link: `/03_c-senior/04_${commonDirectoryName}/` },
+        { text: 'const 关键字', link: `/03_c-senior/03_${commonDirectoryName}/` },
+        { text: '字符串', link: `/03_c-senior/04_${commonDirectoryName}/` },
         { text: '预处理器', link: `/03_c-senior/05_${commonDirectoryName}/` },
         { text: '自定义数据类型一', link: `/03_c-senior/06_${commonDirectoryName}/` },
         { text: '自定义数据类型二', link: `/03_c-senior/07_${commonDirectoryName}/` },
