@@ -1,28 +1,28 @@
 <template>
   <DefaultTheme.Layout>
     <template #doc-footer-before>
-      <Backtotop />
+      <BackTop/>
     </template>
     <template #doc-before>
-      <ArticleMetadata />
+      <ArticleMetadata/>
     </template>
   </DefaultTheme.Layout>
 </template>
 
-<script setup lang="ts">
-import Backtotop from "./BackTop.vue";
+<script lang="ts" setup>
+import BackTop from "./BackTop.vue";
 import ArticleMetadata from "./ArticleMetadata.vue";
-import { useData } from "vitepress";
+import {useData} from "vitepress";
 import DefaultTheme from "vitepress/theme";
-import { nextTick, provide } from "vue";
+import {nextTick, provide} from "vue";
 
-const { isDark } = useData();
+const {isDark} = useData();
 
 const enableTransitions = () =>
-  "startViewTransition" in document &&
-  window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+    "startViewTransition" in document &&
+    window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
 
-provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
+provide("toggle-appearance", async ({clientX: x, clientY: y}: MouseEvent) => {
   if (!enableTransitions()) {
     isDark.value = !isDark.value;
     return;
@@ -31,8 +31,8 @@ provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
   const clipPath = [
     `circle(0px at ${x}px ${y}px)`,
     `circle(${Math.hypot(
-      Math.max(x, innerWidth - x),
-      Math.max(y, innerHeight - y)
+        Math.max(x, innerWidth - x),
+        Math.max(y, innerHeight - y)
     )}px at ${x}px ${y}px)`,
   ];
 
@@ -42,12 +42,12 @@ provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
   }).ready;
 
   document.documentElement.animate(
-    { clipPath: isDark.value ? clipPath.reverse() : clipPath },
-    {
-      duration: 300,
-      easing: "ease-in",
-      pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
-    }
+      {clipPath: isDark.value ? clipPath.reverse() : clipPath},
+      {
+        duration: 300,
+        easing: "ease-in",
+        pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
+      }
   );
 });
 </script>

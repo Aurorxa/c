@@ -13,12 +13,12 @@ export default defineConfig({
       title: '许大仙',
       ...zhConfig
     },
-    // en: {
-    //   label: 'English',
-    //   lang: 'en',
-    //   link: '/en/',
-    //   title: 'C/C++',
-    //   ...enConfig
-    // },
+    en: {
+      label: 'English',
+      lang: 'en',
+      link: '/en/',
+      title: 'C/C++',
+      ...enConfig
+    },
   },
 })
