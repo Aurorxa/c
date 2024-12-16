@@ -563,11 +563,121 @@ int main() {
 
 ### 3.4.2 使用指针变量接收字符串字面量
 
+* 使用`指针变量`接收字符串字面量的时候，该指针是一个`指向常量`的指针，即：`指针可以改变指向；但是，指针指向的内容不可变`。
+
+> [!NOTE]
+>
+> ::: details 点我查看 指针变量可变，但是指针指向的内容不可变
+>
+> * ① 指针变量可变。
+>
+> ```c
+> #include <stdio.h>
+> 
+> int main() {
+> 
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, NULL);
+> 
+>     const char *p = "hello";
+> 
+>     // 指针 p 允许改变指向
+>     p = "world"; // [!code highlight]
+> 
+>     printf("%s\n", p); // world
+> 
+>     return 0;
+> }
+> ```
+>
+> * ② 指针指向的内容不可变。
+>
+> ```c
+> #include <stdio.h>
+> 
+> int main() {
+> 
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, NULL);
+> 
+>     const char *p = "hello";
+> 
+>     // 错误，指针 p 指向的内容不可变
+>     *p = "h"; // [!code error]
+> 
+>     printf("%s\n", p); // world
+> 
+>     return 0;
+> }
+> ```
+>
+> :::
 
 
 
+* 示例：
+
+```c
+![12](./C:/Users/Administrator/Desktop/12.svg)#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    const char *p = "hello";
+
+    printf("%s\n", p); // hello
+
+    return 0;
+}
+```
 
 ### 3.4.3 将字符串字面量作为参数进行传递
+
+* 我们经常会在 `printf` 或 `scanf` 中使用`字符串字面量`作为参数，即：
+
+```c
+printf("a + b = %d",a + b);
+```
+
+* 此时的字符串字面量 `"a + b = %d"`是在`只读数据段`中存储的一个`字符数组`，而传递给 `printf` 函数的就是该字符数组的首元素指针，如下所示：
+
+![](./assets/12.svg)
+
+> [!NOTE]
+>
+> 对于`字符串字面量`而言，即使函数内部得到了`字符串字面量`对应的`字符数组`的`首元素指针`，由于`字符串字面量`存储在`只读数据段`中，在函数内部是不能修改字符串内容的；否则，将会引发未定义行为。
+
+* 如果函数中的参数可能传入`字符串字面量`，在声明的时候，请为`形参`添加 `const` 关键字，以明确其不可修改的特点，如下所示：
+
+```c
+int printf (const char *__format, ...);
+```
+
+```c
+int scanf(const char *__format, ...);
+```
+
+```c
+char *strcpy(char *dest, const char *src);
+```
+
+```c
+char *strncpy( char *dest, const char *src, size_t count );
+```
+
+```c
+char *strcat( char *dest, const char *src );
+```
+
+```c
+char *strncat( char *dest, const char *src, size_t count );
+```
+
+```c
+int strcmp( const char* lhs, const char* rhs );
+```
 
 
 
