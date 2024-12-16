@@ -132,7 +132,7 @@ char str[] = {'H', 'e','\0', 'l', 'l', 'o', '\0'}; // He
 
 ## 2.4 打印字符串
 
-* 在 C 语言中，可以通过 `printf` 函数来打印字符串，并通过格式占位符 `%s` 来代表字符串。
+* 在 C 语言中，可以通过 `printf` 函数来打印字符串，并通过格式占位符 `%s` 来输出字符串。
 
 > [!CAUTION]
 >
@@ -1452,9 +1452,180 @@ int main() {
 
 ## 5.3 字符串复制
 
+### 5.3.1 概述
+
+* 方法声明：
+
+```c
+char *strcpy(char *dest, const char *src);
+```
+
+> [!NOTE]
+>
+> * ① 该函数的名称是 `strcpy` ，全名是 `string_copy`，即：将某个（src）字符串复制到目标字符数组（dest）中。
+> * ② 函数的作用：
+>   * strcpy 函数会将`src(source，源数组)` 中存储的以空字符 '\0' 结束的字符串复制到`dest(destination，目标数组)`所指向的数组中。
+>   * 也就是说，会从首字符开始逐个字符地从 src 复制字符，`包括空字符在内`，都会从 dest 首位置开始，复制到 dest 当中。
+>   * 这个过程中，src 数组是不会被修改的，所以它被 const 修饰。
+> * ③ 函数返回值：该函数会返回指向目标数组 dest 的指针，一般来说，该函数的返回值没有什么意义，推荐忽略它。但某些场景下，这个`返回值允许 strcpy 函数的调用，可以被嵌套使用或者用于更复杂的表达式中`。
+
+> [!CAUTION]
+>
+> * ① strcpy 函数是不安全的，它并不会检查 dest 是否真的能够包含 src 数组。如果 dest 不够大，就会因数组越界而产生未定义行为。
+> * ② 为了安全起见，可以考虑使用`strncpy` 函数解决这一问题。
 
 
 
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char src[] = "Hello World";
+
+    char dest[20];
+
+    strcpy(dest, src);
+
+    printf("dest = %s\n", dest);
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char src[] = "Hello World";
+
+    char dest[20];
+
+    char dest2[20];
+
+	// 链式调用
+    strcpy(dest2, strcpy(dest, src));
+
+    printf("dest = %s\n", dest);
+    printf("dest2 = %s\n", dest2);
+
+    return 0;
+}
+```
+
+### 5.3.2 手动实现
+
+* 思路：边遍历原字符串中的字符，并复制到目标字符串中。
+
+> [!NOTE]
+>
+> ::: details 点我查看 实现思路
+>
+> * 将源字符串 (`src`) 的内容逐字符拷贝到目标字符串 (`dest`)。
+> * 在目标字符串末尾添加字符串结束符 `'\0'`。
+> * 返回目标字符串的首地址。
+>
+> :::
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+/**
+ * 将一个字符串拷贝到另一个字符串中
+ * @param dest
+ * @param src
+ * @return
+ */
+char *strcpy(char *dest, const char *src) {
+    char *p = dest;
+    while (*src != '\0') {
+        *dest++ = *src;
+        *src++;
+    }
+
+    *dest = '\0';
+
+    return p;
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char src[] = "Hello World";
+
+    char dest[20];
+
+    strcpy(dest, src);
+
+    printf("dest = %s\n", dest);
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+/**
+ * 将一个字符串拷贝到另一个字符串中
+ * @param dest
+ * @param src
+ * @return
+ */
+char *strcpy(char *dest, const char *src) {
+    char *p = dest;
+    while (*src != '\0') {
+        *dest++ = *src;
+        *src++;
+    }
+
+    *dest = '\0';
+
+    return p;
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char src[] = "Hello World";
+
+    char dest[20];
+
+    char dest2[20];
+
+    strcpy(dest2, strcpy(dest, src));
+    
+	printf("dest = %s\n", dest);
+    printf("dest2 = %s\n", dest2);
+
+    return 0;
+}
+```
 
 
 
