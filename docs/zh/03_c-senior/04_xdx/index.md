@@ -690,6 +690,129 @@ int strcmp( const char* lhs, const char* rhs );
 
 ## 4.1 概述
 
+* ① C 语言中没有`字符串类型`。
+
+> [!NOTE]
+>
+> 很多编程语言中都内置了字符串类型，如：Java 中的 String 类型、TS 中的 string 类型。
+
+* ② C 语言中的`字符串`依赖于`字符数组`存在。
+
+> [!NOTE]
+>
+> C 语言使用`字符数组`来存储字符串，如：`char str[32]`。
+
+* ③ C 语言中的`字符串`是一种`逻辑类型`，如：`Hello\0World\0`表示的就是`Hello`。
+
+## 4.2 字符串变量的声明
+
+* C 语言的`字符串`以`字符数组`为载体，所以声明`字符串变量`实际也就是声明字符数组，但会稍有区别，即：我们需要声明一个比字符串多一位的字符数组来存储字符串。
+
+```c
+#define LEN 80
+
+char str[LEN+1]; // 多出一个位置用来存储空字符
+```
+
+> [!NOTE]
+>
+> ::: details 点我查看 使用指针声明字符串
+>
+> * ① 数组名在大多数情况下可以视为数组首元素的指针，所以使用字符指针来声明字符串类型是可以，如下所示：
+>
+> ```c
+> char *str;
+> ```
+>
+> * ② 但是，上述的声明格式一般需要`字符串字面量`或者`指向一个已经存在的字符串`，如下所示：
+>
+> ```c
+> char *str = "hello";
+> ```
+>
+> ```c
+> char str[6] = "hello";
+> char *str2 = str;
+> ```
+>
+> * ③ 如果 str 指针指向`字符串字面量`的时候，就不能修改字符串的内容，如下所示：
+>
+> ```c
+> #include <stdio.h>
+> 
+> int main() {
+> 
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, NULL);
+> 
+>     const char *p = "hello";
+> 
+>     // 错误，指针 p 指向的内容不可变
+>     *p = "h"; // [!code error]
+> 
+>     printf("%s\n", p); // world
+> 
+>     return 0;
+> }
+> ```
+>
+> * ④ 在大多数情况下，指针格式的声明用于指向一个动态内存分配的字符串；并且，使用指针，比使用字符数组类型更加直观和灵活，如下所示：
+>
+> ```c
+> #include <stdio.h>
+> #include <stdlib.h>
+> 
+> #define LEN 5
+> int main() {
+> 
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, NULL);
+> 
+>     char *str = (char *)malloc((LEN + 1) * sizeof(char)); // 分配 6 字节
+>     if (str == NULL) {
+>         printf("内存分配失败\n");
+>         return 1;
+>     }
+> 
+>     printf("请输入一个字符串（最多%d个字符）：", LEN);
+> 
+>     // 使用 fgets 获取输入
+>     if (fgets(str, (LEN + 1), stdin) != NULL) {
+>         printf("您输入的字符串是: %s\n", str);
+>     }
+> 
+>     // 释放内存
+>     free(str);
+> 
+>     return 0;
+> }
+> ```
+>
+> :::
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+#define LEN 80
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 声明字符串变量，即：声明字符串数组
+    // 字符串数组的最后一个元素是字符串的结束符 '\0'
+    char str[LEN+1];
+
+    return 0;
+}
+```
+
+## 4.3 字符串变量的初始化
+
 
 
 
