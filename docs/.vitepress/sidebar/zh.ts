@@ -33,7 +33,6 @@ export const zhSidebar: DefaultTheme.Sidebar = {
         { text: '指针二', link: `/02_c-leap/08_${commonDirectoryName}/` },
         { text: '指针三', link: `/02_c-leap/09_${commonDirectoryName}/` },
         { text: '变量', link: `/02_c-leap/10_${commonDirectoryName}/` },
-
       ]
     },
     {
