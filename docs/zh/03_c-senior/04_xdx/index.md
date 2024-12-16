@@ -813,9 +813,469 @@ int main() {
 
 ## 4.3 字符串变量的初始化
 
+### 4.3.1 标准写法
+
+* 手动在字符串的结尾添加 `'\0'`作为字符串的结束标识。
 
 
 
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 字符数组，不是字符串
+    char c1[] = {'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd'};
+    // C 风格的字符串
+    char c2[] = {'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '\0'};
+
+    return 0;
+}
+```
+
+### 4.3.2 简化写法（推荐）
+
+* 字符串写成数组的形式，非常麻烦。C 语言中提供了一种简化写法，即：双引号中的字符，会自动视为字符数组。
+
+> [!IMPORTANT]
+>
+> * ① 简化写法会自动在末尾添加 `'\0'` 字符，强烈推荐使用！！！
+> * ② 简化写法只是一种语法糖，不要认为 C 语言中的数组支持赋值操作。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+    
+	// 注意使用双引号，非单引号
+    char c1[] = {"Hello World"}; // [!code highlight]
+    
+    // 语法糖：可以省略一对 {} 来初始化数组元素
+    // "Hello World" 是数组初始化的简写形式！！！
+    // 不要认为 C 语言中的数组支持赋值操作，这边仅仅是语法糖而已！！！
+    char c2[] = "Hello World"; // [!code highlight]
+    
+    return 0;
+}
+```
+
+### 4.3.3 其他写法
+
+* ① 指定数组长度，是字符串长度 + 1 ，如下所示：
+
+> [!NOTE]
+>
+> ::: details 点我查看 其对应的内存示意图
+>
+> ![](./assets/14.svg)
+>
+> :::
+
+```c
+char str[6] = "hello";
+```
+
+* ② 指定数组长度，但是其长度大于`字符串长度 + 1` ，如下所示：
+
+> [!NOTE]
+>
+> ::: details 点我查看 其对应的内存示意图
+>
+> ![](./assets/15.svg)
+>
+> :::
+
+```c
+char str[7] = "hello";
+```
+
+* ③ 指定数组长度，但是长度不可以小于`字符串长度 + 1`（在 C 语言中，这样的字符数组是不能作为字符串使用的）。
+
+```c
+// 错误
+char str[5] = "hello"; // [!code error]
+```
+
+## 4.4 字符串变量的存储形式
+
+* 对于字符串变量，如下所示：
+
+```c
+char str[] = "hello";
+```
+
+* 其是存储在栈中的，如下所示：
+
+![](./assets/13.svg)
+
+## 4.5 字符串变量初始化和字符指针初始化的区别
+
+* 对于字符串变量初始化，如下所示：
+
+```c
+char str[] = "hello";
+```
+
+* 对于字符指针初始化，如下所示：
+
+```c
+char *p = "hello";
+```
+
+* 它们在虚拟地址空间中的位置是不同的，如下所示：
+
+![](./assets/16.svg)
+
+* 正是由于它们在虚拟地址空间分布的不同，造成它们的特性不同，如下所示：
+  * ① str 是一个字符串变量，同时也是一个字符串数组。
+    * 在此初始化代码中的 `"hello"`，是字符串变量初始化的简写形式，是一个语法糖。
+    * str 数组是一个在栈上创建的独立的新数组。
+    * `str 数组表示的字符串内容以及整个字符数组元素，都是完全可变的`。
+  * ② p 是一个指向字符串字面量的指针变量。
+    * 在此初始化代码中的 `"hello"`，是字符串字面量。
+    * p 指针指向的是只读数据段中，存储的是字符串字面量在只读数据段中字符数组的首元素指针。
+    * `字符串字面量不可变，即：意味着指针 p ，是一个可以改变指向，但是不能改变指向内容的指针`。
+
+* 所以，对于字符串变量，完全可以读写，如下所示：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = "hello";
+
+    // 读
+    printf("%c\n", str[0]); // h
+
+    // 写
+    str[0] = 'H';
+    printf("%s\n", str); // Hello
+
+    return 0;
+}
+```
+
+* 但是，对于字符串字面量，只可以读，不可以写，如下所示：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char *p = "hello";
+
+    // 读
+    printf("%c\n", p[0]); // h
+
+    // 写，错误
+    p[0] = 'H'; // [!code error] 
+    printf("%s\n", p); // Hello
+
+    return 0;
+}
+```
+
+> [!TIP]
+>
+> ::: details 点我查看 实际开发中的建议
+>
+> * ① 如果需要一个可以修改内容的字符串，可以主动声明初始化一个字符数组来存放该字符串，即：字符串变量。
+>
+> ```c
+> char str[] = "hello";
+> ```
+>
+> * ② 如果该字符串不可以修改，可以使用指针变量来接收。
+>
+> ```c
+> char *str = "hello";
+> ```
+>
+> * ③ 对于字符数组是在栈中开辟的，一旦声明或初始化过多，将会出现栈溢出，即：Stack Overflow ；此时，就可以在堆中使用内存分配函数进行动态分配。
+>
+> ```c {10}
+> #include <stdio.h>
+> #include <stdlib.h>
+> 
+> #define LEN 5
+> int main() {
+> 
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, NULL);
+> 
+>     char *str = (char *)malloc((LEN + 1) * sizeof(char)); // 分配 6 字节
+>     if (str == NULL) {
+>         printf("内存分配失败\n");
+>         return 1;
+>     }
+> 
+>     printf("请输入一个字符串（最多%d个字符）：", LEN);
+> 
+>     // 使用 fgets 获取输入
+>     if (fgets(str, (LEN + 1), stdin) != NULL) {
+>         printf("您输入的字符串是: %s\n", str);
+>     }
+> 
+>     // 释放内存
+>     free(str);
+> 
+>     return 0;
+> }
+> ```
+> :::
+
+## 4.6 字符串变量的输入（读）和输出（写）
+
+### 4.6.1 概述
+
+* 在计算机编程领域，当我们提到`输入(Input)`和`输出(Output)`这两个术语时，通常都是有固定含义的：
+  * 站在内存（或进程）的角度：从数据源（文件、键盘输入、网络等）中输入数据，获取数据，将其加载到进程的内存中，这个过程称之为`输入`。
+  * 站在内存（或进程）的角度：将进程内存中的数据发送到目的地（显示器、文件、网络等），输出数据，这个过程称之为`输出`。
+* 其对应的图示，如下所示：
+
+![](./assets/17.png)
+
+* 在字符串处理中，也是类似的，即：
+  * `字符串输入`：意味着编写代码，调用函数从键盘录入、文件等数据源中输入数据。
+  * `字符串输出`：意味着编写代码，调用函数将数据输出到显示器、文件等目的地，输出数据。
+
+> [!CAUTION]
+>
+> 字符串字面量是不可以修改的，只可以读，而不能写！！！
+
+### 4.6.2 字符串输出
+
+* 所谓的`字符串输出`，也就是将整个字符串遍历，逐个输出字符或者整个输出。
+
+> [!CAUTION]
+>
+> 字符串变量和字符串字面量都可以输出。
+
+* 在 C 语言中，有两个函数可以在控制台上输出字符串，它们分别是：
+  * ① `puts()`：输出字符串并自动换行，并且该函数只能输出字符串。
+  * ② `printf()` ：通过格式占位符 `%s`，就可以输出字符串，不能自动换行。
+
+> [!NOTE]
+>
+> `puts()` VS `printf()` ：
+>
+> * ① `puts()` 只能用于输出字符串，而 `printf()` 可用于输出各种数据类型。
+> * ② `puts()` 函数需要传入一个字符数组作为参数，若传入的字符数组无法表示字符串，会引发未定义行为。
+> * ③ `puts()` 在字符串后自动添加换行符，而 `printf()` 则不会，除非明确添加了 `\n`。
+> * ④ `puts()` 通常比 `printf()` 快，因为它不需要解析格式字符串。
+> * ⑤ `printf()` 显然更加灵活，因为它支持格式化输出；所以，在实际开发中，`printf()` 函数用的居多！！！
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char c1[] = {"Hello World"}; // 注意使用双引号，非单引号
+    char c2[] = "Hello World";   // 可以省略一对 {} 来初始化数组元素
+
+    puts(c1); // Hello World
+    puts(c2); // Hello World
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char c1[] = {"Hello World"}; // 注意使用双引号，非单引号
+    char c2[] = "Hello World";   // 可以省略一对 {} 来初始化数组元素
+
+    printf("c1 = %s\n", c1); // c1 = Hello World
+    printf("c2 = %s\n", c2); // c2 = Hello World
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char *p = "hello";
+
+    printf("%s\n", p); // hello
+
+    puts(p); // hello
+
+    return 0;
+}
+```
+
+### 4.6.3 字符串输入
+
+* 所谓`字符串输入`，也就是通过某个数据源，将一串字符数据存储到字符串变量的字符数组中。
+* 在 C 语言中，有两个函数可以让用户从键盘输入字符串，它们分别是：
+  * ① ~~`gets()`：读取一行输入，直到遇到换行符为止，换行符会被丢弃。~~
+  * ② `scanf()`：使用 `%s` 可以读取字符串，但会将遇到的空白字符（如空格、回车）视为输入的结束标志。
+  * ③ `fgets()`： 从输入流中读取一行字符，并包括换行符，换行符存入字符串末尾，直到达到指定的长度或遇到换行符为止，即：如果 str 数组的长度是10，此函数调用最多会将 9 个字符存储到字符数组中，因为会留一个位置存空字符 `'\0'`。所以此函数是安全的，不会导致数组越界，访问非法数据。
+
+> [!NOTE]
+>
+> `scanf()` VS `gets()` VS `fgets()` ：
+>
+> * ① `scanf()` 的特点：
+>   * 使用 `%s` 可以读取字符串，但会将遇到的空白字符（如空格、回车）视为输入的结束标志。
+>   * 不会自动检查缓冲区是否溢出（需要手动限制读取的字符数），即：不安全。
+> * ② `gets()` 的特点：
+>   * 不支持限制输入的长度，容易导致**缓冲区溢出**。
+>   * 不会读取空格（会直接忽略它们）。
+>   * 不安全，C11 标准已经将其弃用。
+> * ③ `fgets()` 的特点：
+>   * 必须明确指定最大读取字符数，有效防止缓冲区溢出。
+>   * 可以处理空格和空行，换行符会保留在字符串中。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[32] = {'\0'};
+
+    printf("请输入字符串：");
+    gets(str);
+
+    printf("字符串是：%s\n", str);
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+#define LEN 10
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[LEN] = {'\0'};
+
+    printf("请输入字符串：");
+
+    scanf("%9s", str); // [!code highlight]
+
+    printf("字符串是：%s\n", str);
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[32] = {'\0'};
+
+    printf("请输入字符串：");
+    // scanf() 在读取数据时需要的是数据的地址，这一点是恒定不变的。
+    // 对于 int、char、float 等类型的变量都要在前边添加 & 以获取它们的地址。
+    // 而数组或者字符串用于 scanf() 时不用添加 &，它们本身就会转换为地址。
+    scanf("%[^\n]", str); // [!code highlight]
+
+    printf("字符串是：%s\n", str);
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    char str[5] = {'\0'};
+    printf("请输入一行文本： ");
+
+    // 读取最多 4 个字符，保留换行符
+    if (fgets(str, sizeof(str), stdin) != NULL) { // [!code highlight]
+        printf("你输入的内容是：%s", str);
+    } else {
+        printf("读取失败。\n");
+    }
+
+    return 0;
+}
+```
 
 
 
@@ -823,9 +1283,164 @@ int main() {
 
 ## 5.1 概述
 
+* 字符相关的库函数，在头文件 `<string.h>` 中。
+
+## 5.2 获取字符串长度
+
+### 5.2.1 概述
+
+* 方法声明：
+
+```c
+size_t strlen(const char *str);
+```
+
+> [!NOTE]
+>
+> * ① 该函数的名称是 `strlen` ，全名是 `string_length`，即：获取字符串的长度。
+> * ② 返回当前字符串的长度，也就是字符数组中空字符'\0'前面的字符数量。
+
+> [!CAUTION]
+>
+> * ① 函数传参的字符数组，必须是一个能够表示字符串的字符数组。否则，函数调用会产生未定义行为。
+> * ② 此函数的形参类型是：`const char \*str`。它表示函数传入的指针，是一个不能用于修改指向内容的指针。
 
 
 
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    size_t len = strlen("abc");
+    printf("len = %zu\n", len); // len = 3
+
+    len = strlen("");
+    printf("len = %zu\n", len); // len = 0
+
+    const char str[] = "abcd";
+    len = strlen(str);
+    printf("len = %zu\n", len); // len = 4
+
+    const char str2[10] = "12345";
+    len = strlen(str2);
+    printf("len = %zu\n", len); // len = 5
+
+    const char str3[5] = {'a', '\0', 'c'};
+    len = strlen(str3);
+    printf("len = %zu\n", len); // len = 1
+
+    return 0;
+}
+```
+
+### 5.2.2 手动实现一
+
+* 思路：累加计数法。
+
+> [!NOTE]
+>
+> * 使用一个计数器变量 `len`，逐步统计字符串中的字符数。
+> * 每次循环（循环条件就是判 `'\0'`）：
+>   - 通过 `str++` 移动指针到下一个字符。
+>   - 同时将计数器 `len` 加一。
+> * 循环结束时，`len` 的值即为字符串的长度。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * 获取字符串长度
+ * @param str
+ * @return
+ */
+size_t strlen(const char *str) {
+    // 检查参数是否合法
+    if (str == NULL) {
+        exit(1);
+    }
+    // 计数法
+    size_t len = 0;
+    while (*str != '\0') {
+        str++;
+        len++;
+    }
+    return len;
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    size_t len = strlen("abc");
+    printf("len = %zu\n", len); // len = 3
+
+    return 0;
+}
+```
+
+### 5.2.3 实现思路二
+
+* 思路：指针相减运算。
+
+> [!NOTE]
+>
+> - 使用两个指针：
+>   - `p` 用于保存字符串的起始位置。
+>   - `str` 用于逐步遍历字符串。
+> - 循环结束时，`str` 指针已经移动到字符串的末尾（结束符 `\0` 的位置），而 `p` 指针仍指向字符串的首字符。
+> - 最后，通过指针相减计算字符串长度。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * 获取字符串长度（官方实现）
+ * @param str
+ * @return
+ */
+size_t strlen(const char *str) {
+    // 检查参数是否合法
+    if (str == NULL) {
+        exit(1);
+    }
+    const char *p = str;
+    // 循环结束条件是遇到字符串结束符
+    while (*str != '\0') {
+        str++;
+    }
+    // 当循环结束时，str 指向字符串结束符，p 指向字符串首字符
+    // 返回字符串长度，即：指针相减
+    return str - p;
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    size_t len = strlen("abc");
+    printf("len = %zu\n", len); // len = 3
+
+    return 0;
+}
+```
 
 
 
