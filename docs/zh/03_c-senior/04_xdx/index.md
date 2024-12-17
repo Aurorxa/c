@@ -1288,7 +1288,8 @@ int main() {
 > [!CAUTION]
 >
 > * ① 标准库中的绝大多数函数都是不安全的。
-> * ② 如果想要使用安全的字符串处理函数，可以使用第三方安全字符串库，如：[safestringlib](https://github.com/intel/safestringlib) 。
+> * ② 下面虽然会有手动实现；但是，在实际开发中，推荐使用标准库或第三方库。
+> * ③ 如果想要使用安全的字符串处理函数，可以使用第三方安全字符串库，如：[safestringlib](https://github.com/intel/safestringlib) 。
 
 ## 5.2 获取字符串长度
 
@@ -1303,7 +1304,7 @@ size_t strlen(const char *str);
 > [!NOTE]
 >
 > * ① 该函数的名称是 `strlen` ，全名是 `string_length`，即：获取字符串的长度。
-> * ② 返回当前字符串的长度，也就是字符数组中空字符'\0'前面的字符数量。
+> * ② 返回当前字符串的长度，也就是字符数组中空字符`'\0'`前面的字符数量。
 
 > [!CAUTION]
 >
@@ -1694,38 +1695,198 @@ int main() {
 
 ## 5.5 字符串拼接
 
+* 方法声明：
+
+```c
+char *strcat(char *dest, const char *src);
+```
+
+> [!NOTE]
+>
+> * ① 该函数的名称是 `strcat` ，全名是 `string_concat`，即：将一个字符串拼接到另一个字符串的末尾。
+> * ② 会从 dest 字符串的空字符 `'\0'` 开始，替换这个空字符，然后将src中表示字符串的字符数据从开头到空字符，全部拼接到dest末尾。在这个过程中，src 字符串不会被修改，所以它被 const 修饰。
+> * ② 返回拼接后的字符串，即：dest 将包含 dest 和 src 的字符串拼接后的副本。
+
+> [!CAUTION]
+>
+> * ① src 和 dest两个参数都必须是字符串，即以空字符串结尾的字符数组，否则将引发未定义行为。
+> * ② strcat 函数与 strcpy 一样，不会检查 dest 数组是否能够容纳拼接后的字符串。如果 dest 不够大，就会产生未定义行为，这是潜在的安全隐患。
+> * ③ 可以考虑使用更安全的`strncat`函数来实现字符串拼接，它允许指定最大拼接的字符数。
 
 
 
+* 示例：
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char dest[20] = "Hello, ";
+    char src[] = "World!";
+
+    // 调用函数后，dest 数组变为 "Hello, World!\0"，其余部分填充为空字符
+    strcat(dest, src);
+
+    // 输出拼接后的字符串
+    printf("%s", dest); // Hello, World!
+
+    return 0;
+}
+```
 
 ## 5.6 更安全的字符串拼接
 
+* 方法声明：
+
+```c
+char *strncat(char *dest, const char *src, size_t n);
+```
+
+> [!NOTE]
+>
+> strncat 函数的行为：仍旧是找到dest字符串末尾的空字符，然后从该字符开始，将 src 的首个元素复制到 dest末尾，直到：
+>
+> * ① 已经复制了 n 个字符。
+> * ② 复制到达了`src`字符串的结尾，即遇到了`src`的空字符串。所以该函数不会把 src 中的空字符复制到 dest 中。
+>
+> `strncat`函数一定会在 dest 的末尾添加一个空字符，以确保 dest 能够表示一个字符串。由于这一步操作的存在，该函数仍然具有越界访问的风险，需要程序员自己设定合理的 n 取值，以规避这种情况。
+
+> [!CAUTION]
+>
+> 为了安全的使用此函数，基于函数的特点，我们就可以得出 n 的计算公式：
+>
+> ```txt
+> // dest数组的长度 - 已存储字符串的长度 - 1(留给存空字符)
+> int n = sizeof(dest) - strlen(dest) - 1;   
+> ```
 
 
 
+* 示例：
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char src[] = "world";
+    char dest[10] = "hello, ";
+    // 确保 dest 是一个数组类型，而不是一个指针类型才能这样操作
+    int n = sizeof(dest) - strlen(dest) - 1;
+    strncat(dest, src, n);
+
+    printf("%s\n",dest);
+
+    return 0;
+}
+```
 
 ## 5.7 字符串比较大小（字典顺序比较）
 
+* 方法声明：
+
+```c
+int strcmp(const char *str1, const char *str2);
+```
+
+> [!NOTE]
+>
+> * ① `strcmp` 函数的全名是 `string_compare`，它用于比较两个字符串的大小。
+> * ② `strcmp` 函数按照`字典顺序`比较两个字符串的大小。
 
 
 
+* 示例：
 
-# 第六章：字符串数组（⭐）
+```c
+#include <stdio.h>
+#include <string.h>
 
-## 6.1 字符二维数组
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = "abc";
+    char str2[] = "123";
+    char str3[] = "bbb";
+    char str4[] = "aaa";
+    char str5[] = "abcd";
+    char str6[] = "abc";
+
+    printf("%d\n", strcmp(str, str2));
+    printf("%d\n", strcmp(str, str3));
+    printf("%d\n", strcmp(str, str4));
+    printf("%d\n", strcmp(str, str5));
+    printf("%d\n", strcmp(str, str6));
+
+    return 0;
+}
+```
 
 
 
+# 第六章：字符串数组
+
+## 6.1 概述
+
+* 在实际开发中，我们经常需要处理一组字符串；那么，我们需要如何存储一组字符串集合？
+* 在 C 语言中，处理字符串集合的时候，我们通常有两种存储方式：
+  * ① 使用`字符二维数组`来存储字符串集合。
+  * ② 使用`字符指针数组`来存储字符串集合（推荐方式）。
+
+> [!NOTE]
+>
+> * ① 上述的两种方式都称为`字符串数组`。
+> * ② 只不过，在实际开发中，我们更加推荐`字符指针数组`的形式，原因下文详解。
+
+## 6.2 字符二维数组
+
+* 字符串的本质是一个字符数组，那么存储字符串的数组就是一个字符数组的数组，也就是字符二维数组。
+* 如果定义字符二维数组，用来存储`星期名称`的字符串集合，如下所示：
+
+```c
+char week_days[][10] = 
+    { "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" };
+```
+
+* 其在内存中，就是这样的，如下所示：
+
+![](./assets/18.svg)
+
+> [!CAUTION]
+>
+> 这种做法简单直观，但是有如下的缺点：
+>
+> * ① 浪费内存空间：上图的很多空字符都是多余的，但是却无法利用。
+> * ② 不够灵活也效率低下：如果需要对一组字符串进行排序，可能就需要复制交换整个字符串里面的内容。
+
+## 6.2 字符指针数组（⭐）
+
+* 字符指针数组，也就是存储字符指针变量的数组，通过存储一个字符串字符数组的首元素指针变量，进而存储一个字符串集合。
+* 如果定义字符指针数组，用来存储`星期名称`的字符串集合，如下所示：
+
+```c
+char* week_days[] =
+    { "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" };
+```
+
+* 其在内存中，就是这样的，如下所示：
+
+![](./assets/19.svg)
+
+> [!NOTE]
+>
+> * ① 虽然额外为这些字符串数组的指针分配了空间，但字符串的字符数组本身就不会再浪费内存空间了。
+> * ② 这样的存储方式很灵活，对字符串数组进行操作的时候，我们只需要操作指针数组中的指针元素即可，不再需要操作整个字符串字符数组。
 
 
-## 6.2 字符指针数组
-
-
-
-
-
-
-
-
-
-# 第七章：命令行参数（⭐）
