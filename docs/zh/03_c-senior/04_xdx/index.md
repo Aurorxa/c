@@ -249,15 +249,15 @@ int main() {
 ### 2.5.1 概述
 
 * 优点：
-  * ① **简单高效**：字符串通过`'\0'`结尾，处理简单，且C库提供了基础的字符串函数。
+  * ① **简单高效**：字符串通过`'\0'`结尾，处理简单，且 C 库提供了基础的字符串函数。
   * ② **性能好**：不需要一个额外的新类型、内存占用较少（和其他语言中的字符串对比）。
   * ③ **灵活性强**：可以直接操作字符数组，甚至用指针高效传递。
   * ④ **内存高效**：字符串是字符数组，内存管理由程序员控制，节省空间。
 * 缺点：
   * ① **无法直接判断字符串**：C 语言中的字符串是以`'\0'`（空字符）作为结束符的，因此无法直接判断一个字符数组是否是字符串，必须遍历数组直到找到`'\0'`。
-  * ② **操作繁琐**：处理字符串时需要手动管理`'\0'`字符，考虑到结束符的存在，很多字符串操作（如复制、拼接、比较）都变得复杂且容易出错。
+  * ② **操作繁琐**：处理字符串时需要手动管理`'\0'`字符，考虑到结束符的存在，很多字符串操作（复制、拼接、比较）都变得复杂且容易出错。
   * ③ **字符串没有内建长度信息**：C 语言的字符串依赖`'\0'`作为结束标志，而没有像其他语言那样的长度属性。没有`'\0'`就无法正确处理字符串。
-  * ④ **获取字符串长度消耗性能**：C语言获取字符串长度必须遍历整个字符串，直到遇到`'\0'`，对于长字符串来说，效率较低。
+  * ④ **获取字符串长度消耗性能**：C 语言获取字符串长度必须遍历整个字符串，直到遇到`'\0'`，对于长字符串来说，效率较低。
 
 > [!IMPORTANT]
 >
@@ -1285,6 +1285,11 @@ int main() {
 
 * 字符串相关的库函数，在头文件 `<string.h>` 中。
 
+> [!CAUTION]
+>
+> * ① 标准库中的绝大多数函数都是不安全的。
+> * ② 如果想要使用安全的字符串处理函数，可以使用第三方安全字符串库，如：[safestringlib](https://github.com/intel/safestringlib) 。
+
 ## 5.2 获取字符串长度
 
 ### 5.2.1 概述
@@ -1472,7 +1477,7 @@ char *strcpy(char *dest, const char *src);
 
 > [!CAUTION]
 >
-> * ① strcpy 函数是不安全的，它并不会检查 dest 是否真的能够包含 src 数组。如果 dest 不够大，就会因数组越界而产生未定义行为。
+> * ① strcpy 函数是不安全的，因为该函数不能限制复制的字符数量，该函数是将 src 中的所有字符（包括空字符）全部复制到 dest 中，如果 dest 的长度不够，将会因为数组越界（野指针）而产生未定义行为。
 > * ② 为了安全起见，可以考虑使用`strncpy` 函数解决这一问题。
 
 
@@ -1490,7 +1495,7 @@ int main() {
 
     char src[] = "Hello World";
 
-    char dest[20];
+    char dest[sizeof(str) + 1];
 
     strcpy(dest, src);
 
@@ -1514,9 +1519,9 @@ int main() {
 
     char src[] = "Hello World";
 
-    char dest[20];
+    char dest[sizeof(str) + 1];
 
-    char dest2[20];
+    char dest2[sizeof(str) + 1];
 
 	// 链式调用
     strcpy(dest2, strcpy(dest, src));
@@ -1574,15 +1579,42 @@ int main() {
 
     char src[] = "Hello World";
 
-    char dest[20];
+    char dest[sizeof(str) + 1];
+    char dest2[sizeof(str) + 1];
 
-    strcpy(dest, src);
+    strcpy(dest2, strcpy(dest, src));
 
     printf("dest = %s\n", dest);
+    printf("dest2 = %s\n", dest2);
 
     return 0;
 }
 ```
+
+## 5.4 更安全的字符串复制
+
+### 5.4.1 概述
+
+* 方法声明：
+
+```c
+char *strncpy (char *dest, const char *src, size_t n)
+```
+
+> [!NOTE]
+>
+> * ① 该函数的名称是 `strncpy` ，全名是 `string_n(character)_copy`，即：将某个（src）字符串中的字符复制 n 个到目标字符数组（dest）中。
+> * ② 在实际开发中，建议将 `n` 设置为 `dest 的长度 - 1` ，并主动将 dest 的最后一个元素设置为 `'\0'`，这样总能安全的得到一个字符串。
+
+> [!CAUTION]
+>
+> 该函数将从 src 字符串中复制 n 个字符到 dest 字符数组中：
+>
+> * ① 如果 n = strlen(src) + 1 ，即：n 正好是 src 的长度 + 1 ，strncpy 函数会将 src 完整复制到 dest 数组中，包括空字符。
+> * ② 如果 n < strlen(src) + 1，即： n 小于 src 的长度 + 1，strncpy 函数不会将 src 完整复制到 dest 数组中，并且此时复制完成的 dest 数组也不会以空字符结尾，无法表示一个字符串。
+> * ③ 如果 n > strlen(src) + 1，即： n 大于 src 的长度 + 1，strncpy 函数不仅会完整复制 src 字符串到 dest 中，还会将 `剩余 (n - strlen(src) - 1) 个字符` 设置为空字符。
+>
+> strncpy 函数一定会处理 n 个字符数据，如果 n 比较大，在复制完源数组后，它会顺道将 dest 数组中的元素置为空字符。
 
 
 
@@ -1590,52 +1622,95 @@ int main() {
 
 ```c
 #include <stdio.h>
-
-/**
- * 将一个字符串拷贝到另一个字符串中
- * @param dest
- * @param src
- * @return
- */
-char *strcpy(char *dest, const char *src) {
-    char *p = dest;
-    while (*src != '\0') {
-        *dest++ = *src;
-        *src++;
-    }
-
-    *dest = '\0';
-
-    return p;
-}
+#include <string.h>
 
 int main() {
 
     // 禁用 stdout 缓冲区
     setbuf(stdout, NULL);
 
-    char src[] = "Hello World";
+    char str[] = "hello";
 
-    char dest[20];
+    char dest[sizeof(str) + 1];
 
-    char dest2[20];
+    strncpy(dest, str, sizeof(dest) - 1);
+    dest[sizeof(dest) - 1] = '\0';
 
-    strcpy(dest2, strcpy(dest, src));
-    
-	printf("dest = %s\n", dest);
-    printf("dest2 = %s\n", dest2);
+    printf("dest = %s\n", dest);
 
     return 0;
 }
 ```
 
-## 5.4 字符串拼接
+### 5.4.2 为什么 strncpy 更安全
+
+* 如果 dest 的长度远远大于或等于 src 的长度 + 1 ，strncpy 复制是没有问题的，如下所示：
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = "hello";
+
+    char dest[sizeof(str) + 1];
+
+    strncpy(dest, str, sizeof(dest) - 1);
+    dest[sizeof(dest) - 1] = '\0';
+
+    printf("dest = %s\n", dest); // dest = hello
+
+    return 0;
+}
+```
+
+* 但是，dest  的长度小于 src 的长度 + 1，strncpy 复制虽然只复制了一部分，但是并不会产生数组越界，进而导致未定义行为：
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    char str[] = "hello";
+
+    char dest[3];
+
+    strncpy(dest, str, sizeof(dest) - 1);
+    dest[sizeof(dest) - 1] = '\0';
+
+    printf("dest = %s\n", dest); // dest = he
+
+    return 0;
+}
+```
+
+### 5.4.3 手动实现
 
 
 
 
 
-## 5.5 字符串比较大小（字典顺序比较）
+## 5.5 字符串拼接
+
+
+
+
+
+## 5.6 更安全的字符串拼接
+
+
+
+
+
+## 5.7 字符串比较大小（字典顺序比较）
 
 
 
