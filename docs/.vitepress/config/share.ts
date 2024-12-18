@@ -45,7 +45,7 @@ export const sharedConfig = defineConfig({
       groupIconVitePlugin() //代码组图标
     ],
     server: {
-      port: 18089
+      port: 10089
     },
     css: {
       preprocessorOptions: {
