@@ -58,16 +58,16 @@
 
 
 
-## 2.2 CLion 整合 Valgrind
+## 2.2 CLion 整合 Valgrind（必做）
 
 * C 语言中的指针是否使用是个颇具争议的话题，现代化的高级编程语言通过各种策略和机制，在编译期就能解决指针危险的问题。但是，遗憾的是，C 语言的指针很大程度上，在运行期才会暴露问题。
 * 幸运的是，我们可以使用 `Valgrind` 项目来进行`内存泄漏检测`，而 `Valgrind` 只支持 Linux 。
 
 > [!NOTE]
 >
-> :::details 点我查看 CLion 整合 Valgrind
+> :::details 点我查看
 >
-> [内存泄漏检测](/02_c-leap/04_xdx/#_4-1-内存泄漏检测)
+> [CLion 整合 Valgrind](/02_c-leap/04_xdx/#_4-1-内存泄漏检测)
 >
 > :::
 
