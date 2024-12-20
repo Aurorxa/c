@@ -530,7 +530,562 @@ void *realloc (void *ptr, size_t size);
 void free (void *ptr);
 ```
 
+## 2.5 内存分配函数 malloc
 
+### 2.5.1 概述
+
+* malloc 的方法声明：
+
+```c
+void *malloc (size_t size);
+```
+
+> [!NOTE]
+>
+> * ① malloc 的全称是 `memory allocation`，其中文含义就是`内存分配`。
+> * ② 该函数会在`堆`空间分配一片连续，以 size 个字节大小的连续空间。
+> * ③ `此函数不会对堆空间分配的内存块的数据进行初始化；换言之，此函数在堆空间内存块中的数据是随机的、未定义的`。
+> * ④ 如果分配成功，此函数会返回指向堆空间`内存块地址（首字节）地址`的指针。
+>   * 返回的指针类型是 `void*`，在使用之前需要进行强转。
+>   * 如果分配的是一个`数组`内存空间，我们可以利用返回值指针进行数组操作。
+>   * 如果分配的是一个`结构体`内存精简，我们可以利用返回值指针进行结构体操作。
+> * ⑤ 如果分配失败，此函数将会返回一个空指针（NULL）。
+
+### 2.5.2 应用示例
+
+* 需求：使用 malloc 函数在堆中开辟长度为 10 的 int 数组，进行初始化并输出数组中的元素。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARR_LEN 10
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个长度为 10 的数组
+    // 如果成功，malloc 将会返回一个指向该内存的指针
+    int *p = (int *)malloc(sizeof(int) * ARR_LEN); // [!code highlight]
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // malloc 并不会初始化内存空间，需要手动初始化
+    for (int i = 0; i < 10; i++) {
+        p[i] = i;
+    }
+
+    // 输出数组中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", p[i]);
+    }
+
+    // 释放内存
+    free(p);
+
+    return 0;
+}
+```
+
+### 2.5.3 应用示例
+
+* 需求：使用 malloc 函数在堆中开辟 10 个 Student 结构体变量，进行初始化并输出每个结构体变量中的元素。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define LEN 10
+
+typedef struct Student {
+    int id;
+    char name[20];
+    int age;
+} Student;
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个 10 个结构体变量
+    // 如果成功，malloc 将会返回一个指向该内存的指针
+    Student *p = (Student *)malloc(sizeof(Student) * LEN); // [!code highlight]
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // malloc 并不会初始化内存空间，需要手动初始化
+    for (int i = 0; i < 10; i++) {
+        p[i].id = i;
+        snprintf(p[i].name, sizeof(p[i].name), "C-%d", i); // 将 i 转为字符串
+        p[i].age = i + 18;
+    }
+
+    // 输出结构体中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("id=%d，姓名=%s，年龄=%d\n", p[i].id, p[i].name, p[i].age);
+    }
+
+    // 释放内存
+    free(p);
+
+    return 0;
+}
+```
+
+### 2.5.4 不要使用数组类型接收 malloc 等函数的返回值
+
+* 在实际开发中，我们会经常使用 `malloc`、`calloc` 或 `realloc` 等函数在堆中创建数组；但是，可能有些人会想当然的使用数组类型来接收，如下所示：
+
+```c
+// 错误！使用数组类型接收 malloc 等函数的返回值
+int arr[] = malloc(4 * sizeof(int)); // [!code error]
+```
+
+```c
+// 错误！使用数组类型接收 malloc 等函数的返回值
+int arr[4] = malloc(4 * sizeof(int)); // [!code error]
+```
+
+* 上述的做法，是不对的，在 C 语言中是不会编译通过的，会直接报错，如下所示：
+
+![](./assets/5.png)
+
+* 正确的做法，应该使用对应的数据类型的指针来接收（强制类型转换）：
+
+```c
+int *p = (int *)malloc(sizeof(int) * ARR_LEN);
+```
+
+> [!NOTE]
+>
+> ::: details 点我查看 原因
+>
+> * ① 在 C 语言中，数组类型的长度必须是在`编译`的时候确定，数组名在声明的时候就和`栈区`的一块内存绑定，如下所示：
+>
+> ```c
+> // 在栈区开辟 4 个 int 大小的数组
+> int arr[4] = {1,2}; 
+> ```
+>
+> ```c
+> // 由系统推断出数组的大小，还是在栈区开辟 4 个 int 大小的数组
+> int arr[] = {1,2,3,4}; 
+> ```
+>
+> * ② 在 C 语言中，malloc 是在`运行`的时候动态分配内存的，数组类型的变量显然不能接收 malloc 函数的返回值，只能通过指针类型来接收，如下所示：
+>
+> ```c
+> // 错误！使用数组类型接收 malloc 等函数的返回值
+> int arr[] = malloc(4 * sizeof(int)); // [!code error]
+> ```
+>
+> ```c
+> // 错误！使用数组类型接收 malloc 等函数的返回值
+> int arr[4] = malloc(4 * sizeof(int)); // [!code error]
+> ```
+>
+> ```c
+> int *p = (int *)malloc(sizeof(int) * ARR_LEN);
+> ```
+>
+> :::
+
+> [!IMPORTANT]
+>
+> 在使用动态内存分配函数的时候，不要考虑其它的类型，记住使用指针类型即可。
+
+## 2.6 内存清理函数 free
+
+### 2.6.1 概述
+
+* 方法声明：
+
+```c
+void free (void *ptr);
+```
+
+> [!NOTE]
+>
+> * ① 为了避免内存泄漏，在确定动态分配的内存不再使用之后，需要及时的调用 free 函数释放它，这是非常重要的。
+> * ② `参数必须是堆上申请内存块的地址(首字节地址)，不能传递别的指针，否则会引发未定义行为`。
+> * ③ free 函数的行为，如下所示：
+>   * free 函数并不会修改它所释放的内存区域中存储的任何数据，free 的作用仅仅是告诉操作系统这块内存不再被使用了，可以将其标记为可用状态，以供将来的内存分配请求使用。
+>   * 释放后的内存区域中的数据一般仍然会继续存在，直到被下一次的内存分配操作覆盖。当然即便 free 前的原始数据一直存在未被覆盖，这片内存区域也不再可用了，因为你不知道什么时候数据就会被覆盖掉了。
+>   * free 函数不会修改传入指针指向的内容，更不会对实参指针本身做任何修改。
+
+### 2.6.2 应用示例
+
+* 需求：使用 malloc 函数在堆中开辟长度为 10 的 int 数组，进行初始化并输出数组中的元素。当数组不再使用的时候，需释放堆中对应的内存空间。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARR_LEN 10
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个长度为 10 的数组
+    // 如果成功，malloc 将会返回一个指向该内存的指针
+    int *p = (int *)malloc(sizeof(int) * ARR_LEN); 
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // malloc 并不会初始化内存空间，需要手动初始化
+    for (int i = 0; i < 10; i++) {
+        p[i] = i;
+    }
+
+    // 输出数组中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", p[i]);
+    }
+
+    // 释放内存
+    free(p); // [!code highlight]
+
+    return 0;
+}
+```
+
+### 2.6.3 传递 NULL 指针
+
+* 如果 `ptr` 是 `NULL`，`free` 函数不会执行任何操作，也不会导致程序崩溃。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int *ptr = NULL;
+
+    // 安全，无需担心崩溃
+    free(ptr); // [!code highlight]
+
+    int num = 10;
+    printf("num = %d\n", num); // num = 10
+
+    return 0;
+}
+```
+
+### 2.6.3 尽量不要移动原始指针
+
+* free 函数需要传递`指向`堆上动态分配内存的内存块的`指针`，不会乱传一个指向栈区或数据段数据的指针。
+
+> [!CAUTION]
+>
+> free 函数需要的指针是指向分配内存块首字节地址的指针，不能是其余字节的指针！！！
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARR_LEN 10
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个长度为 10 的数组
+    // 如果成功，malloc 将会返回一个指向该内存的指针
+    int *p = (int *)malloc(sizeof(int) * ARR_LEN);
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // malloc 并不会初始化内存空间，需要手动初始化
+    for (int i = 0; i < 10; i++) {
+        // 这边其实 p 已经移动了
+        *p++ = i; // [!code error]
+    }
+
+    // 释放内存
+    free(p);
+
+    return 0;
+}
+```
+
+* 最新版本的 GCC，针对这种情况，会报 `invalid pointer` 错误，如下所示：
+
+![](./assets/6.png)
+
+> [!TIP]
+>
+> 尽量不要移动指向堆中内存块的原始指针，如果实在有移动指针的必要，可以创建一个副本指针来移动。
+
+* 创建一个副本指针，来修正上述的问题，如下所示：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARR_LEN 10
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个长度为 10 的数组
+    // 如果成功，malloc 将会返回一个指向该内存的指针
+    int *p = (int *)malloc(sizeof(int) * ARR_LEN);
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // 定义一个临时指针用于移动指针操作
+    int *tmp = p; // [!code highlight]
+    // malloc 并不会初始化内存空间，需要手动初始化
+    for (int i = 0; i < 10; i++) {
+        *tmp++ = i;
+    }
+
+    // 释放内存
+    free(p);
+
+    return 0;
+}
+
+```
+
+### 2.5.5 不要两次 free 同一片内存区域
+
+* C 语言标准规定，动态分配内存的内存块可以手动 free 一次表明它不再被使用，但不能进行 "double free"，这将导致未定义行为。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARR_LEN 10
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个长度为 10 的数组
+    // 如果成功，malloc 将会返回一个指向该内存的指针
+    int *p = (int *)malloc(sizeof(int) * ARR_LEN);
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // 定义一个临时指针用于移动指针操作
+    int *tmp = p;
+    // malloc 并不会初始化内存空间，需要手动初始化
+    for (int i = 0; i < 10; i++) {
+        *tmp++ = i;
+    }
+
+    // 释放内存
+    free(p);
+    free(p); // [!code highlight]
+
+    return 0;
+}
+```
+
+* 最新版本的 GCC，针对这种情况，会报 `double free detected in tcache 2` 错误，如下所示：
+
+![](./assets/7.png)
+
+> [!NOTE]
+>
+> ::: details 点我查看 如何避免重复释放？
+>
+> * ① 使用 Valgrind 等工具来检测内存问题，包括：重复释放和未释放的内存。
+> * ② 释放内存后，及时将指针显示的设置为 NULL，因为 `free(NULL)` 是合法操作，且不会引发任何问题。
+>
+> ```c
+> free(p);
+> p = NULL;  // 避免悬空指针和重复释放
+> ```
+>
+> :::
+
+### 2.5.6 悬空指针
+
+* free 函数调用后，指针所指向的内存块就被释放了；但是，`free 函数不会改变传入的实参本身`，因为参数类型是 `void *`。
+* free 后的实参指针就变为了指向一片已释放区域的指针，即：悬空指针（悬空指针就是野指针，使用悬空指针会引发未定义行为）。
+
+```c
+int *p = (int *)malloc(sizeof(int) * ARR_LEN);
+
+// 释放内存
+free(p);
+
+// free 之后的 p 就是一个悬空指针
+for (int i = 0; i < 10; i++) {
+    p[i] = i; // [!code error]
+}
+```
+
+> [!NOTE]
+>
+> ::: details 点我查看 如何解决悬空指针？
+>
+> * ① 使用 Valgrind 等工具来检测内存问题，包括：重复释放和未释放的内存。
+> * ② 释放内存后，及时将指针显示的设置为 NULL，因为 `free(NULL)` 是合法操作，且不会引发任何问题。
+>
+> ```c
+> free(p);
+> p = NULL;  // 避免悬空指针和重复释放
+> ```
+>
+> :::
+
+* 其实，在一个函数内部进行内存管理是比较容易的；但是，如果悬空指针出现在多个函数中，就会比较难以排查，如下所示：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void freeMemory(int* p) {
+    free(p); // 内存被释放
+}
+
+void useMemory(int* p) {
+    *p = 42; // 使用已释放的内存
+    printf("Value: %d\n", *p);
+}
+
+int main() {
+    int* ptr = malloc(sizeof(int));
+    *ptr = 10;
+
+    freeMemory(ptr);  // 在此释放内存
+    useMemory(ptr);   // 再次使用，导致悬空指针问题
+
+    return 0;
+}
+```
+
+> [!NOTE]
+>
+> ::: details 点我查看 如何解决悬空指针？
+>
+> * ① 使用 Valgrind 等工具来检测内存问题，包括：重复释放和未释放的内存。
+> * ② 释放内存后，及时将指针显示的设置为 NULL，因为 `free(NULL)` 是合法操作，且不会引发任何问题。
+>
+> ```c
+> free(p);
+> p = NULL;  // 避免悬空指针和重复释放
+> ```
+>
+> * ③ 只让一个函数，用来进行内存清理工作，如下所示：
+>
+> ```c
+> typedef int E;
+> 
+> typedef struct {
+>     // 元素
+>     E *elements;
+>     // 实际需要存放的元素个数
+>     int size;
+>     // 数组容量，即：数组中可以存放元素个数
+>     int capacity;
+> } Vector;
+> 
+> // 初始化
+> Vector *vector_create();
+> 
+> // 销毁
+> void vector_destroy(Vector *vector);
+> ```
+>
+> :::
+
+### 2.5.7 避免不可到达的区域
+
+* 有的时候，`不可达到区域`导致的内存泄漏更加严重（和忘记 free 导致的内存泄漏相比），如下所示：
+
+```c
+p = malloc(xxxx);
+q = malloc(xxxx);
+
+p = q;
+```
+
+* 将指针变量 q 赋值给指针变量 q ，这样指针变量 p 和指针变量 q 都会指向同一块内存，这也会导致 p 指向的内存块再也无法访问，即：内存泄露。
+
+![](./assets/8.svg)
+
+* 所以，如果在程序中需要给指向分配内存块的指针赋值，应该先进行 free 再赋值，如下所示：
+
+```c
+p = malloc(xxxx);
+q = malloc(xxxx);
+
+free(p); // [!code highlight]
+
+p = q;
+```
+
+* 此时，程序中就不会出现内存泄漏了，因为 p 原本指向的内存区域已经被释放了。
+
+![](./assets/9.svg)
+
+> [!NOTE]
+>
+> 对一个指向堆区的指针，在修改它的指向前，需要考虑是否需要 free，以避免内存泄漏。
+
+### 2.5.8 总结
+
+* 手动管理内存实在是太复杂了，针对 C 语言手动分配内存以及释放内存，给出如下建议：
+  * ① `正确传参 free 函数`：free 函数需要传入指向动态分配内存块首字节的指针，free 之前不妨检查指针是否已被移动。
+  * ② `在free内存块后，建议立刻将指针设置为NULL`：
+    * 避免了 "double free" 的风险：对空指针调用`free 函数`是安全的，它不会有任何效果。
+    * 减少悬空指针出现的风险：解引用空指针导致程序崩溃，比悬空指针带来的未定义行为要更容易检测和修正。
+  * ③ `慎重改变堆区指针的指向`：指向堆区域的指针，如果需要改变它的指向，在改变之前应当考虑指向的内存块是否需要 free。
+  * ④ `多函数共同管理同一块内存区域时，应严格遵循单一原则`：哪个函数用于分配内存，哪个函数用于 free 释放内存，这两个函数一定要明确单一的职责。
+
+* 也正是因为手动管理内存的复杂性，在 C 之后的很多语言，如：Java 、Go、Python 等，都内置了 GC ，来帮助程序员管理内存。
 
 
 

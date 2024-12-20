@@ -13,7 +13,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "^1.24.2",
+    "@shikijs/vitepress-twoslash": "^1.24.3",
     "@types/dom-view-transitions": "^1.0.5",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
