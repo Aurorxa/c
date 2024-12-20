@@ -369,126 +369,168 @@ int main() {
 
 * ① `动态内存分配`：`malloc`、`calloc` 返回 `void *`，方便程序员动态管理各种类型的数据。
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-
-    // 禁用 stdout 缓冲区
-    setbuf(stdout, nullptr);
-
-    int *p = (int *)malloc(sizeof(int) * 10); // [!code highlight]
-    
-     if (p == NULL) {
-        printf("Memory allocation failed\n");
-        return 1;
-    }
-
-    // 初始化
-    for (int i = 0; i < 10; i++) {
-        p[i] = i;
-    }
-
-    // 输出数组中的元素
-    for (int i = 0; i < 10; i++) {
-        printf("%d\n", p[i]);
-    }
-
-    free(p);
-
-    return 0;
-}
-```
+> [!NOTE]
+>
+> ::: details 点我查看
+>
+> ```c
+> #include <stdio.h>
+> #include <stdlib.h>
+> 
+> int main() {
+> 
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, nullptr);
+> 
+>     int *p = (int *)malloc(sizeof(int) * 10); // [!code highlight]
+>     
+>      if (p == NULL) {
+>         printf("Memory allocation failed\n");
+>         return 1;
+>     }
+> 
+>     // 初始化
+>     for (int i = 0; i < 10; i++) {
+>         p[i] = i;
+>     }
+> 
+>     // 输出数组中的元素
+>     for (int i = 0; i < 10; i++) {
+>         printf("%d\n", p[i]);
+>     }
+> 
+>     free(p);
+> 
+>     return 0;
+> }
+> ```
+>
+> :::
 
 * ② `通用数据结构`：链表、栈、队列等，可以存储不同类型的数据。
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-// 定义链表节点
-typedef struct Node {
-    void *data;             // 使用 void * 存储任意类型的数据
-    struct Node *next;
-} Node;
-
-// 创建新节点
-Node *createNode(void *data) {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
-    newNode->next = NULL;
-    return newNode;
-}
-
-// 遍历链表
-void printIntList(Node *head) {
-    Node *current = head;
-    while (current != NULL) {
-        printf("%d -> ", *(int *)current->data);
-        current = current->next;
-    }
-    printf("NULL\n");
-}
-
-int main() {
-    
-    // 禁用 stdout 缓冲区
-    setbuf(stdout, nullptr);
-    
-    int a = 10, b = 20, c = 30;
-
-    // 创建链表
-    Node *head = createNode(&a);
-    head->next = createNode(&b);
-    head->next->next = createNode(&c);
-
-    // 打印链表
-    printIntList(head);
-
-    // 释放内存
-    Node *current = head;
-    while (current != NULL) {
-        Node *temp = current;
-        current = current->next;
-        free(temp);
-    }
-
-    return 0;
-}
-```
+> [!NOTE]
+>
+> ::: details 点我查看
+>
+> ```c
+> #include <stdio.h>
+> #include <stdlib.h>
+> 
+> // 定义链表节点
+> typedef struct Node {
+>     void *data;             // 使用 void * 存储任意类型的数据
+>     struct Node *next;
+> } Node;
+> 
+> // 创建新节点
+> Node *createNode(void *data) {
+>     Node *newNode = (Node *)malloc(sizeof(Node));
+>     newNode->data = data;
+>     newNode->next = NULL;
+>     return newNode;
+> }
+> 
+> // 遍历链表
+> void printIntList(Node *head) {
+>     Node *current = head;
+>     while (current != NULL) {
+>         printf("%d -> ", *(int *)current->data);
+>         current = current->next;
+>     }
+>     printf("NULL\n");
+> }
+> 
+> int main() {
+>     
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, nullptr);
+>     
+>     int a = 10, b = 20, c = 30;
+> 
+>     // 创建链表
+>     Node *head = createNode(&a);
+>     head->next = createNode(&b);
+>     head->next->next = createNode(&c);
+> 
+>     // 打印链表
+>     printIntList(head);
+> 
+>     // 释放内存
+>     Node *current = head;
+>     while (current != NULL) {
+>         Node *temp = current;
+>         current = current->next;
+>         free(temp);
+>     }
+> 
+>     return 0;
+> }
+> ```
+>
+> :::
 
 * ③ `通用函数接口`：标准库的 `qsort`，使用 `void *` 实现类型无关的比较操作。
 
+> [!NOTE]
+>
+> ::: details 点我查看
+>
+> ```c
+> #include <stdio.h>
+> #include <stdlib.h>
+> 
+> // 比较函数
+> int compare(const void *a, const void *b) {
+>     return (*(int *)a - *(int *)b);
+> }
+> 
+> int main() {
+>     
+>     // 禁用 stdout 缓冲区
+>     setbuf(stdout, nullptr);
+>     
+>     int arr[] = {42, 8, 23, 16, 15, 4};
+>     size_t size = sizeof(arr) / sizeof(arr[0]);
+> 
+>     // 使用 qsort 排序
+>     qsort(arr, size, sizeof(int), compare);
+> 
+>     // 打印排序后的数组
+>     for (size_t i = 0; i < size; i++) {
+>         printf("%d ", arr[i]);
+>     }
+>     printf("\n");
+> 
+>     return 0;
+> }
+> ```
+>
+> :::
+
+## 2.4 动态内存分配函数的介绍
+
+* 在 C 语言中，要想在堆上进行动态内存分配，主要依赖于以下的函数，其都在头文件`<stdlib.h>` 中，如下所示：
+
 ```c
-#include <stdio.h>
-#include <stdlib.h>
-
-// 比较函数
-int compare(const void *a, const void *b) {
-    return (*(int *)a - *(int *)b);
-}
-
-int main() {
-    
-    // 禁用 stdout 缓冲区
-    setbuf(stdout, nullptr);
-    
-    int arr[] = {42, 8, 23, 16, 15, 4};
-    size_t size = sizeof(arr) / sizeof(arr[0]);
-
-    // 使用 qsort 排序
-    qsort(arr, size, sizeof(int), compare);
-
-    // 打印排序后的数组
-    for (size_t i = 0; i < size; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    return 0;
-}
+void *malloc (size_t size);
 ```
+
+```c
+void *calloc (size_t num, size_t size);
+```
+
+```c
+void *realloc (void *ptr, size_t size);
+```
+
+* 在 C 语言中，为了避免内存泄漏，在确定动态分配的内存不再使用后，要及时调用 free 函数释放它，其也在头文件`<stdlib.h>` 中，如下所示：
+
+```c
+void free (void *ptr);
+```
+
+
 
 
 
