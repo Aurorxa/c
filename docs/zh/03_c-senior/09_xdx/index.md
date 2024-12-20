@@ -183,6 +183,20 @@ int main(){
   - ④ 临时变量。
   - ...
 
+## 1.4 栈区 VS 堆区
+
+* 栈区 VS 堆区，如下所示：
+
+| 特性         | 栈区                           | 堆区                               |
+| ------------ | ------------------------------ | ---------------------------------- |
+| 内存分配方式 | 自动分配与释放                 | 程序员手动分配与释放（或垃圾回收） |
+| 生命周期     | 局部，随着函数调用结束自动释放 | 根据程序员需求，生命周期灵活       |
+| 内存大小     | 固定，通常较小                 | 动态分配，理论上较大               |
+| 访问速度     | 快（栈指针调整）               | 慢（需要查找空闲块）               |
+| 存储内容     | 局部变量、函数参数、返回地址等 | 动态分配的数据结构、大型对象等     |
+| 线程安全     | 线程私有                       | 线程共享，需注意同步               |
+| 内存碎片问题 | 无明显碎片                     | 容易出现内存碎片                   |
+
 > [!CAUTION]
 >
 > * ① 尽管堆区提供了灵活的内存管理方式，但也需要程序员小心处理内存分配与释放，防止内存泄漏和碎片化等问题。
@@ -195,9 +209,13 @@ int main(){
 
 ## 2.1 概述
 
+* `动态内存分配`在 C 语言编程中有着举足轻重的地位，因为它是链式结构的基础。我们可以将动态分配的内存链接在一起，形成链表、树、图等灵活的数据类型。
+* 虽然动态内存分配适用于所有的数据类型，但是其主要的应用场景是字符串、数组和结构体中。其中，动态分配的结构体是最值得关注的，因为它可以被链接成链接、树和其它的数据结构。
 
-
-
+> [!CAUTION]
+>
+> * ① 一般来说，如果没有特殊需求，不要在堆上为基本数据类型动态分配内存。
+> * ② 在实际开发中，一般也没有必要，在堆上为基本数据类型动态分配内存。
 
 ## 2.2 CLion 整合 Valgrind（必做）
 
@@ -208,19 +226,269 @@ int main(){
 >
 > :::details 点我查看
 >
-> [CLion 整合 Valgrind](/02_c-leap/04_xdx/#_4-1-内存泄漏检测)
+> * ① [CLion 整合 Valgrind](/02_c-leap/04_xdx/#_4-1-内存泄漏检测)。
+> * ② 在使用 C 语言开发项目的时候，尤其是涉及到动态内存分配，很容易引起内存溢出或未定义行为等，强烈建议在 CLion 中调用 `Valgrind` 进行项目开发。
 >
 > :::
 
 ## 2.3 通用指针类型
 
+### 2.3.1 概述
 
+* 在 C 语言中，通用指针类型就是 `void *`类型的指针。
 
+### 2.3.2 特点
 
+* ① `类型无关，赋值灵活`：由于指针本质上是一个存储内存地址的变量，而内存地址是没有类型的（unsigned int，即：无符号整数）；所以，`void *` 指针可以存储任何类型的地址，并指向任意类型的对象。
 
+> [!NOTE]
+>
+> * ① 在底层实现上，指针实际上只存储内存地址，不管指针的具体类型是什么，指针变量的值都是内存地址（unsigned int，即：无符号整数），例如：一个 `int*`类型的指针和一个 `double*`类型的指针在底层的存储都是一样，二者之间的区别在于：
+>   * 编译器根据指针类型推断数据类型，从而决定指针在解引用的时候如何解释内存中的数据。
+>   * 指针的算术操作（加减）依赖数据类型，决定指针步长的大小。
+> * ② `void *` 指针去除了指针的“类型约束”，只保留了指针的通用特性——存储内存地址。
 
+```c {15-18}
+#include <stdio.h>
 
+int main() {
 
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int a = 10;
+    double d = 20;
+    int arr[] = {1, 2, 3, 4, 5};
+
+    void *p = NULL;
+
+    // 通用指针类型可以存储任意类型的地址，指针任意类型的对象
+    p = &a;
+    p = arr;
+    p = &arr;
+    p = &d;
+    
+    return 0;
+}
+```
+
+* ② `不支持类型安全检查`：`void*` 跳过了编译器的类型检查机制，这意味着程序员需要手动确保类型的正确性，稍有不慎可能导致类型错误或程序崩溃。
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    double d = 3.14;
+    void *p = &d;
+    // 强制转换为错误类型，可能引发未定义行为
+    int *int_ptr = (int *)p;  // [!code error]
+    
+    return 0;
+}
+```
+
+* ③ `无法直接解引用`：由于 `void *` 并未定义指向的具体数据类型，无法直接对其进行解引用操作。若要解引用，必须将其`强制类型转换`为具体的数据类型。
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int a = 10;
+    void *ptr = &a;
+    // 错误，无法解引用 void *
+    printf("%d\n", *ptr); // [!code error]
+
+    return 0;
+}
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int a = 10;
+    void *ptr = &a;
+    // 强制转换为 int 类型指针
+    int *int_ptr = (int *)ptr; // [!code highlight]
+    printf("%d", *int_ptr);
+
+    return 0;
+}
+```
+
+* ④ `无法执行指针运算`：由于 `void *` 类型的大小未定义，不能对其进行指针运算（加减操作）。若需要指针运算，必须先将其强制转换为具体类型的指针。
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int arr[] = {1, 2, 3, 4, 5};
+    void *ptr = arr + 1;
+    // 错误
+    ptr++; // [!code error]
+  
+    return 0;
+}
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int arr[] = {1, 2, 3, 4, 5};
+    void *ptr = arr + 1;
+    // 强制转换为 int 类型指针
+    int *int_ptr = (int *)ptr; // [!code highlight]
+    printf("%d", *int_ptr);    // 2
+
+    return 0;
+}
+```
+
+### 2.3.3 为什么要设计通用指针类型？
+
+* ① `动态内存分配`：`malloc`、`calloc` 返回 `void *`，方便程序员动态管理各种类型的数据。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int *p = (int *)malloc(sizeof(int) * 10); // [!code highlight]
+    
+     if (p == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
+    // 初始化
+    for (int i = 0; i < 10; i++) {
+        p[i] = i;
+    }
+
+    // 输出数组中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("%d\n", p[i]);
+    }
+
+    free(p);
+
+    return 0;
+}
+```
+
+* ② `通用数据结构`：链表、栈、队列等，可以存储不同类型的数据。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+// 定义链表节点
+typedef struct Node {
+    void *data;             // 使用 void * 存储任意类型的数据
+    struct Node *next;
+} Node;
+
+// 创建新节点
+Node *createNode(void *data) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// 遍历链表
+void printIntList(Node *head) {
+    Node *current = head;
+    while (current != NULL) {
+        printf("%d -> ", *(int *)current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+    
+    int a = 10, b = 20, c = 30;
+
+    // 创建链表
+    Node *head = createNode(&a);
+    head->next = createNode(&b);
+    head->next->next = createNode(&c);
+
+    // 打印链表
+    printIntList(head);
+
+    // 释放内存
+    Node *current = head;
+    while (current != NULL) {
+        Node *temp = current;
+        current = current->next;
+        free(temp);
+    }
+
+    return 0;
+}
+```
+
+* ③ `通用函数接口`：标准库的 `qsort`，使用 `void *` 实现类型无关的比较操作。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+// 比较函数
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+    
+    int arr[] = {42, 8, 23, 16, 15, 4};
+    size_t size = sizeof(arr) / sizeof(arr[0]);
+
+    // 使用 qsort 排序
+    qsort(arr, size, sizeof(int), compare);
+
+    // 打印排序后的数组
+    for (size_t i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+```
 
 
 
