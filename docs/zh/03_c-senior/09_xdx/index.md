@@ -542,8 +542,8 @@ void *malloc (size_t size);
 
 > [!NOTE]
 >
-> * ① malloc 的全称是 `memory allocation`，其中文含义就是`内存分配`。
-> * ② 该函数会在`堆`空间分配一片连续，以 size 个字节大小的连续空间。
+> * ① `malloc` 的全称是 `memory allocation`，其中文含义就是`内存分配`。
+> * ② 该函数会在`堆`空间分配一片连续，以 `size` 个字节大小的连续空间。
 > * ③ `此函数不会对堆空间分配的内存块的数据进行初始化；换言之，此函数在堆空间内存块中的数据是随机的、未定义的`。
 > * ④ 如果分配成功，此函数会返回指向堆空间`内存块地址（首字节）地址`的指针。
 >   * 返回的指针类型是 `void*`，在使用之前需要进行强转。
@@ -1092,15 +1092,177 @@ p = q;
 
 ## 2.7 清零内存分配函数 calloc
 
+### 2.7.1 概述
+
+* calloc 方法声明：
+
+```c
+void *calloc (size_t num, size_t size);
+```
+
+> [!NOTE]
+>
+> - ① `calloc` 的全称是 `clear allocation`，其中文含义就是`内存分配时自动初始化 0 值`。
+> - ② 参数 `num` 表示分配的元素的数量，而参数 `size` 表示每个元素的内存大小。
+> - ③ 该函数会在`堆`空间分配一片连续，以 `size * num` 个字节大小的连续空间。
+> - ④ calloc 和 malloc 最大的不同就在于其会将分配的内存初始化为 0 ，这意味着其不仅仅分配内存，还会清零所有内存。
+> - ⑤ 如果分配成功，此函数会返回指向堆空间`内存块地址（首字节）地址`的指针。
+>   - 返回的指针类型是 `void*`，在使用之前需要进行强转。
+>   - 如果分配的是一个`数组`内存空间，我们可以利用返回值指针进行数组操作。
+>   - 如果分配的是一个`结构体`内存精简，我们可以利用返回值指针进行结构体操作。
+> - ⑥ 如果分配失败，此函数将会返回一个空指针（NULL）。
+
+> [!TIP]
+>
+> 在使用动态内存分配函数在堆中开启内存空间时，如果需要将对应的内存空间初始化为 0 ，推荐使用 calloc 函数，因为其比 malloc 更加安全！！！
+
+### 2.7.2 应用示例
+
+* 需求：使用 calloc 函数在堆中开辟长度为 10 的 int 数组，并输出数组中的元素。
 
 
 
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARR_LEN 10
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个长度为 10 的数组
+    // 如果成功，malloc 将会返回一个指向该内存的指针
+    int *p = (int *)calloc(ARR_LEN, sizeof(int)); // [!code highlight]
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("calloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // calloc 会自动清零，输出数组中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", p[i]);
+    }
+
+    // 手动初始化
+    for (int i = 0; i < 10; i++) {
+        p[i] = i;
+    }
+
+    printf("\n");
+
+    // 输出数组中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", p[i]);
+    }
+
+    // 释放内存
+    free(p);
+
+    return 0;
+}
+```
+
+### 2.7.3 应用示例
+
+* 需求：使用 calloc 函数在堆中开辟 10 个 Student 结构体变量，进行初始化并输出每个结构体变量中的元素。
 
 
 
+* 示例：
 
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#define LEN 10
 
+typedef struct Student {
+    int id;
+    char name[20];
+    int age;
+} Student;
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个 10 个结构体变量
+    // 如果成功，calloc 将会返回一个指向该内存的指针
+    Student *p = (Student *)calloc(LEN, sizeof(Student)); // [!code highlight]
+
+    // 检测分配是否成功
+    if (p == NULL) {
+        printf("calloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // calloc 会初始化内存空间，输出结构体中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("id=%d，姓名=%s，年龄=%d\n", p[i].id, p[i].name, p[i].age);
+    }
+
+    printf("\n");
+
+    // 手动初始化
+    for (int i = 0; i < 10; i++) {
+        p[i].id = i;
+        snprintf(p[i].name, sizeof(p[i].name), "C-%d", i); // 将 i 转为字符串
+        p[i].age = i + 18;
+    }
+
+    // 输出结构体中的元素
+    for (int i = 0; i < 10; i++) {
+        printf("id=%d，姓名=%s，年龄=%d\n", p[i].id, p[i].name, p[i].age);
+    }
+
+    // 释放内存
+    free(p);
+
+    return 0;
+}
+```
+
+### 2.7.4 malloc VS calloc
+
+* 相同点：都可以在堆上进行内存分配。
+* 不同点：
+  * ① `malloc 性能更好`：malloc 由于不需要初始化 0 值，性能可能会更好一点，如果特别在意性能以及内存确实需要手动初始化的时候，优先使用 malloc 函数。
+  * ② `calloc 更加安全`：如果使用 malloc 函数在堆上进行内存分配，那么内存块中的所有元素都是随机值、未定义的，如果忘记直接使用这些随机值将会产生未定义行为，非常危险。但是，如果使用 calloc 函数并不会产生未定义行为。
+
+> [!IMPORTANT]
+>
+> * ① malloc、calloc 和 realloc 中，只有`calloc`会自动初始化 0 值，其余函数均不会自动初始化 0 值。
+> * ② 在实际开发中，如果当程序安全和正确性是首要考虑时，推荐使用`calloc`函数，因为其更加安全！！！
 
 ## 2.8 内存重新分配函数 realloc
+
+### 2.8.1 概述
+
+* 方法声明：
+
+```c
+void *realloc (void *ptr, size_t new_size);
+```
+
+> [!NOTE]
+>
+> - ① `realloc`的全称是 `reallocation`，其中文含义就是`重新分配内存`，即：经常应用于动态扩容和缩容的场景。
+> - ② 参数 `ptr` 指向原先已分配的内存块，而参数 `new_size` 表示新的内存块大小。
+> - ③ 该函数根据参数的取值不同，可能会有 `malloc` 和 `free` 的行为（实际开发中，不会有此应用场景）：
+>   - 如果 `ptr` 指针是一个空指针，那么该函数的行为和 `malloc` 一致，即：分配 `new_size` 字节的内存空间，并且返回该内存块的首字节指针。
+>   - 如果 `new_size` 的取值为 0 ，那么该函数的行为和 `free` 一致，会释放 `ptr` 指向的内存块。
+> - ④ 如果没有上述的两种情况，那么 `realloc` 就用于重新调整已分配内存块的大小，即：`ptr` 指针指向的已分配内存块的大小。
+>   - 当 `new_size` 的取值和 ptr 指针指向的已分配内存块的`大小一致`的时候，并不会做任何操作。
+>   - 当 `new_size` 的取值比 ptr 指针指向的已分配内存块`小`的时候（新内存块小于旧内存块），会在旧内存块的`尾部（高地址）`进行截取，被截断抛弃的内存块会被自动释放。
+>   - 当 `new_size` 的取值比 ptr 指针指向的已分配内存块`大`的时候（新内存块大于旧内存块），会尽可能地在原地扩大旧内存块，即：原地扩容（效率高）。但是，如果无法进行原地扩容，那么就会在别处申请空间分配 new_size 大小的新内存块，并将旧内存块中的数据全部复制到新内存块，将旧内存块自动释放。
+>   - 不管采取那种方式进行新内存块的扩容，新扩容部分的内存区域都不会进行初始化，都是随机值、未定义。
+> - ⑤ 如果 `realloc` 函数分配内存空间成功，它会返回指向新内存块的指针；若失败，仍会返回空指针，且不会改变旧内存块。
 
