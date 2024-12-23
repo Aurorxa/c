@@ -8,21 +8,12 @@ onMounted(() => {
     script.id = "LA-DATA-WIDGET";
     script.crossOrigin = "anonymous";
     script.charset = "UTF-8";
-    script.src =
-      "https://v6-widget.51.la/v6/3Ki1BsybBJG95owJ/quote.js?theme=0&col=true&f=12&badge=icon_0&icon=center&la-data-widget-container";
+    script.src = "https://v6-widget.51.la/v6/3Ki1BsybBJG95owJ/quote.js?theme=0&f=12";
     document.body.appendChild(script);
   }
 });
 </script>
 
-<template>
-  <div id="la-data-widget-container"></div>
-</template>
+<template></template>
 
-<style>
-#la-data-widget-container {
-  padding-top: 40px;
-  display: flex;
-  justify-content: center;
-}
-</style>
+<style></style>
