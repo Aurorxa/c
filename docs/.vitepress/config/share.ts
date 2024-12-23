@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import timeline from "vitepress-markdown-timeline"
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+import { La51Plugin } from 'vitepress-plugin-51la'
 import { loadEnv } from 'vite'
 
 const mode = process.env.NODE_ENV || 'development'
@@ -42,7 +43,12 @@ export const sharedConfig = defineConfig({
       chunkSizeWarningLimit: 1600
     },
     plugins: [
-      groupIconVitePlugin() //代码组图标
+      groupIconVitePlugin(), //代码组图标
+      La51Plugin({
+        id: '3Ki1BsybBJG95owJ',
+        ck: '3Ki1BsybBJG95owJ',
+        apply: 'all'
+      })
     ],
     server: {
       port: 10089

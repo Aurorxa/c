@@ -13,7 +13,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "^1.24.3",
+    "@shikijs/vitepress-twoslash": "^1.24.4",
     "@types/dom-view-transitions": "^1.0.5",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
@@ -31,6 +31,7 @@
     "nprogress-v2": "^1.0.4",
     "vitepress-markdown-timeline": "^1.2.1",
     "vitepress-plugin-comment-with-giscus": "^1.1.15",
+    "vitepress-plugin-51la": "^0.1.0",
     "vue-router": "^4.5.0"
   }
 }
