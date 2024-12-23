@@ -16,4 +16,13 @@ onMounted(() => {
 
 <template></template>
 
-<style></style>
+<style>
+span.la-widget.la-data-widget__container {
+  position: relative;
+  bottom: 2px;
+  display: flex;
+  padding-bottom: 20px;
+  justify-content: center;
+  gap: 10px;
+}
+</style>
