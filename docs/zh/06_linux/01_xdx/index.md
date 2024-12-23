@@ -152,7 +152,7 @@
 
 ![VMware单击安装按钮.png](./assets/12.png)
 
-* ⑨ VMware 输入许可证密钥：
+* ⑨ VMware 输入许可证密钥（可选，最新版的已经去掉了许可证）：
 
 ![VMware单击许可证.png](./assets/13.png)
 

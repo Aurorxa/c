@@ -51,5 +51,6 @@ features:
 
 <confetti />
 <HomeUnderline />
+<DataPanel />
 
 
