@@ -18,10 +18,9 @@ onMounted(() => {
 
 <style>
 .la-widget {
-  position: relative;
-  bottom: 2px;
-  display: flex;
-  padding-bottom: 20px;
-  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 15%;
 }
 </style>
