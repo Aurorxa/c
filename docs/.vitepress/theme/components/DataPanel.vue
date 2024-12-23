@@ -17,10 +17,20 @@ onMounted(() => {
 <template></template>
 
 <style>
-.la-widget {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 15%;
+@media (min-width: 1024px) {
+  /* 针对桌面设备 */
+  .la-widget {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 15%;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* 针对平板和手机设备 */
+  .la-widget {
+    display: none;
+  }
 }
 </style>
