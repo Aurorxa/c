@@ -7,7 +7,6 @@ import giscusTalk from 'vitepress-plugin-comment-with-giscus'
 import { useData, useRoute, inBrowser } from 'vitepress'
 import Confetti from "./components/Confetti.vue"
 import SwitchLayout from './components/SwitchLayout.vue'
-import DataPanel from './components/DataPanel.vue'
 import HomeUnderline from "./components/HomeUnderline.vue"
 import 'nprogress-v2/dist/index.css'
 import "vitepress-markdown-timeline/dist/theme/index.css"
@@ -25,7 +24,6 @@ export default {
     app.component('ArticleMetadata', ArticleMetadata)
     app.component('confetti', Confetti)
     app.component('HomeUnderline', HomeUnderline)
-    app.component('DataPanel', DataPanel)
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
       // 手动定义 onBeforeRouteChange

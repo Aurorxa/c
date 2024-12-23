@@ -6,16 +6,12 @@
     <template #doc-before>
       <ArticleMetadata />
     </template>
-    <template #home-features-after>
-      <DataPanel />
-    </template>
   </DefaultTheme.Layout>
 </template>
 
 <script lang="ts" setup>
 import BackTop from "./BackTop.vue";
 import ArticleMetadata from "./ArticleMetadata.vue";
-import DataPanel from "./DataPanel.vue";
 import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { nextTick, provide } from "vue";
