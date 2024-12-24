@@ -6,6 +6,7 @@ import { onMounted, watch, nextTick, h } from 'vue'
 import giscusTalk from 'vitepress-plugin-comment-with-giscus'
 import { useData, useRoute, inBrowser } from 'vitepress'
 import Confetti from "./components/Confetti.vue"
+import TypeIt from "./components/TypeIt.vue"
 import SwitchLayout from './components/SwitchLayout.vue'
 import HomeUnderline from "./components/HomeUnderline.vue"
 import 'nprogress-v2/dist/index.css'
@@ -24,6 +25,7 @@ export default {
     app.component('ArticleMetadata', ArticleMetadata)
     app.component('confetti', Confetti)
     app.component('HomeUnderline', HomeUnderline)
+    app.component('TypeIt', TypeIt)
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
       // 手动定义 onBeforeRouteChange
