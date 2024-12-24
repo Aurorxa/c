@@ -534,7 +534,7 @@ void free (void *ptr);
 
 ### 2.5.1 概述
 
-* malloc 的方法声明：
+* `malloc`函数的方法声明：
 
 ```c
 void *malloc (size_t size);
@@ -717,7 +717,7 @@ int *p = (int *)malloc(sizeof(int) * ARR_LEN);
 
 ### 2.6.1 概述
 
-* 方法声明：
+* `free`函数的方法声明：
 
 ```c
 void free (void *ptr);
@@ -1094,7 +1094,7 @@ p = q;
 
 ### 2.7.1 概述
 
-* calloc 方法声明：
+* `calloc`函数的方法声明：
 
 ```c
 void *calloc (size_t num, size_t size);
@@ -1246,7 +1246,7 @@ int main() {
 
 ### 2.8.1 概述
 
-* 方法声明：
+* `realloc`函数的方法声明：
 
 ```c
 void *realloc (void *ptr, size_t new_size);
