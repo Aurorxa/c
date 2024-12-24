@@ -1278,13 +1278,163 @@ void *realloc (void *ptr, size_t new_size);
 >
 > :::
 
+![](./assets/10.svg)
 
+* ② 当`new_size`的取值比`ptr`指针指向的已分配内存块`大`的时候（新内存块大于旧内存块），会尽可能地在原地扩大旧内存块，即：原地扩容（效率高）。
 
-* ② 当 `new_size` 的取值比 `ptr` 指针指向的已分配内存块`大`的时候（新内存块大于旧内存块），会尽可能地在原地扩大旧内存块，即：原地扩容（效率高）。但是，如果无法进行原地扩容，那么就会在别处申请空间分配 new_size 大小的新内存块，并将旧内存块中的数据全部复制到新内存块，将旧内存块自动释放。
+![](./assets/11.svg)
 
+* ③ 当`new_size`的取值比`ptr`指针指向的已分配内存块`大`的时候（新内存块大于旧内存块），如果无法进行原地扩容，那么就会在别处申请空间分配`new_size`大小的新内存块，并将旧内存块中的数据全部复制到新内存块，将旧内存块自动释放。
 
-
-
+![](./assets/12.svg)
 
 ### 2.8.3 realloc 函数的正确使用姿势
+
+* 如果我们使用`malloc`或`calloc`在堆区申请一块内存空间，如下所示：
+
+```c
+int len = 5;
+int* p = (int*)malloc(len * sizeof(int));
+
+// 分配失败
+if(p == NULL){
+    printf("malloc ERROR\n");
+    exit(1);
+}
+
+// 到这里，p 指针一定不是空指针
+```
+
+* 于是，我们使用了`realloc`进行扩容，可能会这么写，如下所示：
+
+```c
+len = 10;
+realloc(p,len);
+```
+
+* 这是一个`扩容`的过程，如果`是`原地扩容，这个代码并没有什么毛病，如下所示：
+
+![](./assets/13.svg)
+
+* 这是一个`扩容`的过程，如果`不是`原地扩容，那么`p`指针就指向了一个已经被释放内存的区域，即：悬空指针，如下所示：
+
+![](./assets/14.svg)
+
+* 此时，我们可以使用`p`指针来接收`realloc`函数的返回值，这样就没有悬空指针的问题了，如下所示：
+
+```c
+len = 10;
+p = (int*)realloc(p,len * sizeof(int));
+```
+
+* 如果`realloc`分配成功，皆大欢喜，没有悬空指针的问题，如下所示：
+
+![](./assets/15.svg)
+
+* 如果`realloc`分配失败，`realloc`就返回`NULL`，而p指针指向NULL，是没有什么问题的；但是，原先 `p` 指针所指向的`旧内存块`就成为了一片`永远无法到达的区域`（垃圾），从而造成`内存泄漏`！！！
+
+![](./assets/16.svg)
+
+* `终极解决方案`：使用一个`临时指针`来接收`realloc`函数的返回值，判断是否分配成功，如果分配成功，再将`临时指针`赋值给`p`指针，如下所示：
+
+```c
+len = 10;
+int* tmp = (int*)realloc(p,len * sizeof(int));
+// 分配失败
+if(tmp == NULL){
+    printf("realloc ERROR\n");
+    exit(1);
+}
+
+// 到这里一定是分配成功的
+p = tmp; // 既避免了`p`成为一个悬空指针，也避免了因为`realloc`分配失败导致内存泄漏。
+```
+
+### 2.8.4 应用示例
+
+* 需求：使用`realloc`函数进行正确的扩缩容。
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define LEN 10
+#define SMALL_SIZE 3
+#define BIG_SIZE 13
+
+void print_arr(int *arr, int len) {
+    printf("[");
+    for (size_t i = 0; i < len; i++) {
+        printf("%d, ", *arr++);
+    }
+    printf("\b\b]\n");
+}
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, NULL);
+
+    // 使用 malloc 函数在堆上申请内存，创建一个长度为 10 的数组
+    int *arr = (int *)malloc(LEN * sizeof(int));
+
+    // 检测分配是否成功
+    if (arr == NULL) {
+        printf("Failed to allocate memory.\n");
+        exit(1);
+    }
+
+    // 初始化
+    for (int i = 0; i < LEN; i++) {
+        arr[i] = i;
+    }
+
+    // 打印数组中的元素
+    print_arr(arr, LEN);
+
+    // 缩容
+    int *tmp = (int *)realloc(arr, SMALL_SIZE * sizeof(int)); // [!code highlight]
+
+    // 检测分配是否成功
+    if (tmp == NULL) { // [!code highlight]
+        printf("Failed to reallocate memory.\n");
+        exit(1);
+    }
+
+    // 更新指针
+    arr = tmp; // [!code highlight]
+
+    // 打印数组中的元素
+    print_arr(arr, SMALL_SIZE); // [!code highlight]
+
+    // 扩容
+    tmp = (int *)realloc(arr, BIG_SIZE * sizeof(int));
+
+    // 检测分配是否成功
+    if (tmp == NULL) {
+        printf("Failed to reallocate memory.\n");
+        exit(1);
+    }
+
+    // 更新指针
+    arr = tmp;
+
+    // 初始化新扩容的区域
+    for (int i = LEN; i < BIG_SIZE; i++) {
+        arr[i] = i;
+    }
+
+    // 打印数组中的元素
+    print_arr(arr, BIG_SIZE);
+
+    // 释放内存
+    free(arr);
+
+    return 0;
+}
+```
 
