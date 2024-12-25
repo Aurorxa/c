@@ -62,21 +62,21 @@ export const sharedConfig = defineConfig({
       pagefindPlugin({
         locales: {
           root: {
-            btnPlaceholder: 'Search',
-            placeholder: 'Search Docs...',
-            emptyText: 'No results',
-            heading: 'Total: {{searchResult}} search results.',
-            filter(searchItem, idx, originArray) {
-              console.log(searchItem)
-              return !searchItem.route.includes('404')
-            }
-          },
-          zh: {
             customSearchQuery: chineseSearchOptimize,
             btnPlaceholder: '搜索',
             placeholder: '搜索文档',
             emptyText: '空空如也',
             heading: '共: {{searchResult}} 条结果',
+            filter(searchItem, idx, originArray) {
+              console.log(searchItem)
+              return !searchItem.route.includes('404')
+            }
+          },
+          en: {
+            btnPlaceholder: 'Search',
+            placeholder: 'Search Docs...',
+            emptyText: 'No results',
+            heading: 'Total: {{searchResult}} search results.',
             filter(searchItem, idx, originArray) {
               console.log(searchItem)
               return !searchItem.route.includes('404')
