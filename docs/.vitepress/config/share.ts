@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
 import timeline from "vitepress-markdown-timeline"
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-import { La51Plugin } from 'vitepress-plugin-51la'
+import { La51Plugin, } from 'vitepress-plugin-51la'
+import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { loadEnv } from 'vite'
 
 const mode = process.env.NODE_ENV || 'development'
@@ -9,6 +10,21 @@ const { VITE_BASE_URL } = loadEnv(mode, process.cwd())
 
 console.log('Mode:', process.env.NODE_ENV)
 console.log('VITE_BASE_URL:', VITE_BASE_URL)
+
+
+/**
+ * 使用浏览器内置的分词API Intl.Segmenter
+ */
+function chineseSearchOptimize(input: string) {
+  const segmenter = new Intl.Segmenter('zh-CN', { granularity: 'word' })
+  const result: string[] = []
+  for (const it of segmenter.segment(input)) {
+    if (it.isWordLike) {
+      result.push(it.segment)
+    }
+  }
+  return result.join(' ')
+}
 
 export const sharedConfig = defineConfig({
   rewrites: {
@@ -43,6 +59,32 @@ export const sharedConfig = defineConfig({
       chunkSizeWarningLimit: 1600
     },
     plugins: [
+      pagefindPlugin({
+        locales: {
+          root: {
+            btnPlaceholder: 'Search',
+            placeholder: 'Search Docs...',
+            emptyText: 'No results',
+            heading: 'Total: {{searchResult}} search results.',
+            filter(searchItem, idx, originArray) {
+              console.log(searchItem)
+              return !searchItem.route.includes('404')
+            }
+          },
+          zh: {
+            customSearchQuery: chineseSearchOptimize,
+            btnPlaceholder: '搜索',
+            placeholder: '搜索文档',
+            emptyText: '空空如也',
+            heading: '共: {{searchResult}} 条结果',
+            filter(searchItem, idx, originArray) {
+              console.log(searchItem)
+              return !searchItem.route.includes('404')
+            }
+          }
+        },
+        excludeSelector: ['img', 'a.header-anchor'],
+      }),
       groupIconVitePlugin(), //代码组图标
       La51Plugin({
         id: '3Ki1BsybBJG95owJ',
@@ -98,37 +140,6 @@ export const sharedConfig = defineConfig({
   },
   themeConfig: { // 主题设置
     logo: '/logo.svg',  // 左上角logo
-    search: {
-      provider: 'local',
-      options: {
-        locales: {
-          root: {
-            translations: {
-              button: {
-                buttonText: 'Search',
-                buttonAriaLabel: 'Search',
-              },
-              modal: {
-                displayDetails: 'Display detailed list',
-                resetButtonTitle: 'Reset search',
-                backButtonTitle: 'Close search',
-                noResultsText: 'No results for',
-                footer: {
-                  selectText: 'to select',
-                  selectKeyAriaLabel: 'enter',
-                  navigateText: 'to navigate',
-                  navigateUpKeyAriaLabel: 'up arrow',
-                  navigateDownKeyAriaLabel: 'down arrow',
-                  closeText: 'to close',
-                  closeKeyAriaLabel: 'escape',
-                },
-              },
-            },
-          },
-
-        },
-      },
-    },
     // 编辑链接
     editLink: {
       pattern: 'https://github.com/Aurorxa/c/edit/master/docs/:path',
