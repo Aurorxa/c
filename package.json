@@ -33,7 +33,6 @@
     "randomcolor": "^0.6.2",
     "typeit": "^8.8.7",
     "vitepress-markdown-timeline": "^1.2.1",
-    "vitepress-plugin-51la": "^0.1.0",
     "vitepress-plugin-comment-with-giscus": "^1.1.15",
     "vitepress-plugin-pagefind": "^0.4.12",
     "vue-router": "^4.5.0"
