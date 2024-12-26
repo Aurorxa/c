@@ -42,12 +42,12 @@ provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
   }).ready;
 
   document.documentElement.animate(
-    { clipPath: isDark.value ? clipPath.reverse() : clipPath },
+    { clipPath: isDark.value ? clipPath.reverse() : clipPath } as AnimationKeyFrame,
     {
       duration: 300,
       easing: "ease-in",
       pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
-    }
+    } as any
   );
 });
 </script>
