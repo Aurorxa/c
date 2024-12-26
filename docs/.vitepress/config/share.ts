@@ -1,29 +1,17 @@
 import { defineConfig } from 'vitepress'
 import timeline from "vitepress-markdown-timeline"
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-import { pagefindPlugin } from 'vitepress-plugin-pagefind'
+// import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { loadEnv } from 'vite'
+import { pagefind,announcement } from './vite-plugin-config'
+import { pagefindPlugin } from 'vitepress-plugin-pagefind'
+import { AnnouncementPlugin } from 'vitepress-plugin-announcement'
 
 const mode = process.env.NODE_ENV || 'development'
 const { VITE_BASE_URL } = loadEnv(mode, process.cwd())
 
 console.log('Mode:', process.env.NODE_ENV)
 console.log('VITE_BASE_URL:', VITE_BASE_URL)
-
-
-/**
- * 使用浏览器内置的分词API Intl.Segmenter
- */
-function chineseSearchOptimize(input: string) {
-  const segmenter = new Intl.Segmenter('zh-CN', { granularity: 'word' })
-  const result: string[] = []
-  for (const it of segmenter.segment(input)) {
-    if (it.isWordLike) {
-      result.push(it.segment)
-    }
-  }
-  return result.join(' ')
-}
 
 export const sharedConfig = defineConfig({
   rewrites: {
@@ -58,33 +46,9 @@ export const sharedConfig = defineConfig({
       chunkSizeWarningLimit: 1600
     },
     plugins: [
-      pagefindPlugin({
-        locales: {
-          root: {
-            customSearchQuery: chineseSearchOptimize,
-            btnPlaceholder: '搜索',
-            placeholder: '搜索文档',
-            emptyText: '空空如也',
-            heading: '共: {{searchResult}} 条结果',
-            filter(searchItem, idx, originArray) {
-              console.log(searchItem)
-              return !searchItem.route.includes('404')
-            }
-          },
-          en: {
-            btnPlaceholder: 'Search',
-            placeholder: 'Search Docs...',
-            emptyText: 'No results',
-            heading: 'Total: {{searchResult}} search results.',
-            filter(searchItem, idx, originArray) {
-              console.log(searchItem)
-              return !searchItem.route.includes('404')
-            }
-          }
-        },
-        excludeSelector: ['img', 'a.header-anchor'],
-      }),
       groupIconVitePlugin(), //代码组图标
+      pagefindPlugin(pagefind),
+      AnnouncementPlugin(announcement)
     ],
     server: {
       port: 10089
