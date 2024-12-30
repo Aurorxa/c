@@ -49,7 +49,8 @@ export const zhSidebar: DefaultTheme.Sidebar = {
         { text: '常见的库函数', link: `/03_c-senior/08_${commonDirectoryName}/` },
         { text: '内存管理一', link: `/03_c-senior/09_${commonDirectoryName}/` },
         { text: '内存管理二', link: `/03_c-senior/10_${commonDirectoryName}/` },
-        { text: '文件操作', link: `/03_c-senior/11_${commonDirectoryName}/` },
+        { text: '文件操作一', link: `/03_c-senior/11_${commonDirectoryName}/` },
+        { text: '文件操作二', link: `/03_c-senior/12_${commonDirectoryName}/` },
       ]
     },
     {
