@@ -11,7 +11,7 @@ export default defineConfig({
       label: '简体中文',
       lang: 'zh-CN',
       title: '许大仙',
-      ...zhConfig
+      ...zhConfig,
     },
     // en: {
     //   label: 'English',
