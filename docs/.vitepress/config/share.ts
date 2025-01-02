@@ -3,9 +3,8 @@ import timeline from "vitepress-markdown-timeline"
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 // import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 import { loadEnv } from 'vite'
-import { pagefind,announcement } from './vite-plugin-config'
+import { pagefind } from './vite-plugin-config'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
-import { AnnouncementPlugin } from 'vitepress-plugin-announcement'
 
 const mode = process.env.NODE_ENV || 'development'
 const { VITE_BASE_URL } = loadEnv(mode, process.cwd())
@@ -48,7 +47,6 @@ export const sharedConfig = defineConfig({
     plugins: [
       groupIconVitePlugin(), //代码组图标
       pagefindPlugin(pagefind),
-      AnnouncementPlugin(announcement)
     ],
     server: {
       port: 10089
