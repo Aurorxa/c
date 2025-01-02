@@ -13,7 +13,11 @@ import 'nprogress-v2/dist/index.css'
 import "vitepress-markdown-timeline/dist/theme/index.css"
 import 'virtual:group-icons.css' //代码组样式
 import './style/index.css'
+import { 
+  NolebaseGitChangelogPlugin 
+} from '@nolebase/vitepress-plugin-git-changelog/client'
 
+import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
 import { NProgress } from 'nprogress-v2/dist/index.js'
 
 export default {
@@ -26,6 +30,7 @@ export default {
     app.component('confetti', Confetti)
     app.component('HomeUnderline', HomeUnderline)
     app.component('TypeIt', TypeIt)
+    app.component('NolebaseGitChangelogPlugin', NolebaseGitChangelogPlugin)
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
       // 手动定义 onBeforeRouteChange

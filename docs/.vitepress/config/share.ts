@@ -5,6 +5,10 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { loadEnv } from 'vite'
 import { pagefind } from './vite-plugin-config'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
+import { 
+  GitChangelog, 
+  GitChangelogMarkdownSection, 
+} from '@nolebase/vitepress-plugin-git-changelog/vite'
 
 const mode = process.env.NODE_ENV || 'development'
 const { VITE_BASE_URL } = loadEnv(mode, process.cwd())
@@ -47,6 +51,11 @@ export const sharedConfig = defineConfig({
     plugins: [
       groupIconVitePlugin(), //代码组图标
       pagefindPlugin(pagefind),
+      GitChangelog({ 
+        // 填写在此处填写您的仓库链接
+        repoURL: () => 'https://github.com/Aurorxa/c', 
+      }), 
+      GitChangelogMarkdownSection()
     ],
     server: {
       port: 10089
