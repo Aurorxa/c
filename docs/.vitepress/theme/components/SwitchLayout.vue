@@ -5,8 +5,9 @@
     </template>
     <template #doc-before>
       <ArticleMetadata />
-      <NolebaseGitContributors />
-      <NolebaseGitChangelog />
+    </template>
+    <template #doc-top>
+      <NolebaseHighlightTargetedHeading />
     </template>
   </DefaultTheme.Layout>
 </template>
@@ -17,10 +18,9 @@ import ArticleMetadata from "./ArticleMetadata.vue";
 import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { nextTick, provide } from "vue";
-import {
-  NolebaseGitChangelog,
-  NolebaseGitContributors,
-} from "@nolebase/vitepress-plugin-git-changelog/client";
+
+import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
+import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
 
 const { isDark } = useData();
 

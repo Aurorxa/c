@@ -52,5 +52,3 @@ features:
 <confetti />
 <HomeUnderline />
 <TypeIt />
-
-

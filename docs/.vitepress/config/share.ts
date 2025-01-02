@@ -5,16 +5,20 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { loadEnv } from 'vite'
 import { pagefind } from './vite-plugin-config'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
-import { 
-  GitChangelog, 
-  GitChangelogMarkdownSection, 
+import {
+  GitChangelog,
+  GitChangelogMarkdownSection,
 } from '@nolebase/vitepress-plugin-git-changelog/vite'
+import {
+  InlineLinkPreviewElementTransform
+} from '@nolebase/vitepress-plugin-inline-link-preview/markdown-it'
 
 const mode = process.env.NODE_ENV || 'development'
 const { VITE_BASE_URL } = loadEnv(mode, process.cwd())
 
 console.log('Mode:', process.env.NODE_ENV)
 console.log('VITE_BASE_URL:', VITE_BASE_URL)
+
 
 export const sharedConfig = defineConfig({
   rewrites: {
@@ -48,15 +52,31 @@ export const sharedConfig = defineConfig({
     build: {
       chunkSizeWarningLimit: 1600
     },
+    ssr: {
+      noExternal: [
+        '@nolebase/vitepress-plugin-highlight-targeted-heading',
+        '@nolebase/vitepress-plugin-inline-link-preview',
+      ],
+    },
+    optimizeDeps: {
+      exclude: [
+        'vitepress',
+        '@nolebase/vitepress-plugin-inline-link-preview/client',
+      ],
+    },
     plugins: [
       groupIconVitePlugin(), //代码组图标
       pagefindPlugin(pagefind),
-      GitChangelog({ 
+      GitChangelog({
         // 填写在此处填写您的仓库链接
-        repoURL: () => 'https://github.com/Aurorxa/c', 
-      }), 
+        repoURL: () => 'https://github.com/Aurorxa/c',
+      }),
       GitChangelogMarkdownSection({
-        exclude: (id) => id.endsWith("index.md")
+        exclude: (id) => id.endsWith("index.md"),
+        sections: {
+          disableChangelog: true,
+          disableContributors: true,
+        },
       })
     ],
     server: {
@@ -103,6 +123,7 @@ export const sharedConfig = defineConfig({
       })
       md.use(timeline)
       md.use(groupIconMdPlugin) //代码组图标
+      md.use(InlineLinkPreviewElementTransform)
     }
   },
   themeConfig: { // 主题设置

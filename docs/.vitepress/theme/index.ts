@@ -18,6 +18,11 @@ import {
   NolebaseGitChangelogPlugin
 } from '@nolebase/vitepress-plugin-git-changelog/client'
 import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
+import {
+  NolebaseInlineLinkPreviewPlugin,
+} from '@nolebase/vitepress-plugin-inline-link-preview/client'
+
+import '@nolebase/vitepress-plugin-inline-link-preview/client/style.css'
 import { NProgress } from 'nprogress-v2/dist/index.js'
 
 export default {
@@ -31,6 +36,7 @@ export default {
     app.component('HomeUnderline', HomeUnderline)
     app.component('TypeIt', TypeIt)
     app.use(NolebaseGitChangelogPlugin)
+    app.use(NolebaseInlineLinkPreviewPlugin)
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
       // 手动定义 onBeforeRouteChange
