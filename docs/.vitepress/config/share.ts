@@ -55,7 +55,9 @@ export const sharedConfig = defineConfig({
         // 填写在此处填写您的仓库链接
         repoURL: () => 'https://github.com/Aurorxa/c', 
       }), 
-      GitChangelogMarkdownSection()
+      GitChangelogMarkdownSection({
+        exclude: (id) => id.endsWith("index.md")
+      })
     ],
     server: {
       port: 10089
