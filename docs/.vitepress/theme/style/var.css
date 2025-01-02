@@ -1,3 +1,11 @@
+ .medium-zoom-overlay {
+  z-index: 20;
+}
+
+.medium-zoom--opened .medium-zoom-image {
+  z-index: 199 !important;
+}
+
 :root {
   --vp-c-brand-1: #18794e;
   --vp-c-brand-2: #299764;
@@ -37,14 +45,6 @@
   --vp-shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.12);
   --vp-shadow-5: 0 18px 56px rgba(0, 0, 0, 0.16),
     0 4px 12px rgba(0, 0, 0, 0.16) 
-    
-  .medium-zoom-overlay {
-    z-index: 20;
-  }
-
-  .medium-zoom-image {
-    z-index: 150 !important; /* 给的值是21，但是实测盖不住，直接999 */
-  }
 }
 
 .dark {
