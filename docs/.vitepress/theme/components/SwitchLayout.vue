@@ -5,6 +5,8 @@
     </template>
     <template #doc-before>
       <ArticleMetadata />
+      <NolebaseGitContributors />
+      <NolebaseGitChangelog />
     </template>
   </DefaultTheme.Layout>
 </template>
@@ -15,6 +17,10 @@ import ArticleMetadata from "./ArticleMetadata.vue";
 import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { nextTick, provide } from "vue";
+import {
+  NolebaseGitChangelog,
+  NolebaseGitContributors,
+} from "@nolebase/vitepress-plugin-git-changelog/client";
 
 const { isDark } = useData();
 
