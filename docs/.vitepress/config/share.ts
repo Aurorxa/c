@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 import timeline from "vitepress-markdown-timeline"
-import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-// import { pagefindPlugin } from 'vitepress-plugin-pagefind'
+import { groupIconMdPlugin, groupIconVitePlugin, localIconLoader } from 'vitepress-plugin-group-icons'
+import { figure } from '@mdit/plugin-figure'
 import { loadEnv } from 'vite'
 import { pagefind } from './vite-plugin-config'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
@@ -65,7 +65,11 @@ export const sharedConfig = defineConfig({
       ],
     },
     plugins: [
-      groupIconVitePlugin(), //代码组图标
+      groupIconVitePlugin({
+        customIcon: {
+          'c': localIconLoader(import.meta.url, '../../public/iconify/c.svg'),
+        }
+      }), //代码组图标
       pagefindPlugin(pagefind),
       GitChangelog({
         // 填写在此处填写您的仓库链接
@@ -124,6 +128,7 @@ export const sharedConfig = defineConfig({
       md.use(timeline)
       md.use(groupIconMdPlugin) //代码组图标
       md.use(InlineLinkPreviewElementTransform)
+      md.use(figure, { figcaption: 'alt', copyAttrs: '^class$', lazy: true }) 
     }
   },
   themeConfig: { // 主题设置

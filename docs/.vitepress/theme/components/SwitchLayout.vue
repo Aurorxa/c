@@ -9,6 +9,9 @@
     <template #doc-top>
       <NolebaseHighlightTargetedHeading />
     </template>
+    <template #aside-outline-before>
+      <ShareButton />
+    </template>
   </DefaultTheme.Layout>
 </template>
 
@@ -18,6 +21,7 @@ import ArticleMetadata from "./ArticleMetadata.vue";
 import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { nextTick, provide } from "vue";
+import { ShareButton } from "@theojs/lumen";
 
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
