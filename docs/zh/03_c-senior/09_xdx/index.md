@@ -1439,3 +1439,224 @@ int main() {
 }
 ```
 
+
+
+# 第三章：手动实现 C++ 中的Vector
+
+## 3.1 概述
+
+* 我们知道，C 语言中的数组，如下所示：
+
+```c
+int arr[] = {1,2,3,4,5};
+```
+
+* 默认是在`栈`中开辟的，而且在编译期就需要确定数组的长度，否则将无法通过编译。但是，在实际开发中，有的时候，我们希望数组的大小在运行的时候根据需要动态分配和调整，即：动态数组。
+
+> [!NOTE]
+>
+> * ① 很多编程语言中已经内置了动态数组，如：C++ 中的 Vector 、Java 中的 ArrayList 。
+> * ② C 语言没有内置动态数组，需要我们通过动态内存分配函数手动实现。
+
+## 3.2 实现思路
+
+* 在`堆`中申请一个 `Vector` 结构体，`Vector` 结构体的定义，如下所示：
+
+```c
+typedef int E;
+
+typedef struct {
+    // 元素
+    E *data;
+    // 实际需要存放的元素个数
+    int size;
+    // 数组容量，即：数组中可以存放元素个数
+    int capacity;
+} Vector;
+```
+
+* `Vector` 结构体中的元素有 `*data`、`size` 和 `capacity`，如下所示：
+
+![](./assets/17.svg)
+
+> [!NOTE]
+>
+> * ① `*data` 是一个指向`堆`中的`数组`。
+> * ② `size` 是`堆`中数组元素的`个数`。
+> * ③ `capacity` 是`堆`中数组的`容量`。
+
+* 我们可以提供如下的函数来实现动态数组，如下所示：
+
+```c
+// 初始化
+Vector *vector_create();
+
+// 销毁
+void vector_destroy(Vector *vector);
+
+// 在末尾添加元素
+void vector_push_back(Vector *vector, E element);
+
+// 获取元素个数
+int vector_size(const Vector *vector);
+
+// 判断是否为空
+bool vector_empty(const Vector *vector);
+```
+
+## 3.3 面向接口编程
+
+* 项目结构：
+
+```txt
+├─📁 include/------ # 头文件目录
+│ └─📄 vector.h
+├─📁 module/------- # 函数体
+│ └─📄 vector.c
+└─📄 main.c-------- # 主函数
+```
+
+
+
+* 示例：
+
+```c [include/vector.h]
+#ifndef VECTOR_H
+#define VECTOR_H
+
+typedef int E;
+
+typedef struct {
+    // 元素
+    E *data;
+    // 实际需要存放的元素个数
+    int size;
+    // 数组容量，即：数组中可以存放元素个数
+    int capacity;
+} Vector;
+
+// 初始化
+Vector *vector_create();
+
+// 销毁
+void vector_destroy(Vector *vector);
+
+// 在末尾添加元素
+void vector_push_back(Vector *vector, E element);
+
+// 获取元素个数
+int vector_size(const Vector *vector);
+
+// 判断是否为空
+bool vector_empty(const Vector *vector);
+
+#endif // VECTOR_H
+```
+
+```c [module/vector.c]
+#include "./include/vector.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define DEFAULT_CAPACITY 8
+#define THRESHOLD 1024
+
+Vector *vector_create() {
+    Vector *vector = (Vector *)malloc(sizeof(Vector));
+    if (vector == NULL) {
+        printf("ERROR：malloc vector failed\n");
+        exit(1);
+    }
+
+    E *elements = (int *)malloc(sizeof(E) * DEFAULT_CAPACITY);
+    if (elements == NULL) {
+        free(vector);
+        printf("ERROR：malloc elements failed\n");
+        exit(1);
+    }
+
+    vector->data = elements;
+    vector->capacity = DEFAULT_CAPACITY;
+    vector->size = 0;
+
+    return vector;
+}
+
+// 扩容
+void grow_capacity(Vector *vector) {
+    // 计算新容量
+    int new_capacity = 0;
+    if (vector->capacity < THRESHOLD) {
+        new_capacity = vector->capacity << 1;
+    } else {
+        new_capacity = vector->capacity + (vector->capacity >> 1);
+    }
+
+    // 申请新内存，进行扩容
+    E *tmp = (E *)realloc(vector->data, sizeof(E) * new_capacity);
+    if (tmp == NULL) {
+        printf("ERROR：realloc failed in grow_capacity \n");
+        exit(1);
+    }
+
+    vector->data = tmp;
+    vector->capacity = new_capacity;
+}
+
+void vector_push_back(Vector *vector, const E element) {
+    // 判断是否需要扩容
+    if (vector->size == vector->capacity) {
+        grow_capacity(vector);
+    }
+    // 添加元素
+    vector->data[vector->size++] = element;
+}
+
+void vector_destroy(Vector *vector) {
+    if (vector != NULL) {
+        free(vector->data);
+        free(vector);
+        vector = NULL;
+    }
+}
+
+int vector_size(const Vector *vector) {
+    return vector->size;
+}
+
+bool vector_empty(const Vector *vector) {
+    return vector->size == 0;
+}
+```
+
+```c [main.c]
+#include "vector.h"
+
+#include <stdio.h>
+#include <time.h>
+
+#define LEN 10
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    Vector *vector = vector_create();
+
+    for (int i = 0; i < LEN; i++) {
+        vector_push_back(vector, i + 1);
+    }
+
+    // 遍历动态数组
+    for (int i = 0; i < vector->size; i++) {
+        printf("%d ", vector->data[i]);
+    }
+
+    vector_destroy(vector);
+
+    return 0;
+}
+```
+
