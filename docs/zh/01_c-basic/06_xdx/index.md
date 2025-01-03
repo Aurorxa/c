@@ -798,8 +798,9 @@ int x; // 定义变量 x，并分配内存
 
   * ③ **头文件**：在头文件中，变量和函数一般只声明不定义，以避免重复定义的问题。
 
-  ```c [header.h]
+  ```c [include/xxx.h]
   extern int globalVar;
+  
   void someFunction();
   ```
 
