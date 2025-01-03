@@ -5,7 +5,9 @@
   "main": "index.js",
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "scripts": {
     "docs:dev": "vitepress dev docs --mode development",
@@ -32,7 +34,7 @@
   },
   "dependencies": {
     "@theojs/lumen": "^5.2.1",
-    "dayjs": "1.11.13",
+    "dayjs": "^2.0.0-alpha.4",
     "dotenv": "^16.4.7",
     "medium-zoom": "^1.1.0",
     "nprogress-v2": "^1.0.4",
