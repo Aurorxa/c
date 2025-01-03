@@ -38,7 +38,7 @@
 >
 > 下载地址在[这里](https://github.com/niXman/mingw-builds-binaries/releases/download/13.2.0-rt_v11-rev1/x86_64-13.2.0-release-posix-seh-ucrt-rt_v11-rev1.7z)。
 
-![](./assets/1.png)
+![下载到本地](./assets/1.png)
 
 * 解压到指定的目录，即：
 
@@ -46,27 +46,27 @@
 >
 > 本人的解压目录是：`D:\develop\mingw64` 。
 
-![](./assets/2.png)
+![解压到指定的目录](./assets/2.png)
 
 #### 1.2.2.2 配置 path 环境变量 
 
 * 配置环境变量，以便任意目录都可以执行 gcc 命令，即：
 
-![](./assets/3.png)
+![配置环境变量 1](./assets/3.png)
 
-![](./assets/4.png)
+![配置环境变量 2](./assets/4.png)
 
-![](./assets/5.png)
+![配置环境变量 3](./assets/5.png)
 
-![](./assets/6.png)
+![配置环境变量 4](./assets/6.png)
 
 > [!NOTE]
 >
 > 因为，本人安装 MinGW-w64 的目录是 `D:\develop\mingw64`，所以本人需要配置的 path 环境变量就是`D:\develop\mingw64\bin`。
 
-![](./assets/7.png)
+![配置环境变量 5](./assets/7.png)
 
-![](./assets/8.png)
+![配置环境变量 6](./assets/8.png)
 
 * 测试是否安装成功：
 
@@ -74,7 +74,7 @@
 gcc --version
 ```
 
-![](./assets/9.gif)
+![测试是否安装成功](./assets/9.gif)
 
 ### 1.2.3 Cygwin 的安装和配置
 
@@ -86,23 +86,23 @@ gcc --version
 >
 > 下载地址在[这里](https://www.cygwin.com/install.html)。
 
-![](./assets/10.png)
+![下载到本地](./assets/10.png)
 
 * 点击安装：
 
-![](./assets/11.png)
+![点击安装 1](./assets/11.png)
 
-![](./assets/12.png)
+![点击安装 2](./assets/12.png)
 
-![](./assets/13.png)
+![点击安装 3](./assets/13.png)
 
-![](./assets/14.png)
+![点击安装 4](./assets/14.png)
 
-![](./assets/15.png)
+![点击安装 5](./assets/15.png)
 
-![](./assets/16.png)
+![点击安装 6](./assets/16.png)
 
-![](./assets/17.png)
+![点击安装 7](./assets/17.png)
 
 * 选择需要安装的软件包：
 
@@ -110,35 +110,35 @@ gcc --version
 >
 > 默认是最小化安装，没有 GCC，需要选择 gcc-core、gcc-g++、make、gdb、binutils 。
 
-![](./assets/18.png)
+![选择需要安装的软件包](./assets/18.png)
 
 * 安装 gcc-core ：
 
-![](./assets/19.png)
+![安装 gcc-core 1](./assets/19.png)
 
-![](./assets/20.png)
+![安装 gcc-core 2](./assets/20.png)
 
 * 安装 gcc-g++ ：
 
-![](./assets/21.png)
+![安装 gcc-g++](./assets/21.png)
 
 * 安装 make ：
 
-![](./assets/22.png)
+![安装 make](./assets/22.png)
 
 * 安装 gdb ：
 
-![](./assets/23.png)
+![安装 gdb ](./assets/23.png)
 
 * 安装 binutils ：
 
-![](./assets/24.png)
+![安装 binutils 1](./assets/24.png)
 
-![](./assets/25.png)
+![安装 binutils 2](./assets/25.png)
 
-![](./assets/26.png)
+![安装 binutils 3](./assets/26.png)
 
-![](./assets/27.png)
+![安装 binutils 4](./assets/27.png)
 
 #### 1.2.3.2 配置 path 环境变量 
 
@@ -154,25 +154,25 @@ gcc --version
 >
 > 下载地址在[这里](https://www.msys2.org/)。
 
-![](./assets/28.png)
+![下载到本地](./assets/28.png)
 
 * 点击安装：
 
-![](./assets/29.png)
+![点击安装 1](./assets/29.png)
 
-![](./assets/30.png)
+![点击安装 2](./assets/30.png)
 
-![](./assets/31.png)
+![点击安装 3](./assets/31.png)
 
 > [!NOTE]
 >
 > 可能很多人，会遇到安装到 `50%` 就一直卡死在那边，不用慌，关闭它，再次重新安装即可。
 
-![](./assets/32.png)
+![点击安装 4](./assets/32.png)
 
 * 点击运行 MSYS2 ：
 
-![](./assets/33.png)
+![点击运行 MSYS2 ](./assets/33.png)
 
 * 出现命令终端：
 
@@ -180,7 +180,7 @@ gcc --version
 >
 > 如果没有出现命令终端，也不要慌，去 Win11 操作系统的`开始`菜单，那边找一下，就能找到。
 
-![](./assets/34.png)
+![出现命令终端](./assets/34.png)
 
 * 替换清华镜像源（可选）：
 
@@ -190,7 +190,7 @@ sed -i \
 /etc/pacman.d/mirrorlist*
 ```
 
-![](./assets/35.gif)
+![替换清华镜像源](./assets/35.gif)
 
 * 安装 gcc 等相关开发包：
 
@@ -215,7 +215,7 @@ pacman -Sy base-devel --noconfirm # 安装开发工具包
 pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关工具链
 ```
 
-![](./assets/36.gif)
+![安装 gcc 等相关开发包](./assets/36.gif)
 
 #### 1.2.4.2 配置 path 环境变量 
 
@@ -259,23 +259,23 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 
 * 鼠标双击，进入安装：
 
-![](./assets/37.png)
+![鼠标双击，进入安装](./assets/37.png)
 
 * 下一步：
 
-![](./assets/38.png)
+![下一步](./assets/38.png)
 
 * 下一步：
 
-![](./assets/39.png)
+![下一步](./assets/39.png)
 
 * 下一步：
 
-![](./assets/40.png)
+![下一步](./assets/40.png)
 
 * 安装：
 
-![](./assets/41.png)
+![安装](./assets/41.png)
 
 * 安装完成：
 
@@ -283,13 +283,13 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 >
 > 通常安装完成之后，桌面上会出现 CLion 的快捷方式，可以点击此快捷方式，以便快速启动 CLion 。
 
-![](./assets/42.png)
+![安装完成](./assets/42.png)
 
 #### 1.4.1.3 配置
 
 * 打开 CLion ：
 
-![](./assets/43.png)
+![打开 CLion ](./assets/43.png)
 
 * 切换中文界面（可选）：
 
@@ -297,35 +297,35 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 >
 > 对于以中文、韩语和日语为母语的开发者，`CLion` 在 `2024.2` 版本之后就绑定了本地化插件，即不需要再安装本地化插件了。
 
-![](./assets/44.gif)
+![切换中文界面（可选）](./assets/44.gif)
 
 * 配置 UI：
 
-![](./assets/45.png)
+![配置 UI 1](./assets/45.png)
 
-![](./assets/46.png)
+![配置 UI 2](./assets/46.png)
 
 * 配置自定义字体（可选）：
 
-![](./assets/47.png)
+![配置自定义字体（可选）](./assets/47.png)
 
 * 配置 `系统设置`相关功能：
 
-![](./assets/48.png)
+![配置系统设置相关功能 1](./assets/48.png)
 
-![](./assets/49.png)
+![配置系统设置相关功能 2](./assets/49.png)
 
 * 配置`文件编码` 为 UTF-8：
 
-![](./assets/50.png)
+![配置文件编码为 UTF-8](./assets/50.png)
 
 * 配置`控制台编码`为 UTF-8：
 
-![](./assets/51.png)
+![配置控制台编码为 UTF-8](./assets/51.png)
 
 * 配置`显示方法分隔符`功能：
 
-![](./assets/52.png)
+![配置显示方法分隔符功能](./assets/52.png)
 
 * 配置`编辑器`的字体（可选）：
 
@@ -333,11 +333,11 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 >
 > 本人是安装了 `Fira Code` 字体，如果你也需要安装此字体，可以去 [GitHub](https://github.com/) 搜索并下载。
 
-![](./assets/53.png)
+![配置编辑器的字体](./assets/53.png)
 
 * 检测 GCC 工具链是否安装成功：
 
-![](./assets/54.png)
+![检测 GCC 工具链是否安装成功](./assets/54.png)
 
 ### 1.4.2 VS Code
 
@@ -354,49 +354,49 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 
 * 鼠标双击，进入安装：
 
-![](./assets/55.png)
+![鼠标双击，进入安装](./assets/55.png)
 
 * 同意协议：
 
-![](./assets/56.png)
+![同意协议](./assets/56.png)
 
 * 下一步：
 
-![](./assets/57.png)
+![下一步](./assets/57.png)
 
 * 下一步：
 
-![](./assets/58.png)
+![下一步](./assets/58.png)
 
 * 下一步：
 
-![](./assets/59.png)
+![下一步](./assets/59.png)
 
 * 安装：
 
-![](./assets/60.png)
+![安装](./assets/60.png)
 
 * 安装过程：
 
-![](./assets/61.png)
+![安装过程](./assets/61.png)
 
 * 安装完成：
 
-![](./assets/62.png)
+![安装完成](./assets/62.png)
 
 #### 1.4.2.3 配置
 
 * 安装`中文`插件：
 
-![](./assets/63.png)
+![安装中文插件 1](./assets/63.png)
 
-![](./assets/64.png)
+![安装中文插件 2](./assets/64.png)
 
 * 安装 `C/C++` 插件：
 
-![](./assets/65.png)
+![安装 C/C++ 插件 1](./assets/65.png)
 
-![](./assets/66.png)
+![安装 C/C++ 插件 2](./assets/66.png)
 
 ### 1.4.3 Microsoft Visual Studio
 
@@ -415,27 +415,27 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 
 * 鼠标双击，进入安装：
 
-![](./assets/67.png)
+![鼠标双击，进入安装](./assets/67.png)
 
 * 继续：
 
-![](./assets/68.png)
+![继续](./assets/68.png)
 
 * 等待：
 
-![](./assets/69.png)
+![等待](./assets/69.png)
 
 * 工作负荷（使用 C++ 的桌面开发）：
 
-![](./assets/70.png)
+![工作负荷](./assets/70.png)
 
 * 单个组件：
 
-![](./assets/71.png)
+![单个组件](./assets/71.png)
 
 * 语言包：
 
-![](./assets/72.png)
+![语言包](./assets/72.png)
 
 * 安装位置（修改默认的安装位置）：
 
@@ -459,37 +459,37 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 >
 > :::
 
-![](./assets/73.png)
+![安装位置](./assets/73.png)
 
 * 开始安装：
 
-![](./assets/76.png)
+![开始安装](./assets/76.png)
 
 * 安装中：
 
-![](./assets/77.png)
+![安装中](./assets/77.png)
 
 * 安装完成，然后关闭：
 
-![](./assets/78.png)
+![安装完成，然后关闭](./assets/78.png)
 
 #### 1.4.3.3 配置
 
 * 在开始菜单处，启动 VS ：
 
-![](./assets/79.png)
+![在开始菜单处，启动 VS](./assets/79.png)
 
 * 登录或跳过该选项（有微软账号就注册，没有就暂时跳过）：
 
-![](./assets/80.png)
+![登录或跳过该选项](./assets/80.png)
 
 * 继续：
 
-![](./assets/81.png)
+![继续](./assets/81.png)
 
 * 注册 VS ：
 
-![](./assets/82.png)
+![注册 VS 1](./assets/82.png)
 
 * 填写注册码：
 
@@ -502,9 +502,9 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 >
 > :::
 
-![](./assets/83.png)
+![注册 VS 2](./assets/83.png)
 
-![](./assets/84.png)
+![注册 VS 3](./assets/84.png)
 
 ## 1.5 什么是工程/项目 ？
 
@@ -526,7 +526,7 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 
 * 许多 IDE 都提供了工程或项目的概念，其目的就是为了帮助开发者合理的管理软件开发中所需要的资源，如：图片、视频、音频、库（框架）等。
 
-![](./assets/85.png)
+![项目模板](./assets/85.png)
 
 ### 1.5.2 工程类型/项目类型
 
@@ -552,7 +552,7 @@ pacman -Sy mingw-w64-ucrt-x86_64-toolchain --noconfirm # 安装开发 gcc 相关
 
 * ① 新建一个 `HelloWorld.c` 的文件：
 
-![](./assets/86.png)
+![新建一个 HelloWorld.c 的文件](./assets/86.png)
 
 * ② 通过`记事本`等软件打开该文件，输入如下的代码，并保存：
 
@@ -565,7 +565,7 @@ int main(){
 }
 ```
 
-![](./assets/87.gif)
+![通过记事本等软件打开该文件，输入代码](./assets/87.gif)
 
 * ③ 通过 `gcc` 命令编译该文件：
 
@@ -573,7 +573,7 @@ int main(){
 gcc HelloWorld.c -o HelloWorld.exe
 ```
 
-![](./assets/88.gif)
+![通过 gcc 命令编译该文件](./assets/88.gif)
 
 * ④ 执行：
 
@@ -581,27 +581,27 @@ gcc HelloWorld.c -o HelloWorld.exe
 ./HelloWorld.exe
 ```
 
-![](./assets/89.gif)
+![执行](./assets/89.gif)
 
 ## 2.2 VS Code 版
 
 * ① 新建一个`空`文件夹（目录），用于存放代码：
 
-![](./assets/90.png)
+![新建一个空文件夹（目录），用于存放代码](./assets/90.png)
 
 * ② 通过 `vscode` 打开该目录：
 
-![](./assets/91.gif)
+![通过 vscode 打开该目录](./assets/91.gif)
 
 * ③ 在 `vscode` 中新建 `HelloWorld.c` 文件：
 
-![](./assets/92.gif)
+![在 vscode 中新建 HelloWorld.c 文件](./assets/92.gif)
 
 * ④ 设置 VSCode 中 C/C++ 的代码格式为行尾风格（可选）：
 
-![](./assets/93.png)
+![设置 VSCode 中 C/C++ 的代码格式为行尾风格（可选） 1](./assets/93.png)
 
-![](./assets/94.png)
+![设置 VSCode 中 C/C++ 的代码格式为行尾风格（可选） 2](./assets/94.png)
 
 * ⑤ 编写如下的代码，并保存：
 
@@ -614,7 +614,7 @@ int main(){
 }
 ```
 
-![](./assets/95.gif)
+![编写代码，并保存](./assets/95.gif)
 
 * ⑥ 通过 `gcc` 命令编译该文件：
 
@@ -622,7 +622,7 @@ int main(){
 gcc HelloWorld.c -o HelloWorld.exe
 ```
 
-![](./assets/96.gif)
+![通过 gcc 命令编译该文件](./assets/96.gif)
 
 * ⑦ 执行：
 
@@ -630,33 +630,33 @@ gcc HelloWorld.c -o HelloWorld.exe
 ./HelloWorld.exe
 ```
 
-![](./assets/97.gif)
+![执行](./assets/97.gif)
 
 * ⑧ 安装 Code Runner 插件（步骤略），实现右键直接编译执行（可选）：
 
-![](./assets/98.gif)
+![安装 Code Runner 插件](./assets/98.gif)
 
 ## 2.3 VS 版
 
 * ① 新建空项目：
 
-![](./assets/99.png)
+![新建空项目 1](./assets/99.png)
 
-![](./assets/100.png)
+![新建空项目 2](./assets/100.png)
 
-![](./assets/101.png)
+![新建空项目 3](./assets/101.png)
 
-![](./assets/102.png)
+![新建空项目 4](./assets/102.png)
 
 * ② 打开`解决方案资源管理器`：
 
-![](./assets/103.png)
+![打开解决方案资源管理器 1](./assets/103.png)
 
-![](./assets/104.png)
+![打开解决方案资源管理器 2](./assets/104.png)
 
 * ③ 新建 `HelloWorld.c` 文件：
 
-![](./assets/105.gif)
+![新建 HelloWorld.c 文件](./assets/105.gif)
 
 * ④ 编写如下代码，并保存：
 
@@ -669,21 +669,21 @@ int main(){
 }
 ```
 
-![](./assets/106.gif)
+![编写代码，并保存](./assets/106.gif)
 
 * ⑤ 编译和执行：
 
-![](./assets/107.gif)
+![编译和执行](./assets/107.gif)
 
 ## 2.4 CLion 版
 
 * ① 新建空项目：
 
-![](./assets/108.png)
+![新建空项目 1](./assets/108.png)
 
-![](./assets/109.png)
+![新建空项目 2](./assets/109.png)
 
-![](./assets/110.png)
+![新建空项目 3](./assets/110.png)
 
 * ② 编写如下代码，并保存：
 
@@ -696,19 +696,19 @@ int main(){
 }
 ```
 
-![](./assets/111.gif)
+![编写代码，并保存](./assets/111.gif)
 
 * ③ 编译和运行：
 
-![](./assets/112.gif)
+![编译和运行](./assets/112.gif)
 
 * ④ 默认情况下，一个项目只能有一个 c 源文件包含 main 函数，但是 CLion 可以有多个，如下：
 
-![](./assets/113.gif)
+![默认情况下，一个项目只能有一个 c 源文件包含 main 函数，但是 CLion 可以有多个](./assets/113.gif)
 
 * ⑤ 如果之后，有中文乱码问题，那么请做如下步骤：
 
-![](./assets/114.png)
+![如果之后，有中文乱码问题，请这么做 1](./assets/114.png)
 
 > [!NOTE]
 >
@@ -721,7 +721,7 @@ int main(){
 > 
 > ::: 
 
-![](./assets/115.gif)
+![如果之后，有中文乱码问题，请这么做 2](./assets/115.gif)
 
 
 

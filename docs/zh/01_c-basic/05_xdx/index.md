@@ -7,7 +7,7 @@
 * WSL2，全称为 Windows Subsystem for Linux 2，是微软提供的一种技术，允许用户在 Windows 操作系统上运行 Linux 内核。WSL2  是 WSL1 的升级版，它引入了一个真正的 Linux 内核来代替 WSL1 中使用的兼容层，从而提供更高的性能和更广泛的系统调用支持。
 * 和传统的虚拟化技术的对比，如下所示：
 
-![](./assets/1.svg)
+![传统的虚拟化技术 VS Hyper-v 虚拟化技术](./assets/1.svg)
 
 > [!NOTE]
 >
@@ -38,11 +38,11 @@
 
 * ① BIOS 或 UEFI 中，开启虚拟化：步骤略。
 
-![](./assets/2.png)
+![BIOS 或 UEFI 中，开启虚拟化](./assets/2.png)
 
 * ② 查看是否开启了虚拟化：
 
-![](./assets/3.png)
+![查看是否开启了虚拟化](./assets/3.png)
 
 * ③ 启用适用于 Linux 的 Windows 子系统：
 
@@ -54,7 +54,7 @@
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 ```
 
-![](./assets/4.gif)
+![启用适用于 Linux 的 Windows 子系统](./assets/4.gif)
 
 * ④ 启用虚拟机功能：
 
@@ -66,7 +66,7 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 ```
 
-![](./assets/5.gif)
+![启用虚拟机功能](./assets/5.gif)
 
 * ⑤ 更新 Linux 内核包：
 
@@ -78,7 +78,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 wsl --update
 ```
 
-![](./assets/6.gif)
+![更新 Linux 内核包](./assets/6.gif)
 
 * ⑥ 将 wsl2 设置为默认版本：
 
@@ -86,7 +86,7 @@ wsl --update
 wsl --set-default-version 2
 ```
 
-![](./assets/7.gif)
+![将 wsl2 设置为默认版本](./assets/7.gif)
 
 * ⑦ 查看官方在线支持的 Linux 版本：
 
@@ -94,7 +94,7 @@ wsl --set-default-version 2
 wsl --list --online
 ```
 
-![](./assets/8.gif)
+![查看官方在线支持的 Linux 版本](./assets/8.gif)
 
 * ⑧ 安装指定版本的 Linux ：
 
@@ -109,11 +109,11 @@ wsl --list --online
 wsl --install Ubuntu-24.04
 ```
 
-![](./assets/9.gif)
+![安装指定版本的 Linux ](./assets/9.gif)
 
 * ⑨ 在 Microsoft Store 中搜索并安装（可选）：
 
-![](./assets/10.png)
+![在 Microsoft Store 中搜索并安装（可选）](./assets/10.png)
 
 * ⑩ 查询本地安装的 Linux 版本：
 
@@ -121,7 +121,7 @@ wsl --install Ubuntu-24.04
 wsl --list
 ```
 
-![](./assets/11.gif)
+![查询本地安装的 Linux 版本](./assets/11.gif)
 
 ### 1.1.3 配置 WSL2
 
@@ -136,11 +136,11 @@ sudo dnf install make -y # 安装 make
 sudo dnf install gdb -y # 安装 gdb
 ```
 
-![](./assets/12.gif)
+![安装 cmake 相关工具链](./assets/12.gif)
 
 * 可以通过 CLion 测试是否安装成功：
 
-![](./assets/13.gif)
+![通过 CLion 测试是否安装成功](./assets/13.gif)
 
 ### 1.1.4 配置 WSL2
 
@@ -154,17 +154,17 @@ sudo apt install cmake -y # 安装 cmake
 sudo apt install gdb -y # 安装 gdb
 ```
 
-![](./assets/14.gif)
+![安装 cmake 相关工具链](./assets/14.gif)
 
 * 可以通过 CLion 测试是否安装成功：
 
-![](./assets/15.gif)
+![通过 CLion 测试是否安装成功](./assets/15.gif)
 
 ## 1.2 切换 CLion 中的 cmake 的工具链
 
 * 可以在 CLoin 中切换 cmake 的工具链，以便支持不同平台的 cmake ，即：
 
-![](./assets/16.gif)
+![切换 CLion 中的 cmake 的工具链](./assets/16.gif)
 
 ## 1.3 修改 CMakeLists.txt 文件
 
@@ -177,7 +177,7 @@ sudo apt install gdb -y # 安装 gdb
 
 * `CMakeLists.txt` 文件的位置，如下所示：
 
-![](./assets/17.png)
+![CMakeLists.txt 文件的位置](./assets/17.png)
 
 * `CMakeLists.txt` 文件的内容，如下所示：
 
@@ -266,7 +266,7 @@ endforeach ()
 
 * 配置 `.clang-format` 格式化文件，以便写代码的时候，可以自动保存并格式化 C 程序代码，如下所示：
 
-![](./assets/18.png)
+![.clang-format 文件](./assets/18.png)
 
 * `.clang-format` 的内容，如下所示：
 
@@ -311,13 +311,13 @@ IndentCaseLabels: true
 
 * CLion 中配置`保存`的时候`自动格式化`，即：
 
-![](./assets/19.gif)
+![CLion 中配置保存的时候自动格式化](./assets/19.gif)
 
 ## 1.5 配置 .gitignore 文件
 
 * 需要在项目中，配置 `.gitignore` 文件，以便在提交代码到 Git 仓库的时候，忽略某些文件或目录，如下所示：
 
-![](./assets/20.png)
+![配置 .gitignore 文件](./assets/20.png)
 
 * `.gitignore` 文件的内容，如下所示：
 
@@ -336,7 +336,7 @@ build
 >
 > 如果是复制并粘贴一个文件到项目中，请点击`重新加载 CMake 项目`！！！
 
-![](./assets/21.gif)
+![测试上述配置是否生效](./assets/21.gif)
 
 
 
@@ -346,7 +346,7 @@ build
 
 * C 程序的编译过程，如下所示：
 
-![](./assets/22.png)
+![C 程序的编译过程](./assets/22.png)
 
 * 过程 ① ：编写（编辑）源代码，即：编写 C 语言源程序代码，并以文件的形式存储在磁盘中。
 
@@ -404,13 +404,13 @@ build
 
 ## 2.3 通过 gcc 直接生成可执行文件
 
-* 示例：进行预处理、编译、汇编和链接
+* 示例：预处理、编译、汇编和链接
 
 ```shell
 gcc HelloWorld.c -o HelloWorld.exe
 ```
 
-![](./assets/23.gif)
+![预处理、编译、汇编和链接](./assets/23.gif)
 
 ## 2.4 通过 gcc 分步编译
 
@@ -452,7 +452,7 @@ gcc 源文件.o -o 源文件.exe
 gcc -E HelloWorld.c -o HelloWorld.i
 ```
 
-![](./assets/24.gif)
+![只进行预处理](./assets/24.gif)
 
 
 
@@ -462,7 +462,7 @@ gcc -E HelloWorld.c -o HelloWorld.i
 gcc -S HelloWorld.i -o HelloWorld.s
 ```
 
-![](./assets/25.gif)
+![只进行预处理和编译](./assets/25.gif)
 
 
 
@@ -472,7 +472,7 @@ gcc -S HelloWorld.i -o HelloWorld.s
 gcc -c HelloWorld.s -o HelloWorld.o
 ```
 
-![](./assets/26.gif)
+![只进行预处理、编译和汇编](./assets/26.gif)
 
 
 
@@ -482,15 +482,15 @@ gcc -c HelloWorld.s -o HelloWorld.o
 gcc HelloWorld.o -o HelloWorld.exe
 ```
 
-![](./assets/27.gif)
+![进行预处理、编译、汇编和链接](./assets/27.gif)
 
 # 第三章：WSL2 和 CLion 进阶
 
 ## 3.1 WSL2 代理问题
 
-* 在安装和配置 WSL2 之后，可能会出现如下的提示，即：
+* 在安装和配置 WSL2 之后，可能会出现如下的提示，如下所示：
 
-![](./assets/28.png)
+![在安装和配置 WSL2 之后，可能会出现如下的提示](./assets/28.png)
 
 * 那么，只需要修改 `%USERPROFILE%\.wslconfig`文件，内容如下：
 
@@ -511,7 +511,7 @@ bestEffortDnsParsing=true
 useWindowsDnsCache=true
 ```
 
-![](./assets/29.png)
+![修改`%USERPROFILE%\.wslconfig`文件内容](./assets/29.png)
 
 * 在命令行中，执行如下的命令：
 
@@ -519,21 +519,21 @@ useWindowsDnsCache=true
 wsl --shutdown
 ```
 
-![](./assets/30.gif)
+![命令行中，执行命令](./assets/30.gif)
 
 * 此时，再打开终端，就没有这种提示了：
 
-![](./assets/31.png)
+![打开终端，看是否还有这种提示？](./assets/31.png)
 
 ## 3.2 CLion 调试问题
 
 * 在 CLion 中进行 run（运行）程序的时候，对于 `printf` 函数或 `scanf` 函数很正常，如下所示：
 
-![](./assets/32.gif)
+![CLion 调试问题 1](./assets/32.gif)
 
 * 但是，当我们 debug（调试） 的时候，对于 `printf` 函数或 `scanf` 函数会一直没有输出，如下所示：
 
-![](./assets/33.gif)
+![CLion 调试问题 2](./assets/33.gif)
 
 * 原因是 `scanf` 函数并不是直接让用户从键盘输入数据，而是先检查缓冲区，处理缓冲区中的数据；当遇到 `scanf` 函数时，程序会先检查输入缓冲区中是否有数据，所以解决方案就是`禁用缓冲区`，如下所示：
 
@@ -558,7 +558,7 @@ int main() {
 
 * 那么，就会达到我们想要的效果了，如下所示：
 
-![](./assets/34.gif)
+![CLion 调试问题 3](./assets/34.gif)
 
 ## 3.3 Win 中文乱码问题
 
@@ -571,15 +571,15 @@ int main() {
 
 * 其实，还有一种解决方案，如下所示：
 
-![](./assets/35.png)
+![Win 中文乱码问题 1](./assets/35.png)
 
-![](./assets/36.png)
+![Win 中文乱码问题 2](./assets/36.png)
 
-![](./assets/37.png)
+![Win 中文乱码问题 3](./assets/37.png)
 
 * 测试一下，是否配置成功：
 
-![](./assets/38.gif)
+![Win 中文乱码问题 4](./assets/38.gif)
 
 ## 3.4 CLion 中自动导入头文件
 
@@ -590,13 +590,13 @@ int main() {
 > * ① CLion 中的`自动导入头文件`的`快捷键`是 `Alt + Enter` 。
 > * ② CLion 中的`自动提取变量的类型`的`快捷键`是 `Ctrl + Alt + V` 。
 
-![](./assets/39.gif)
+![CLion 中自动导入头文件 1](./assets/39.gif)
 
 * 开启自动导入头文件的步骤，如下所示：
 
-![](./assets/40.png)
+![CLion 中自动导入头文件 2](./assets/40.png)
 
-![](./assets/41.png)
+![CLion 中自动导入头文件 3](./assets/41.png)
 
 ## 3.5 WSL2 启用 systemd
 
@@ -618,7 +618,7 @@ int main() {
 ps -p 1 -o comm= # 如果显示 systemd ，则表示 systemd 正在运行
 ```
 
-![](./assets/42.gif)
+![检查进程树，判断 systemd 是否正在运行](./assets/42.gif)
 
 ### 3.5.2 操作步骤
 
@@ -629,7 +629,7 @@ ps -p 1 -o comm= # 如果显示 systemd ，则表示 systemd 正在运行
 wsl --version # 在 win 中的 cmd 或 PowerShell 执行该命令
 ```
 
-![](./assets/43.png)
+![查询 WSL2 的版本，确保 WSL2 的版本为 `0.67.6` 或更高版本](./assets/43.png)
 
 * ② 向 `/etc/wsl.conf` 配置文件中写入以下内容：
 
@@ -640,7 +640,7 @@ systemd=true
 EOF
 ```
 
-![](./assets/44.gif)
+![向 `/etc/wsl.conf` 配置文件中写入指定内容](./assets/44.gif)
 
 * ③ 重启 WSL 实例：
 
@@ -648,7 +648,7 @@ EOF
 wsl --shutdown # 在 win 中的 cmd 或 PowerShell 执行该命令
 ```
 
-![](./assets/45.gif)
+![重启 WSL 实例](./assets/45.gif)
 
 * ④ 查看是否启用成功：
 
@@ -656,7 +656,7 @@ wsl --shutdown # 在 win 中的 cmd 或 PowerShell 执行该命令
 ps -p 1 -o comm=
 ```
 
-![](./assets/46.png)
+![查看是否启用成功](./assets/46.png)
 
 ## 3.6 GCC 查看支持的 C 语言标准版本
 
@@ -684,7 +684,7 @@ gcc -E -dM - </dev/null | grep "STDC_VERSION"
 >
 > 需要说明的是，在本文撰写之前，C23 标准目前还是草案，并没有完全确定下来。
 
-![](./assets/47.png)
+![查看 GCC 支持的 C 语言标准的版本](./assets/47.png)
 
 ### 3.6.3 切换 GCC 默认支持的 C 语言标准版本
 
@@ -700,7 +700,7 @@ echo 'export CFLAGS="-std=c11"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-![](./assets/48.gif)
+![通过设置一个环境变量，来更改默认的 C 语言的标准版本](./assets/48.gif)
 
 * 验证是否有效：
 
@@ -708,7 +708,7 @@ source ~/.bashrc
 echo $CFLAGS
 ```
 
-![](./assets/49.png)
+![验证是否有效](./assets/49.png)
 
 #### 3.6.3.2 CMake 方式
 
@@ -759,11 +759,11 @@ gcc -std=c17 ...
 
 * ① 所有设置：
 
-![](./assets/50.png)
+![所有设置](./assets/50.png)
 
 * ② 工具链：
 
-![](./assets/51.png)
+![工具链](./assets/51.png)
 
 ## 3.8 CLion 中代码模板的使用
 
@@ -785,17 +785,17 @@ int main() {
 
 * 刚开始写，还感觉比较新鲜，非常好玩。但是，随着时间的深入，我们会感觉特别繁琐，又很无聊。那么，能否在 CLion 中配置一下，让其为我们自动生成呢？
 
-![](./assets/52.gif)
+![CLion 中代码模板](./assets/52.gif)
 
 ### 3.8.2 配置方法
 
 * ① 点击`设置`：
 
-![](./assets/53.png)
+![点击`设置`](./assets/53.png)
 
 * ② `编辑器` --> `文件和代码模板`：
 
-![](./assets/54.png)
+![`编辑器` --> `文件和代码模板`](./assets/54.png)
 
 * ③ 点击`+`，配置对应的内容：
 
@@ -818,7 +818,7 @@ int main() {
 >  ```
 > :::
 
-![](./assets/55.png)
+![点击`+`，配置对应的内容](./assets/55.png)
 
 
 
@@ -828,7 +828,7 @@ int main() {
 
 * 微软在官网上，是这么评价自己的 IDE 的，如下所示：
 
-![](./assets/56.png)
+![Visual Studio 官网](./assets/56.png)
 
 > [!NOTE]
 >
