@@ -5,6 +5,7 @@ import { figure } from '@mdit/plugin-figure'
 import { loadEnv } from 'vite'
 import { pagefind } from './vite-plugin-config'
 import { pagefindPlugin } from 'vitepress-plugin-pagefind'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 import {
   GitChangelog,
   GitChangelogMarkdownSection,
@@ -20,7 +21,7 @@ console.log('Mode:', process.env.NODE_ENV)
 console.log('VITE_BASE_URL:', VITE_BASE_URL)
 
 
-export const sharedConfig = defineConfig({
+export const sharedConfig = withMermaid(defineConfig({
   rewrites: {
     'zh/:rest*': ':rest*'
   },
@@ -81,7 +82,7 @@ export const sharedConfig = defineConfig({
           disableChangelog: true,
           disableContributors: true,
         },
-      })
+      }),
     ],
     server: {
       port: 10089
@@ -128,7 +129,7 @@ export const sharedConfig = defineConfig({
       md.use(timeline)
       md.use(groupIconMdPlugin) //代码组图标
       md.use(InlineLinkPreviewElementTransform)
-      md.use(figure, { figcaption: 'alt', copyAttrs: '^class$', lazy: true }) 
+      md.use(figure, { figcaption: 'alt', copyAttrs: '^class$', lazy: true })
     }
   },
   themeConfig: { // 主题设置
@@ -143,4 +144,4 @@ export const sharedConfig = defineConfig({
       { icon: 'github', link: 'https://github.com/Aurorxa/c' },
     ],
   }
-})
+}))
