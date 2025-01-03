@@ -839,15 +839,15 @@ int main() {
 
 * ① 打开 Visual Studio，选择`继续但无需代码`：
 
-![](./assets/57.png)
+![打开 Visual Studio，选择`继续但无需代码`](./assets/57.png)
 
 * ② 进入主界面：
 
-![](./assets/58.png)
+![进入主界面](./assets/58.png)
 
 * ③ 点击 VS 菜单栏的`文件-->新建-->项目`，进行项目创建：
 
-![](./assets/59.png)
+![点击 VS 菜单栏的`文件-->新建-->项目`，进行项目创建](./assets/59.png)
 
 * ④ 选择`项目模板`（控制台项目）：
 
@@ -856,7 +856,7 @@ int main() {
 > * ① 也可以选择空项目或 CMake 项目。
 > * ② 不过，本次以`控制台`项目作为演示！！！
 
-![](./assets/60.png)
+![选择`项目模板`（控制台项目）](./assets/60.png)
 
 * ⑤ 进入项目配置页面：
 
@@ -868,7 +868,7 @@ int main() {
 > * ② 位置。
 > * ③ 解决方案名称。
 
-![](./assets/61.png)
+![进入项目配置页面](./assets/61.png)
 
 ## 4.3 项目配置
 
@@ -893,7 +893,7 @@ int main() {
 
 * 那么，`解决方案`和`项目`在逻辑上，就是这样的：
 
-![](./assets/62.svg)
+![`解决方案`和`项目`的逻辑关系](./assets/62.svg)
 
 > [!NOTE]
 >
@@ -904,17 +904,17 @@ int main() {
 
 * 其实，从`位置`中，我们也可以看出 VS 中的`解决方案`和`项目`的关系，如下所示：
 
-![](./assets/63.png)
+![VS 中的`解决方案`和`项目`的关系](./assets/63.png)
 
 ## 4.4 创建源文件
 
 * 当项目创建完成后，会显示如下的界面：
 
-![](./assets/64.png)
+![项目创建完成后，显示的界面](./assets/64.png)
 
 * 但是，项目默认创建的不是 C 源文件，而是 C++ 源文件；此时，我们需要将其删掉，再创建 C 源文件，如下所示：
 
-![](./assets/65.gif)
+![删掉默认的 C++ 源代码，并创建 C 源文件](./assets/65.gif)
 
 ## 4.5 编写 C 代码
 
@@ -941,7 +941,7 @@ int main() {
 >
 > 编写完毕之后，记住需要通过 Ctrl + S 快捷键来保存！！！
 
-![](./assets/66.gif)
+![编写 C 代码](./assets/66.gif)
 
 * 代码编写完毕之后，就可以通过 VS 菜单栏上的按钮来启动程序，如下所示：
 
@@ -950,25 +950,25 @@ int main() {
 > * ① 如果点击的是`本地 Windows 调试器`按钮来启动程序，此时程序将以`Debug`的模式来启动。
 > * ② 如果点击的是`开始执行（不调试）`按钮来启动程序，此时程序将以`正常`的模式来启动。
 
-![](./assets/67.gif)
+![通过 VS 菜单栏上的按钮来启动程序](./assets/67.gif)
 
 ## 4.6 VS 中项目目录说明
 
 * 在 VS 中的解决方案管理器中，我们可以看到项目下面分为了好几个层级，如下所示：
 
-![](./assets/68.png)
+![VS 中的解决方案管理器](./assets/68.png)
 
 * 我们可以在`解决方案管理`中选择一个`项目`，通过`鼠标右键`点击`在文件资源管理器中打开文件夹`来查看，解决方案在硬盘上的实际文件目录，如下所示：
 
-![](./assets/69.gif)
+![查看VS 中的解决方案中项目在硬盘上的存储路径](./assets/69.gif)
 
 * 但是，我们却发现并没有我们想要的`头文件目录夹`、`源文件目录夹`等，如下所示：
 
-![](./assets/70.png)
+![VS 项目在硬盘上的实际存储](./assets/70.png)
 
 * 其实，是因为 VS 项目中的`头文件目录夹`、`源文件目录夹`等并不是物理上的目录，而是一个逻辑上的目录而言，是虚拟的，它们是存储在 `xxx.vcxproj` 文件中，该文件用来存储同一个项目中的各个文件之间的关系。那么，VS 中的解决方案、项目以及项目中的文件就是这样的，如下所示：
 
-![](./assets/71.svg)
+![VS 中的解决方案、项目以及项目中的文件的关系](./assets/71.svg)
 
 > [!CAUTION]
 >
@@ -983,29 +983,29 @@ int main() {
 >
 > 如果解决方案中有多个项目，VS 会为每个项目都生成可执行文件！！！
 
-![](./assets/72.gif)
+![继续创建项目，形成多项目](./assets/72.gif)
 
 * 其实，不管我们怎么启动程序，都会发现默认启动的只是 VS 中的第一个项目，如下所示：
 
-![](./assets/73.gif)
+![VS 默认启动第一个项目](./assets/73.gif)
 
 * 其实，当前正在启动的项目，项目名称是加粗的，如下所示：
 
-![](./assets/74.png)
+![正在启动的项目，项目名称是加粗](./assets/74.png)
 
 * 对于多项目，我们可以在`解决方案资源管理器`中的`项目名`，通过`鼠标右键`设置该项目为`启动项目`，如下所示：
 
-![](./assets/75.gif)
+![通过`鼠标右键`设置该项目为`启动项目`](./assets/75.gif)
 
 * 当然，VS 除了可以设置固定的启动项目外，还可以将`启动项目`设置为`当前选定的内容`，如下所示：
 
-![](./assets/76.gif)
+![将`启动项目`设置为`当前选定的内容`](./assets/76.gif)
 
 ## 4.8 更好用的代码提示功能
 
 * 之前，在写代码的时候，遇到代码提示，总需要先按 Tab 键再回车，实现麻烦，如下所示：
 
-![](./assets/77.gif)
+![更好用的代码提示功能 1](./assets/77.gif)
 
 * 其实，也可以设置为直接按回车就可以选择代码，如下所示：
 
@@ -1017,7 +1017,7 @@ int main() {
 > * ② 在左侧的导航树中，选择`文本编辑器-->C/C++-->高级`。
 > * ③ 在右侧的设置列表中，将`主动提交成员列`表改为 `True` 。
 
-![](./assets/78.gif)
+![更好用的代码提示功能 2](./assets/78.gif)
 
 ## 4.9 查看或修改项目中 C 语言的版本
 
@@ -1031,7 +1031,7 @@ int main() {
 > * ② 找到`属性`，`鼠标左键`并`点击`。
 > * ③ 在`配置属性`中的`常规`中，就可以查看或修改项目中 C 语言的版本。
 
-![](./assets/79.gif)
+![查看或修改项目中 C 语言的版本](./assets/79.gif)
 
 ## 4.10 多项目启动插件
 
@@ -1044,17 +1044,17 @@ int main() {
 > * ① VS 的菜单栏中的`扩展--> 管理扩展`中，搜索该插件。
 > * ② 安装并重启 VS。
 
-![](./assets/80.gif)
+![多项目启动插件 1](./assets/80.gif)
 
 * 此时，就可以很方便的进行项目的切换了，如下所示：
 
-![](./assets/81.gif)
+![多项目启动插件 2](./assets/81.gif)
 
 ## 4.11 固定当前项目为启动项目
 
 * 安装了上述的插件，虽然切换项目很方便；但是，还需要每次都点击选择启动项，如下所示：
 
-![](./assets/82.gif)
+![固定当前项目为启动项目 1](./assets/82.gif)
 
 * 我们希望点击那个项目中的 `main.c` 文件，那个项目就是启动项目；此时，我们就可以这么设置，如下所示：
 
@@ -1066,11 +1066,11 @@ int main() {
 > * ② 在左侧的导航树中，选择`项目和生成方案`。
 > * ③ 在右侧的设置列表中，选中`对于新解决方案，使用当前选定的项目作为启动项目`。
 
-![](./assets/83.gif)
+![固定当前项目为启动项目 2](./assets/83.gif)
 
 * 此时，就可以实现我们上述的目标了，如下所示：
 
-![](./assets/84.gif)
+![固定当前项目为启动项目 3](./assets/84.gif)
 
 
 
@@ -1094,7 +1094,7 @@ sudo apt update -y && apt -y upgrade
 sudo apt install ufw -y
 ```
 
-![](./assets/85.gif)
+![安装防火墙](./assets/85.gif)
 
 * 关闭防火墙：
 
@@ -1106,7 +1106,7 @@ sudo ufw disable
 sudo systemctl disable --now ufw
 ```
 
-![](./assets/86.gif)
+![关闭防火墙](./assets/86.gif)
 
 * 查询防火墙状态：
 
@@ -1118,7 +1118,7 @@ sudo ufw status
 sudo systemctl status ufw
 ```
 
-![](./assets/87.gif)
+![查询防火墙状态](./assets/87.gif)
 
 ### 5.2.2 配置 sshd 服务
 
@@ -1132,7 +1132,7 @@ sudo apt update -y && apt -y upgrade
 sudo apt install -y openssh-server
 ```
 
-![](./assets/88.gif)
+![安装 sshd 服务器](./assets/88.gif)
 
 * 编辑 `sshd_config` 配置文件：
 
@@ -1148,7 +1148,7 @@ PasswordAuthentication yes # 修改，第 57 行
 KbdInteractiveAuthentication no # 修改，第 62 行
 ```
 
-![](./assets/89.gif)
+![编辑 `sshd_config` 配置文件](./assets/89.gif)
 
 * 重启 ssh 服务：
 
@@ -1160,7 +1160,7 @@ sudo service ssh restart
 sudo systemctl enable --now ssh
 ```
 
-![](./assets/90.gif)
+![重启 ssh 服务](./assets/90.gif)
 
 * 查看 ssh 服务：
 
@@ -1168,7 +1168,7 @@ sudo systemctl enable --now ssh
 sudo service ssh status
 ```
 
-![](./assets/91.gif)
+![查看 ssh 服务](./assets/91.gif)
 
 ### 5.2.3 修改 root 密码
 
@@ -1183,7 +1183,7 @@ sudo passwd root
 > * ① 密码是 `123456` 。
 > * ② 本地环境弱密码没什么关系；但是，在生产环境中，密码必须复杂且定时更新！！！
 
-![](./assets/92.gif)
+![修改 root 密码](./assets/92.gif)
 
 ### 5.2.4 Xshell 连接 Ubuntu24.04
 
@@ -1196,7 +1196,7 @@ sudo passwd root
 > * 用户名是 `root` 。
 > * 密码是 `123456` 。
 
-![](./assets/93.png)
+![在 Xshell 中配置 Ubuntu 的 IP 和端口，并建立连接](./assets/93.png)
 
 ## 5.3 XShell 连接 AlmaLinux9
 
@@ -1212,7 +1212,7 @@ sudo dnf -y update && dnf -y upgrade
 sudo dnf -y install firewalld
 ```
 
-![](./assets/94.gif)
+![安装防火墙](./assets/94.gif)
 
 * 关闭防火墙：
 
@@ -1224,7 +1224,7 @@ sudo systemctl stop firewalld
 sudo systemctl disable --now firewalld
 ```
 
-![](./assets/95.gif)
+![关闭防火墙](./assets/95.gif)
 
 * 查看防火墙的状态：
 
@@ -1232,7 +1232,7 @@ sudo systemctl disable --now firewalld
 sudo systemctl status firewalld
 ```
 
-![](./assets/96.gif)
+![查看防火墙的状态](./assets/96.gif)
 
 ### 5.3.2 配置 sshd 服务
 
@@ -1246,7 +1246,7 @@ sudo dnf update -y && dnf -y upgrade
 sudo dnf -y install openssh-server
 ```
 
-![](./assets/97.gif)
+![安装 sshd 服务器](./assets/97.gif)
 
 * 编辑 `sshd_config` 配置文件：
 
@@ -1262,7 +1262,7 @@ PasswordAuthentication yes # 修改，第 65 行
 KbdInteractiveAuthentication no # 修改，第 69 行
 ```
 
-![](./assets/98.gif)
+![编辑 `sshd_config` 配置文件](./assets/98.gif)
 
 * 重启 sshd 服务：
 
@@ -1274,7 +1274,7 @@ sudo systemctl restart sshd
 sudo systemctl enable --now sshd
 ```
 
-![](./assets/99.gif)
+![重启 sshd 服务](./assets/99.gif)
 
 * 查看 sshd 服务：
 
@@ -1282,7 +1282,7 @@ sudo systemctl enable --now sshd
 sudo systemctl status sshd
 ```
 
-![](./assets/100.gif)
+![查看 sshd 服务](./assets/100.gif)
 
 ### 5.3.3 修改 root 密码
 
@@ -1297,7 +1297,7 @@ sudo passwd root
 > * ① 密码是 `123456` 。
 > * ② 本地环境弱密码没什么关系；但是，在生产环境中，密码必须复杂且定时更新！！！
 
-![](./assets/101.gif)
+![修改 root 密码](./assets/101.gif)
 
 ### 5.3.4 Xshell 连接 AlmaLinux9
 
@@ -1310,4 +1310,4 @@ sudo passwd root
 > * 用户名是 `root` 。
 > * 密码是 `123456` 。
 
-![](./assets/102.png)
+![在 Xshell 中配置 AlmaLinux9的 IP 和端口，并建立连接](./assets/102.png)

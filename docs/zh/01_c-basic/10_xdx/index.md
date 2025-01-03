@@ -17,17 +17,17 @@
 
 * `字符集`和`字符集编码`之间的关系如下：
 
-![](./assets/1.png)
+![`字符集`和`字符集编码`之间的关系](./assets/1.png)
 
 * Linux 中安装帮助手册：
 
-![](./assets/2.gif)
+![Linux 中安装帮助手册](./assets/2.gif)
 
 ## 1.2 ASCII 编码
 
 * 从`冯·诺依曼`体系结构中，我们知道，计算机中所有的`数据`和`指令`都是以`二进制`的形式表示的；所以，计算机中对于文本数据的数据也是以二进制来存储的，那么对应的流程如下：
 
-![](./assets/3.png)
+![编码和解码](./assets/3.png)
 
 * 我们知道，计算机是上个世纪 60 年代在美国研制成功的，为了实现字符和二进制的转换，美国就制定了一套字符编码，即英语字符和二进制位之间的关系，即 ASCII （American Standard Code for Information Interchange）编码：
   - ASCII 编码只包括了英文字符、数字和一些特殊字符，一共 128 个字符，并且每个字符都分配了唯一的数字，范围是 0 - 127。
@@ -44,15 +44,15 @@
 man ascii
 ```
 
-![](./assets/4.gif)
+![Linux 查看 ascii 码表](./assets/4.gif)
 
 * 其对应的 ASCII 编码表，如下所示：
 
-![](./assets/5.gif)
+![ASCII 编码表](./assets/5.gif)
 
 * 但是，随着计算机的发展，计算机开始了东征之路，由美国传播到东方：
 
-![](./assets/6.png)
+![计算机传播之路](./assets/6.png)
 
 - 先是传播到了欧洲，欧洲在兼容 ASCII 编码的基础上，推出了 ISO8859-1 编码，即：
   - ISO8859-1 编码包括基本的拉丁字母表、数字、标点符号，以及西欧语言中特有的一些字符，如：法语中的 `è`、德语中的 `ü` 等。
@@ -94,7 +94,7 @@ man ascii
 
 - Unicode 仅仅只是字符集，给每个字符设置了唯一的数字编号而已，却没有给出这些数字编号实际如何存储，可以通过如下命令查看：
 
-![](./assets/9.gif)
+![Linux 查看 Unicode ](./assets/9.gif)
 
 - 为了在计算机系统中表示 Unicode 字符，定义了几种编码方案，这些方案包括 UTF-8、UTF-16 和 UTF-32 等。
   - **UTF-8**：使用 1 - 4 个字节表示每个 Unicode 字符，兼容 ASCII，是网络上最常用的编码。
@@ -122,11 +122,9 @@ man ascii
 > * ① Windows 内核、.NET Framework、Java String 内部采用的都是 `UTF-16` 编码，主要原因是为了在兼顾字符处理效率的同时，能够有效处理多种语言的字符集，即：历史遗留问题、兼容性要求和多语言支持的需要。
 > * ② 不过，UNIX 家族的操作系统（Linux、Mac OS、iOS 等）内核都采用 `UTF-8` 编码，主要是为了兼容性和灵活性，因为 UTF-8 编码可以无缝处理 ASCII 字符，同时也能够支持多字节的 Unicode 字符，即：为了最大限度地兼容 ASCII，同时保持系统的简单性、灵活性和效率。
 
-
-
 - `Unicode 字符集`和对应的`UTF-8 字符编码`之间的关系，如下所示：
 
-![](./assets/10.png)
+![`Unicode 字符集`和对应的`UTF-8 字符编码`之间的关系](./assets/10.png)
 
 >[!NOTE]
 >
@@ -149,7 +147,7 @@ man ascii
 echo $LANG
 ```
 
-![](./assets/11.gif)
+![查看 WSL2 的 Linux 发行版的默认编码](./assets/11.gif)
 
 > [!NOTE]
 >
@@ -168,7 +166,7 @@ echo $LANG
 dnf search locale zh
 ```
 
-![](./assets/12.gif)
+![搜索中文语言包](./assets/12.gif)
 
 * ② 安装中文语言包：
 
@@ -176,7 +174,7 @@ dnf search locale zh
 dnf -y install glibc-langpack-zh
 ```
 
-![](./assets/13.gif)
+![安装中文语言包](./assets/13.gif)
 
 * ③ 切换语言环境为中文：
 
@@ -184,7 +182,7 @@ dnf -y install glibc-langpack-zh
 localectl set-locale LANG=zh_CN.UTF-8
 ```
 
-![](./assets/14.gif)
+![切换语言环境为中文](./assets/14.gif)
 
 * ④ 手动加载配置文件，使其生效：
 
@@ -192,7 +190,7 @@ localectl set-locale LANG=zh_CN.UTF-8
 source /etc/locale.conf
 ```
 
-![](./assets/15.gif)
+![手动加载配置文件，使其生效](./assets/15.gif)
 
 ## 2.3 Ubuntu 22.04 设置默认编码
 
@@ -202,7 +200,7 @@ source /etc/locale.conf
 apt update -y && apt install language-pack-zh-hans -y
 ```
 
-![](./assets/16.gif)
+![安装中文语言包](./assets/16.gif)
 
 * ② 切换环境为中文：
 
@@ -210,7 +208,7 @@ apt update -y && apt install language-pack-zh-hans -y
 update-locale LANG=zh_CN.UTF-8 LANGUAGE=zh_CN:zh
 ```
 
-![](./assets/17.gif)
+![切换环境为中文](./assets/17.gif)
 
 * ③ 手动加载配置文件，使其生效：
 
@@ -218,7 +216,7 @@ update-locale LANG=zh_CN.UTF-8 LANGUAGE=zh_CN:zh
 source /etc/default/locale
 ```
 
-![](./assets/18.gif)
+![手动加载配置文件，使其生效](./assets/18.gif)
 
 # 第三章：在 C 语言中使用中文字符
 
@@ -394,7 +392,7 @@ int main() {
 * UTF-8 兼容 ASCII，代码中的大部分字符可以用一个字节保存。另外，UTF-8 基于 Unicode，支持全世界的字符，我们编写的代码可以给全球的程序员使用，真正做到技术无国界。
 * 常见的 IDE 或者编辑器，如：Sublime Text、Vim 等，在创建源文件的时候一般默认就是 UTF-8 编码。就算不是，我们也会推荐设置为 UTF-8 编码，如下所示：
 
-![](./assets/19.png)
+![CLion 中的文件编码](./assets/19.png)
 
 * 对于 C 语言编译器来说，它往往支持多种编码格式的源文件。微软的 MSVC 、GCC 和 LLVM/Clang 都支持 UTF-8 和本地编码的源文件。
 
