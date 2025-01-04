@@ -6,6 +6,10 @@
   z-index: 199 !important;
 }
 
+.VPSocialLinks.VPNavBarSocialLinks.social-links {
+  margin-right: 0;
+}
+
 :root {
   --vp-c-brand-1: #18794e;
   --vp-c-brand-2: #299764;

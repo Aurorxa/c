@@ -12,6 +12,14 @@
     <template #aside-outline-before>
       <ShareButton />
     </template>
+    <!-- 为较宽的屏幕的导航栏添加阅读增强菜单 -->
+    <template #nav-bar-content-after>
+      <NolebaseEnhancedReadabilitiesMenu />
+    </template>
+    <!-- 为较窄的屏幕（通常是小于 iPad Mini）添加阅读增强菜单 -->
+    <template #nav-screen-content-after>
+      <NolebaseEnhancedReadabilitiesScreenMenu />
+    </template>
   </DefaultTheme.Layout>
 </template>
 
@@ -25,6 +33,13 @@ import { ShareButton } from "@theojs/lumen";
 
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
+
+import {
+  NolebaseEnhancedReadabilitiesMenu,
+  NolebaseEnhancedReadabilitiesScreenMenu,
+} from "@nolebase/vitepress-plugin-enhanced-readabilities/client";
+
+import "@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css";
 
 const { isDark } = useData();
 

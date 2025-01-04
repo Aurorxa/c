@@ -55,12 +55,15 @@ export const sharedConfig = withMermaid(defineConfig({
     },
     ssr: {
       noExternal: [
+        '@nolebase/vitepress-plugin-enhanced-readabilities',
+        '@nolebase/ui',
         '@nolebase/vitepress-plugin-highlight-targeted-heading',
         '@nolebase/vitepress-plugin-inline-link-preview',
       ],
     },
     optimizeDeps: {
       exclude: [
+        '@nolebase/vitepress-plugin-enhanced-readabilities/client',
         'vitepress',
         '@nolebase/vitepress-plugin-inline-link-preview/client',
       ],

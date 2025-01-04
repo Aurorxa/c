@@ -20,6 +20,7 @@
   "type": "module",
   "devDependencies": {
     "@mdit/plugin-figure": "^0.14.0",
+    "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.12.0",
     "@nolebase/vitepress-plugin-git-changelog": "^2.12.0",
     "@nolebase/vitepress-plugin-highlight-targeted-heading": "^2.12.0",
     "@nolebase/vitepress-plugin-inline-link-preview": "^2.12.0",
