@@ -45,7 +45,7 @@ export const sharedConfig = withMermaid(defineConfig({
     }],
     ['meta', { 'http-equiv': 'Permissions-Policy', content: 'interest-cohort=(), user-id=()' }],
     // 关键词和描述
-    ['meta', { name: "keywords", content: "许大仙" }],
+    ['meta', { name: "keywords", content: "许大仙、Java、C、C++、大数据、前端、云原生、Go、Python" }],
   ],
   appearance: true, // 主题模式，默认浅色且开启切换
   base: VITE_BASE_URL,
