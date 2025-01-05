@@ -12,11 +12,9 @@
     <template #aside-outline-before>
       <ShareButton />
     </template>
-    <!-- 为较宽的屏幕的导航栏添加阅读增强菜单 -->
     <template #nav-bar-content-after>
       <NolebaseEnhancedReadabilitiesMenu />
     </template>
-    <!-- 为较窄的屏幕（通常是小于 iPad Mini）添加阅读增强菜单 -->
     <template #nav-screen-content-after>
       <NolebaseEnhancedReadabilitiesScreenMenu />
     </template>
