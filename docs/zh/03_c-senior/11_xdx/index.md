@@ -49,12 +49,12 @@ public class Demo {
         // 用户态
         int a = 10;                                 
         int b = 20;                                 
-        int c = a + b;                              
-        string filePath = "c:/demo.txt";           
-        string txt = a + b + c;                    
+        int c = a + b;
+        String filePath = "c:/demo.txt";           
+        String txt = a + b + c;                    
         
         // 从用户态切换到内核态完成文件写入
-        writeFile(filePath, a); // [!code highlight]                   
+        writeFile(filePath, String.valueOf(a)); // [!code highlight]                   
         
         // 从内核态切换回用户态
         System.out.println(a);                      
