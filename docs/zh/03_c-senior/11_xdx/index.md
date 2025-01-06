@@ -304,22 +304,23 @@ int main() {
 
 ###   3.2.2 putchar() 函数和 getchar()  函数
 
-* putchar() 函数的声明：
+* 函数声明：
 
 ```c
+/**
+* putchar 函数把字符输出到屏幕上，并返回相同的字符。
+* 这个函数在同一个时间内只会输出一个单一的字符。
+*/
 int putchar (int c);
 ```
 
-* getchar() 函数的声明：
-
 ```c
+/**
+* getchar 函数从屏幕读取下一个可用的字符，并把它返回为一个整数。
+* 这个函数在同一个时间内只会读取一个单一的字符。
+*/
 int getchar (void);
 ```
-
-> [!NOTE]
->
-> * ① `getchar` 函数从屏幕读取下一个可用的字符，并把它返回为一个整数。这个函数在同一个时间内只会读取一个单一的字符。
-> * ② `putchar` 函数把字符输出到屏幕上，并返回相同的字符。这个函数在同一个时间内只会输出一个单一的字符。
 
 
 
@@ -344,15 +345,140 @@ int main() {
 }
 ```
 
-### 3.2.3 scanf() 函数和 printf() 函数
+### 3.2.3 gets() 函数和 puts() 函数
+
+* 函数声明：
+
+```c
+/**
+* 用于将一个字符串输出到标准输出（通常是屏幕）上，并在末尾自动添加一个换行符。
+*/
+int puts (const char *__s);
+```
+
+```c
+/**
+* 用于从标准输入（通常是键盘）读取一行字符串，直到遇到换行符（\n）为止，
+* 并将字符串存储到目标缓冲区中。
+*/
+char *gets (char *__s);
+```
 
 
 
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+        
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+    
+    puts("Hello, World!"); // [!code highlight]
+    
+    return 0;
+}
+```
 
 
-### 3.2.4 gets() 函数和 puts() 函数
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+        
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+    
+    char name[50];
+    printf("请输入你的名字：");
+    
+    // 从用户输入读取字符串
+    gets(name);   // [!code highlight]
+    
+    puts("你好, ");
+    
+    // 输出用户输入的字符串
+    puts(name);  
+    
+    return 0;
+}
+```
+
+### 3.2.4 scanf() 函数和 printf() 函数
+
+* 函数声明：
+
+```c
+/**
+* 将各种数据类型（int、float 等）的数据转换为字符，并输出到 stdout 缓冲区中
+*/
+int printf (const char *format, ...);
+```
+
+```c
+/**
+* 从 stdin 缓冲区读取字符形式的数据，并将其转换为特定类型的数据。
+*/
+int scanf (const char *__restrict __format, ...)
+```
 
 
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    int chinese, math, english;
+    float average;
+
+    printf("请输入语文成绩：");
+    scanf("%d", &chinese); // [!code highlight]
+
+    printf("请输入数学成绩：");
+    scanf("%d", &math); // [!code highlight]
+
+    printf("请输入英语成绩：");
+    scanf("%d", &english); // [!code highlight]
+
+    average = (chinese + math + english) / 3.0;
+    printf("平均成绩为：%.2f\n", average);
+
+    return 0;
+}
+```
+
+
+
+* 示例：
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // 禁用 stdout 缓冲区
+    setbuf(stdout, nullptr);
+
+    // 声明变量并赋值
+    int num = 18;
+
+    // 使用输出语句，将变量 num 的值输出，其中 %d 表示输出的是整数
+    printf("我今年%d岁\n", num); // [!code highlight]
+
+    return 0;
+}
+```
 
 ## 3.3 文件流的分类
 
