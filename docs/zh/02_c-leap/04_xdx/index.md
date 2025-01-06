@@ -4,7 +4,7 @@
 
 * 有没有过这样的日子，总感觉我们的电脑，不是一个尖端的设备，而像一只疲惫的蜗牛。它在缓慢的爬行，并试图背着重重的楼房去跑马拉松，如下所示：
 
-![](./assets/1.jpeg)
+![疲惫的蜗牛，背着重重的楼房去跑马拉松](./assets/1.jpeg)
 
 > [!NOTE]
 >
@@ -29,7 +29,7 @@
 
 * 亦或者，我们的电脑就像一个蹒跚学步的孩子在发脾气，我们多么希望她们耐心点，并配合我们。可是，她们总是拒绝和我们合作，如下所示：
 
-![](./assets/2.jpg)
+![蹒跚学步的孩子在发脾气](./assets/2.jpg)
 
 * 如果这些场景，你都感觉很熟悉，那么你很有可能就是`内存泄漏`的受害者。
 
@@ -50,11 +50,11 @@
 > * ④ 所谓的`释放内存`，就是程序告诉计算机或操作系统，不再需要使用之前申请的内存空间，那么就可以将之前申请的内存空间，归还给操作系统或计算机，让其它的程序使用。
 > * ⑤ 上面例子中的`程序`就像`车辆`一样，每辆车都执行各自的任务，类似于程序在执行的时候，向操作系统申请自己的内存空间，并完成自己的任务。
 
-![](./assets/3.jpg)
+![交通中的车辆各司其职](./assets/3.jpg)
 
 * 但是，如果有些车辆在完成自己的任务之后，就决定无限期的停在路上，而不是离开。那么，可以想象到的是，随着时间的推移，这些停放的汽车就会开始阻塞城市的道路，减慢交通速度，如下所示：
 
-![](./assets/4.jpg)
+![交通阻塞](./assets/4.jpg)
 
 > [!NOTE]
 >
@@ -73,7 +73,7 @@
 
 * 再或者，在生活中，我们必然需要用水，如果规定每个人一个月的用水量不能超过 `10t`，那么三口之间每个月的用水量就不能超过 `30t`。假设，由于水管老化或小动物（老鼠）的影响，而导致家中的水管产生轻微的破损，产生漏水的现象，如下所示：
 
-![](./assets/5.jpg)
+![漏水现象](./assets/5.jpg)
 
 * 那么，家中隐藏的漏水问题在很长一段时间内是不会被注意到的。亦或者，假设每个人的用水量都没有限制，那么如果要用到 `30t` ，必然会比之前没有漏水的时候，产生的水费也要多很多。
 
@@ -118,7 +118,7 @@ int main() {
 
 * 如果我们在 Windows 上运行该程序，就可以打开 Windows 的任务管理器（快捷键是`Ctrl + Shift + ESC`），将会发现内存的使用率在飙升。当然，稍等片刻后程序会被终止，是因为 Windows  的内存管理机制，发现我们的程序占用内存太多，会让它崩溃，防止系统卡死（其它的操作系统也有相应的措施）。
 
-![](./assets/6.gif)
+![使用 malloc 模拟内存泄漏](./assets/6.gif)
 
 ## 1.4 内存泄漏会导致什么后果？
 
@@ -165,15 +165,15 @@ int main() {
 * 首先，说明一点，在国内的很多文章中，都将 `Out Of Memory（OOM）`翻译为 `内存溢出`，但是本人认为翻译为`内存不足`更为贴切。
 * 在生活中，我们在使用计算机的时候，可能会遇到打开视频网站的时候，视频网站崩溃了，并且在浏览器上显示报错信息`Error Code Out Of Memory`，如下所示：
 
-![](./assets/7.png)
+![视频网站出现内存溢出](./assets/7.png)
 
 * 当然，我们在使用微软办公套件，如：Outlook 的时候，可能也会遇到系统提示 `Out Of Memory`，如下所示：
 
-![](./assets/8.jpg)
+![Outlook 出现内存溢出](./assets/8.jpg)
 
 * 亦或者，我们在打游戏的时候，会遇到系统提示 `Out Of Memory`，如下所示：
 
-![](./assets/9.png)
+![打游戏出现内存溢出](./assets/9.png)
 
 * 上述的种种情景，都表明了内存溢出（内存不足，OOM）是`立即显现`的问题，尤其是当系统无法分配足够内存时，会直接导致程序崩溃或异常。
 
@@ -287,7 +287,7 @@ dnf -y upgrade && dnf -y install valgrind # AlmaLinux
 apt -y update && apt -y upgrade && apt -y install valgrind # Ubuntu
 ```
 
-![](./assets/10.gif)
+![在 WSL2 上安装 Valgrind](./assets/10.gif)
 
 * 查看 valgrind 可执行文件的安装位置：
 
@@ -295,17 +295,17 @@ apt -y update && apt -y upgrade && apt -y install valgrind # Ubuntu
 which valgrind
 ```
 
-![](./assets/11.gif)
+![查看 valgrind 可执行文件的安装位置](./assets/11.gif)
 
 ### 4.1.3 整合
 
 * CLion 中将工具链设置为 WSL2 ：
 
-![](./assets/12.gif)
+![CLion 中将工具链设置为 WSL2](./assets/12.gif)
 
 * CLion 中配置 valgrind 的路径：
 
-![](./assets/13.png)
+![CLion 中配置 valgrind 的路径](./assets/13.png)
 
 * 查看 WSL2 中 cmake 的版本：
 
@@ -313,7 +313,7 @@ which valgrind
 cmake --version
 ```
 
-![](./assets/14.png)
+![查看 WSL2 中 cmake 的版本](./assets/14.png)
 
 * 修改项目中 CMakeLists.txt 中 cmake 的版本：
 
@@ -389,11 +389,11 @@ endforeach ()
 
 * 在 CLion 中正常运行代码：
 
-![](./assets/15.gif)
+![在 CLion 中正常运行代码](./assets/15.gif)
 
 * 在 CLion 中通过 valgrind 运行代码：
 
-![](./assets/16.gif)
+![在 CLion 中通过 valgrind 运行代码](./assets/16.gif)
 
 ## 4.2 性能分析
 
@@ -411,7 +411,7 @@ endforeach ()
 dnf -y install perf
 ```
 
-![](./assets/17.gif)
+![在 WSL2 中的 AlmaLinux 安装 perf ](./assets/17.gif)
 
 #### 4.2.2.2 Ubuntu 22.04
 
@@ -423,7 +423,7 @@ apt -y update \
 	linux-tools-generic linux-tools-$(uname -r)
 ```
 
-![](./assets/18.gif)
+![在 WSL2 中的 Ubuntu 安装 perf ](./assets/18.gif)
 
 > [!NOTE]
 >
@@ -435,7 +435,7 @@ apt -y update \
 uname -sr
 ```
 
-![](./assets/19.gif)
+![查看内核版本](./assets/19.gif)
 
 * 设置环境变量，方便后续引用：
 
@@ -443,7 +443,7 @@ uname -sr
 export KERNEL_VERSION=$(uname -r | cut -d'-' -f1)
 ```
 
-![](./assets/20.gif)
+![设置环境变量，方便后续引用](./assets/20.gif)
 
 * 安装依赖库：
 
@@ -460,7 +460,7 @@ apt -y update && \
     libelf++0 libbfb0-dev python-dev-is-python3
 ```
 
-![](./assets/21.gif)
+![安装依赖库](./assets/21.gif)
 
 * 下载源码：
 
@@ -471,7 +471,7 @@ git clone \
     https://github.com/microsoft/WSL2-Linux-Kernel.git
 ```
 
-![](./assets/22.gif)
+![下载源码](./assets/22.gif)
 
 * 编译内核代码：
 
@@ -483,7 +483,7 @@ cd WSL2-Linux-Kernel
 make -j $(nproc) KCONFIG_CONFIG=Microsoft/config-wsl
 ```
 
-![](./assets/23.gif)
+![编译内核代码](./assets/23.gif)
 
 * 编译 perf 工具：
 
@@ -495,7 +495,7 @@ cd tools/perf
 make clean && make
 ```
 
-![](./assets/24.gif)
+![编译 perf 工具](./assets/24.gif)
 
 * 复制到 PATH 变量所指向的路径中：
 
@@ -503,14 +503,14 @@ make clean && make
 cp perf /usr/bin/
 ```
 
-![](./assets/25.gif)
+![复制到 PATH 变量所指向的路径中](./assets/25.gif)
 
 ### 4.2.3 整合
 
 * CLion 中配置 perf 的路径：
 
-![](./assets/26.png)
+![CLion 中配置 perf 的路径](./assets/26.png)
 
 * 在 CLion 中通过 perf 运行代码：
 
-![](./assets/27.gif)
+![在 CLion 中通过 perf 运行代码](./assets/27.gif)
