@@ -1180,6 +1180,10 @@ extern int printf (const char *__restrict __format, ...);
 └─📄 main.c------ # 主函数
 ```
 
+> [!CAUTION]
+>
+> 头文件通常包含`函数声明（函数原型）`、`自定义数据类型（结构体、联合体）`、`宏定义`以及`类型别名`等。
+
 * 在 CLion 中，是这样的，如下所示：
 
 ![](./assets/13.png)
