@@ -253,7 +253,7 @@
 
 > [!NOTE]
 >
-> 在 Linux 中，重定向技术使用的非常广泛，如：
+> ::: details 点我查看 Linux 中的重定向技术
 >
 > ```shell
 > wc -l < file.txt # 输入重定向
@@ -266,8 +266,7 @@
 > ```shell
 > ls nonexistent_file 2> error.txt # 标准错误写入到文件
 > ```
-
-
+> :::
 
 ### 1.3.6 缓冲区的分类
 
