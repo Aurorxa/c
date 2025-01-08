@@ -6,9 +6,7 @@
     <template #doc-before>
       <ArticleMetadata />
     </template>
-    <template #doc-after>
-      <Artalk />
-    </template>
+    
     <template #doc-top>
       <NolebaseHighlightTargetedHeading />
     </template>
@@ -31,7 +29,6 @@ import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { nextTick, provide } from "vue";
 import { ShareButton } from "@theojs/lumen";
-import Artalk from "./Artalk.vue";
 
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
