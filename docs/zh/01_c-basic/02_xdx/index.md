@@ -581,3 +581,94 @@ winget export -o package.json
 ```
 
 ![](./assets/33.gif)
+
+
+
+# 第三章：Chocolatey
+
+## 3.1 概述
+
+* Chocolatey 是长期流行的第三方软件包管理器，支持许多开发工具、服务和常见软件，其还提供商业版支持。
+
+> [!NOTE]
+>
+> ::: details 点我查看 为什么还介绍 Chocolatey ？
+>
+> 因为有些软件还没有对 winget 进行适配，如：Maven 和 Gradle，如下所示：
+>
+> ![部分软件没有对 winget 进行适配](./assets/34.png)
+> :::
+
+## 3.2 Chocolatey 安装
+
+### 3.2.1 winget 安装 Chocolatey（推荐） 
+
+* 使用 winget 命令进行安装：
+
+```cmd
+winget install --id Chocolatey.Chocolatey
+```
+
+![](./assets/35.gif)
+
+### 3.2.2 手动执行命令安装 Chocolatey 
+
+* 使用管理员的权限执行以下的命令：
+
+::: code-group
+
+```cmd
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+```
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+:::
+
+![](./assets/36.gif)
+
+## 3.3 Chocolatey 远程仓库的使用
+
+* 和 winget 不同的是，Chocolatey  提供了一个[可视化界面](https://community.chocolatey.org/packages)来辅助我们使用，如下所示：
+
+![](./assets/37.png)
+
+* 之后，我们就可以在这个[可视化界面](https://community.chocolatey.org/packages)中搜索想要的软件包，获取软件包安装的命令，如下所示：
+
+![](./assets/38.png)
+
+## 3.3 基本操作（CRUD，⭐）
+
+### 3.3.1 搜索软件
+
+* 命令：
+
+```shell
+```
+
+
+
+
+
+### 3.3.2 安装软件
+
+
+
+
+
+### 3.3.3 升级软件
+
+
+
+
+
+### 3.3.4 查询本地已安装的软件
+
+
+
+
+
+### 3.3.5 卸载软件
+
