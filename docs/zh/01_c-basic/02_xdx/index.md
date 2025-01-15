@@ -639,9 +639,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 ![](./assets/38.png)
 
-## 3.3 基本操作（CRUD，⭐）
+## 3.4 基本操作（CRUD，⭐）
 
-### 3.3.1 搜索软件
+### 3.4.1 搜索软件
 
 * 命令：
 
@@ -708,23 +708,23 @@ choco search 7zip --all-versions --exact
 
 ![](./assets/43.gif)
 
-### 3.3.2 安装软件
+### 3.4.2 安装软件
 
 
 
 
 
-### 3.3.3 升级软件
+### 3.4.3 升级软件
 
 
 
 
 
-### 3.3.4 查询本地已安装的软件
+### 3.4.4 查询本地已安装的软件
 
 
 
 
 
-### 3.3.5 卸载软件
+### 3.4.5 卸载软件
 
