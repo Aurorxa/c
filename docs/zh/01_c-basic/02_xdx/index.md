@@ -126,7 +126,7 @@ winget search [可选参数] [-q] <软件名>
 >
 > * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
 > * `--name`：将搜索限制为应用程序的名称。
-> * `-s（--source）`：使用指定的源名称（msstore 等）查找包。
+> * `-s、--source`：使用指定的源名称（msstore 等）查找包。
 > * `--versions`：显示程序包的可用版本。
 
 
@@ -137,17 +137,19 @@ winget search [可选参数] [-q] <软件名>
 winget search nodejs
 ```
 
-![](./assets/9.gif)
+![](./assets/1.gif)
 
 
 
 * 示例：根据 id 查询指定的软件包
 
 ```cmd
-winget search --id OpenJS.NodeJS.LTS
+winget search --id OpenJS.NodeJS
 ```
 
 ![](./assets/10.gif)
+
+
 
 * 示例：根据 name 查询指定的软件包
 
@@ -214,13 +216,368 @@ winget install [可选参数] [-q] <软件名>
 > * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
 > * `--name`：将搜索限制为应用程序的名称。
 > * `-v、--version`：指定要安装的确切版本。 如果此项未指定，则使用 `latest` 会安装最高版本的应用程序。
-> * `-s（--source）`：使用指定的源名称（msstore 等）查找包。
-> * `-l、--location`：指定需要安装到的位置，如果不指定，默认就安装到 `C:\Program Files\WindowsApps`目录中。
+> * `-s、--source`：使用指定的源名称（msstore 等）查找包。
+> * `-l、--location`：指定需要安装到的位置（并非所有的软件都支持该参数），如果不指定，默认就安装到 `C:\Program Files\WindowsApps`目录中。
+
+
+
+* 示例：安装 powertoys（需要精确匹配）
+
+```shell
+winget install --id Microsoft.PowerToys
+```
+
+![](./assets/15.gif)
+
+
+
+* 示例：安装指定版本的 powertoys
+
+```shell
+winget install --id Microsoft.PowerToys --version 0.17.0
+```
+
+![](./assets/16.gif)
+
+
+
+* 示例：安装到指定位置
+
+```cmd
+winget install --id Apache.Groovy.4 -l D:\develop\groovy
+```
+
+![](./assets/17.gif)
+
+### 2.3.3 升级软件
+
+* 命令：
+
+```shell
+winget upgrade [可选参数] [-q] <软件名> 
+```
+
+> [!NOTE]
+>
+> 参数：
+>
+> * `-q、--query`：查询标志是用于搜索应用的默认参数。 无需指定。
+>
+> 可选参数：
+>
+> * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
+> * `--name`：将搜索限制为应用程序的名称。
+> * `-v、--version`：指定要安装的确切版本。 如果此项未指定，则使用 `latest` 会安装最高版本的应用程序。
+
+
+
+* 示例：更新指定软件包
+
+```cmd
+winget upgrade --id Apache.Groovy.4
+```
+
+![](./assets/18.gif)
+
+* 示例：更新所有软件包
+
+```cmd
+# --force 直接运行命令并继续处理非安全相关问题
+# --unknown 升级包（即使无法确定其当前版本）
+winget upgrade --all --force --unknown
+```
+
+![](./assets/19.gif)
+
+### 2.3.4 查询本地已安装的软件
+
+* 命令：
+
+```shell
+winget list  [可选参数] [-q] <软件名> 
+```
+
+> [!NOTE]
+>
+> 参数：
+>
+> * `-q、--query`：查询标志是用于搜索应用的默认参数。 无需指定。
+>
+> 可选参数：
+>
+> * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
+> * `--name`：将搜索限制为应用程序的名称。
+> * `-n、--count`：限制查询中显示的应用个数。
+> * `-s、--source`：使用指定的源名称（msstore 等）查找包。
+
+
+
+* 示例：查询本地是否安装有 Git
+
+```cmd
+winget list git
+```
+
+![](./assets/20.gif)
+
+
+
+* 示例：查询本地安装的所有应用
+
+```cmd
+winget list
+```
+
+![](./assets/21.gif)
+
+
+
+* 示例：查询本地安装的所有应用，但是限制输出为 9 个
+
+```cmd
+winget list -n 9
+```
+
+![](./assets/22.gif)
+
+
+
+* 示例：查询本地安装有指定源的所有应用，但是限制输出为 9 个
+
+```cmd
+winget list --source winget -n 9
+```
+
+![](./assets/23.gif)
+
+### 2.3.5 卸载软件
+
+* 命令：
+
+```shell
+winget uninstall [可选参数] [-q] <软件名> 
+```
+
+> [!NOTE]
+>
+> 参数：
+>
+> * `-q、--query`：查询标志是用于搜索应用的默认参数。 无需指定。
+>
+> 可选参数：
+>
+> * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
+> * `--name`：将搜索限制为应用程序的名称。
+> * `-s、--source`：使用指定的源名称（msstore 等）查找包。
+
+
+
+* 示例：卸载指定的软件
+
+```shell
+winget uninstall --id Apache.Groovy.4
+```
+
+![](./assets/24.gif)
+
+## 2.4 winget 镜像源
+
+### 2.4.1 概述
+
+* 之前提过，软件包管理器是需要远程仓库（镜像源，存储库）来托管软件包，如下所示：
+
+![](./assets/1.svg)
+
+* 但是，默认情况下，winget 有些软件包是托管到 GitHub 上的，在国内如果使用 winget 进行软件包的下载会很慢，所以就需要切换到国内的 winget 的镜像源（存储库），如下所示：
+
+![](./assets/2.svg)
+
+### 2.4.2 查看 winget 镜像源
+
+* 命令：
+
+```shell
+winget source list [-name 镜像源名称]
+```
+
+> [!NOTE]
+>
+> 默认情况下，winget 会配置两个镜像源，如下所示：
+>
+> * ① msstore ：Microsoft Store 目录。
+> * ② winget ：Windows 程序包管理器应用镜像源。
+>
+> 可选参数：
+>
+> * `-name`：获取有关镜像源的完整详细信息。
+
+
+
+* 示例：查询所有的镜像源
+
+```cmd
+winget source list
+```
+
+![](./assets/25.gif)
+
+
+
+* 示例：查询指定镜像源的详细信息
+
+```cmd
+winget source list --name winget
+```
+
+![](./assets/26.gif)
+
+### 2.4.3 添加 winget 镜像源
+
+* 命令：
+
+```shell
+winget source add <镜像源名称> <镜像源的 URL 地址> --trust-level trusted
+```
+
+> [!CAUTION]
+>
+> 由于该命令会更改用户访问权限，因此使用 add 需要管理员权限。
+
+
+
+* 示例：
+
+```cmd
+winget source add ustc https://mirrors.ustc.edu.cn/winget-source --trust-level trusted
+```
+
+![](./assets/27.gif)
+
+### 2.4.4 更新 winget 镜像源
+
+* 命令：
+
+```shell
+winget source update [--name <镜像源名称>]
+```
+
+
+
+* 示例：更新所有镜像源
+
+```cmd
+winget source update
+```
+
+![](./assets/28.gif)
+
+
+
+* 示例：更新指定镜像源
+
+```cmd
+winget source update --name winget
+```
+
+![](./assets/29.gif)
+
+### 2.4.5 删除 winget 镜像源
+
+* 命令：
+
+```shell
+winget source remove --name <镜像源名称>
+```
+
+> [!CAUTION]
+>
+> 由于该命令会更改用户访问权限，因此使用 remove 需要管理员权限。
 
 
 
 * 示例：
 
 ```shell
+winget source remove --name winget
 ```
 
+![](./assets/30.gif)
+
+### 2.4.6 重置 winget 镜像源
+
+* 命令：
+
+```shell
+winget source reset --force
+```
+
+> [!CAUTION]
+>
+> * ① reset 子命令用于将客户端重置为其原始配置，并删除除默认源之外的所有源。 
+> * ② 由于该命令会更改用户访问权限，因此使用 reset 需要管理员权限。
+
+
+
+* 示例：
+
+```cmd
+winget source reset --force
+```
+
+![](./assets/31.gif)
+
+## 2.5 其余命令
+
+### 2.5.1 显示应用程序的详细信息
+
+* 命令：
+
+```shell
+winget show [可选参数] [-q] <软件名> 
+```
+
+> [!NOTE]
+>
+> 参数：
+>
+> * `-q、--query`：查询标志是用于搜索应用的默认参数。 无需指定。
+>
+> 可选参数：
+>
+> * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
+
+
+
+* 示例：
+
+```cmd
+winget show --name Apache.Groovy.4
+```
+
+![](./assets/32.gif)
+
+### 2.5.2 应用程序的批量导出和批量导入
+
+* 命令：
+
+```shell
+winget export [-o] xxx.json # 将应用程序的 JSON 文件导出到指定文件
+```
+
+```shell
+winget import [-i] xxx.json # 导入要安装的应用的 JSON 文件
+```
+
+> [!NOTE]
+>
+> 应用场景：主要用于与其他开发人员共享该文件，或在还原开发、测试或生产环境。
+
+
+
+* 示例：
+
+```shell
+winget export -o package.json
+```
+
+![](./assets/33.gif)
