@@ -646,11 +646,67 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 * 命令：
 
 ```shell
+choco search <软件名> [可选参数]
 ```
 
+> [!NOTE]
+>
+> 可选参数：
+>
+> * `-y, --yes, --confirm`：确认所有提示。
+> * `-s、--source`：使用指定的源名称（windowsfeatures、ruby、cygwin、python 等）查找包。
+> * `-a, --all, --allversions, --all-versions`：显示程序包的可用版本。
+> * `-e, --exact`：精确搜索。
 
 
 
+* 示例：查询指定的软件包
+
+```cmd
+choco search nodejs
+```
+
+![](./assets/39.gif)
+
+
+
+* 示例：精确查找指定的软件包
+
+```cmd
+choco search nodejs --exact
+```
+
+![](./assets/40.gif)
+
+
+
+* 示例：查询所有可用的软件包
+
+```cmd
+choco search ""
+```
+
+![](./assets/41.gif)
+
+
+
+* 示例：分页搜索软件包
+
+```shell
+choco search jdk --page=0 --page-size=25
+```
+
+![](./assets/42.gif)
+
+
+
+* 示例：显示软件包的所有可用版本（软件包需要精确匹配）
+
+```cmd
+choco search 7zip --all-versions --exact
+```
+
+![](./assets/43.gif)
 
 ### 3.3.2 安装软件
 
