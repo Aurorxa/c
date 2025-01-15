@@ -187,7 +187,7 @@ winget search "Visual Studio Code" -s msstore
 
 
 
-* 示例：显示程序包的所有可用版本（程序包需要精确匹配）
+* 示例：显示软件包的所有可用版本（软件包需要精确匹配）
 
 ```cmd
 winget search --id Microsoft.PowerToys --versions
@@ -215,7 +215,7 @@ winget install [可选参数] [-q] <软件名>
 > * `--name`：将搜索限制为应用程序的名称。
 > * `-v、--version`：指定要安装的确切版本。 如果此项未指定，则使用 `latest` 会安装最高版本的应用程序。
 > * `-s（--source）`：使用指定的源名称（msstore 等）查找包。
-> * `-l、--location`：指定需要安装到的位置，如果不指定，默认就安装到 `C:\Program Files\WindowsApps`。
+> * `-l、--location`：指定需要安装到的位置，如果不指定，默认就安装到 `C:\Program Files\WindowsApps`目录中。
 
 
 
