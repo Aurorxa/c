@@ -41,7 +41,7 @@
 | Scoop               | ① 专注于开发者工具，如编程语言、数据库等。<br>② 无需管理员权限即可安装。<br>③ 使用简洁，易于扩展。 |
 | Ninite              | ① 简单易用，适合普通用户。<br>② 自动化安装和更新常见软件，如：浏览器、媒体播放器等。 |
 
-## 1.3 软件包管理器的原理
+## 1.3 软件包管理器原理
 
 * 用户通过`命令行`执行一系列的`命令`操作，让软件包管理器去`远程仓库`下载指定的软件包并安装到本地计算机，如下所示：
 
@@ -49,12 +49,12 @@
 
 
 
-# 第二章：winget 的使用
+# 第二章：winget
 
 ## 2.1 概述
 
-* 开发人员可以使用 winget 命令行工具发现、安装、升级、删除和配置特选应用程序集。 
-* 安装后，开发人员可以通过 Windows 终端、PowerShell 或命令提示符访问 winget。
+* 开发人员可以使用 `winget` 命令行工具发现、安装、升级、删除和配置特选应用程序集。 
+* 安装后，开发人员可以通过 Windows 终端、PowerShell 或命令提示符访问 `winget`。
 
 ## 2.2 启用 tab 自动补全（仅限于 PowerShell ）
 
@@ -102,7 +102,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 
 ![](./assets/7.gif)
 
-* ③ 重新打开 PowerShell ，就会发现 winget tab 可以自动补全：
+* ③ 重新打开 PowerShell ，就会发现 `winget tab` 可以自动补全：
 
 ![](./assets/8.gif)
 
@@ -113,7 +113,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 * 命令：
 
 ```shell
-winget search [可选参数] [-q <软件名> ]
+winget search [可选参数] [-q] <软件名> 
 ```
 
 > [!NOTE]
@@ -126,7 +126,8 @@ winget search [可选参数] [-q <软件名> ]
 >
 > * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
 > * `--name`：将搜索限制为应用程序的名称。
-> * `-s（--source）`：使用指定的[源](https://learn.microsoft.com/zh-cn/windows/package-manager/winget/source)名称查找包。
+> * `-s（--source）`：使用指定的源名称（msstore 等）查找包。
+> * `--versions`：显示程序包的可用版本。
 
 
 
@@ -173,3 +174,53 @@ winget search -q `"`"
 :::
 
 ![](./assets/12.gif)
+
+
+
+* 示例：跨源搜索（结果范围缩小到特定源）
+
+```cmd
+winget search "Visual Studio Code" -s msstore
+```
+
+![](./assets/13.gif)
+
+
+
+* 示例：显示程序包的所有可用版本（程序包需要精确匹配）
+
+```cmd
+winget search --id Microsoft.PowerToys --versions
+```
+
+![](./assets/14.gif)
+
+### 2.3.2 安装软件
+
+* 命令：
+
+```shell
+winget install [可选参数] [-q] <软件名> 
+```
+
+> [!NOTE]
+>
+> 参数：
+>
+> * `-q、--query`：查询标志是用于搜索应用的默认参数。 无需指定。
+>
+> 可选参数：
+>
+> * `--id`：将搜索限制为应用程序的 ID。 该 ID 包含发布者和应用程序名称。
+> * `--name`：将搜索限制为应用程序的名称。
+> * `-v、--version`：指定要安装的确切版本。 如果此项未指定，则使用 `latest` 会安装最高版本的应用程序。
+> * `-s（--source）`：使用指定的源名称（msstore 等）查找包。
+> * `-l、--location`：指定需要安装到的位置，如果不指定，默认就安装到 `C:\Program Files\WindowsApps`。
+
+
+
+* 示例：
+
+```shell
+```
+
