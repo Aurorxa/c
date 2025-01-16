@@ -73,6 +73,8 @@ export const sharedConfig = withMermaid(defineConfig({
       groupIconVitePlugin({
         customIcon: {
           'c': localIconLoader(import.meta.url, '../../public/iconify/c.svg'),
+          'winget': 'vscode-icons:file-type-shell',
+          'choco': localIconLoader(import.meta.url, '../../public/iconify/choco.svg'),
           'cmd': 'vscode-icons:file-type-shell',
           'powershell': 'vscode-icons:file-type-powershell'
         }

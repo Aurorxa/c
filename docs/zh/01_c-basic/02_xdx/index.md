@@ -32,7 +32,7 @@
   * ③ `Scoop`：社区支持，主打轻量化。
   * ④ `Ninite`：一次性安装并更新所有程序（如果你不熟悉命令行，可以选择该工具）。
 
-* WIndows 软件包管理器的特别，如下所示：
+* WIndows 软件包管理器的特点，如下所示：
 
 | Windows软件包管理器 | 特点                                                         |
 | ------------------- | ------------------------------------------------------------ |
@@ -282,10 +282,13 @@ winget upgrade --id Apache.Groovy.4
 * 示例：更新所有软件包
 
 ```cmd
-# --force 直接运行命令并继续处理非安全相关问题
-# --unknown 升级包（即使无法确定其当前版本）
 winget upgrade --all --force --unknown
 ```
+
+> [!NOTE]
+>
+> * ① --force ：直接运行命令并继续处理非安全相关问题。
+> * ② --unknown ：升级包（即使无法确定其当前版本）。
 
 ![](./assets/19.gif)
 
@@ -599,7 +602,7 @@ winget export -o package.json
 > ![部分软件没有对 winget 进行适配](./assets/34.png)
 > :::
 
-## 3.2 Chocolatey 安装
+## 3.2 安装
 
 ### 3.2.1 winget 安装 Chocolatey（推荐） 
 
@@ -710,21 +713,328 @@ choco search 7zip --all-versions --exact
 
 ### 3.4.2 安装软件
 
+* 命令：
+
+```shell
+choco search <软件名> [可选参数]
+```
+
+> [!NOTE]
+>
+> 可选参数：
+>
+> * `-s、--source`：使用指定的源名称（windowsfeatures、ruby、cygwin、python 等）查找包。
+> * `-f、--force`：强制安装，忽略已安装的相同版本。
+> * `-d、--debug`：启用调试模式。
+> * `-v、--verbose`：启用详细输出（verbose logging）。
+> * `-y, --yes, --confirm`：确认所有提示。
+> * `--params=""`：传递给软件包的参数。
+> * `--install-arguments=""`：安装参数，直接传递给程序。
 
 
 
+* 示例：安装 git 软件包
+
+```cmd
+choco install git
+```
+
+![](./assets/44.gif)
+
+
+
+* 示例：一次性安装多个软件包，并确认所有提示
+
+```cmd
+choco install notepadplusplus googlechrome 7zip -y
+```
+
+![](./assets/45.gif)
+
+
+
+* 示例：强制重新安装软件，并强制重新安装其依赖项
+
+```cmd
+choco install notepadplusplus --force --force-dependencies
+```
+
+![](./assets/46.gif)
+
+
+
+* 示例：安装多个软件包，启用详细输出并强制安装
+
+```cmd
+choco install notepadplusplus googlechrome 7zip -dvfy
+```
+
+![](./assets/47.gif)
+
+
+
+* 示例：安装 Git ，并传递参数给 Git 
+
+```cmd
+choco install git -y --params="'/GitAndUnixToolsOnPath'"
+```
+
+> [!NOTE]
+>
+> `/GitAndUnixToolsOnPath` ：在安装 Git 时，将 Git 添加到系统 PATH 环境变量中。
+
+![](./assets/48.gif)
+
+
+
+* 示例：安装 Git ，指定额外的安装参数
+
+```shell
+choco install git -y --params="'/GitAndUnixToolsOnPath'" --install-arguments="'/DIR=C:\git'"
+```
+
+![](./assets/49.gif)
+
+
+
+* 示例：安装指定版本的 Node.js
+
+```shell
+choco install nodejs --version 22.2.0
+```
+
+![](./assets/50.gif)
 
 ### 3.4.3 升级软件
 
+* 命令：
+
+```shell
+choco upgrade <软件名> [可选参数]
+```
+
+> [!NOTE]
+>
+> 可选参数：
+>
+> * `-s、--source`：使用指定的源名称（windowsfeatures、ruby、cygwin、python 等）查找包。
+> * `-f、--force`：强制安装，忽略已安装的相同版本。
+> * `-d、--debug`：启用调试模式。
+> * `-v、--verbose`：启用详细输出（verbose logging）。
+> * `-y, --yes, --confirm`：确认所有提示。
+> * `--params=""`：传递给软件包的参数。
+> * `--install-arguments=""`：安装参数，直接传递给程序。
+>
+> 准备工作：
+>
+> ```cmd
+> choco install notepadplusplus --version 8.6.5 -fy --force-dependencies
+> choco install git --version 2.41.0 -fy --force-dependencies
+> choco install nodejs --version 22.2.0 -fy --force-dependencies
+> ```
 
 
 
+* 示例：更新 chocolatey
+
+```cmd
+choco upgrade chocolatey
+```
+
+![](./assets/51.gif)
+
+
+
+* 示例：批量更新多个软件包
+
+```cmd
+choco upgrade notepadplusplus
+```
+
+![](./assets/52.gif)
+
+
+
+* 示例：批量更新多个软件包，启用详细输出并强制安装
+
+```cmd
+choco upgrade notepadplusplus  -dvfy
+```
+
+![](./assets/53.gif)
+
+
+
+* 示例：更新软件包，并传递参数
+
+```cmd
+choco upgrade git -y --params="'/GitAndUnixToolsOnPath /NoAutoCrlf'"
+```
+
+![](./assets/54.gif)
+
+
+
+* 示例：更新软件包，并指定额外的安装参数
+
+```cmd
+choco upgrade git -y --params="'/GitAndUnixToolsOnPath /NoAutoCrlf'" --install-args="'/DIR=C:\git'"
+```
+
+![](./assets/55.gif)
+
+
+
+* 示例：将软件包更新到指定的版本
+
+```cmd
+choco upgrade nodejs.install --version 23.6.0
+```
+
+![](./assets/56.gif)
+
+
+
+* 示例：排除某些软件之后，更新剩下的全部软件
+
+```cmd
+choco upgrade all --except="'git,notepadplusplus'"
+```
+
+![](./assets/57.gif)
+
+
+
+* 示例：更新所有软件
+
+```cmd
+choco upgrade all
+```
+
+![](./assets/58.gif)
 
 ### 3.4.4 查询本地已安装的软件
 
+* 命令：
+
+```shell
+choco list <软件名> [可选参数]
+```
+
+> [!NOTE]
+>
+> 可选参数：
+>
+> * `-i、--includeprograms、--include-programs`：显示安装到计算机上的所有软件，包括哪些不是由 Chocolatey  管理的。
 
 
 
+* 示例：显示通过 Chocolatey  安装到计算机上的软件
+
+```cmd
+choco list 
+```
+
+![](./assets/59.gif)
+
+
+
+* 示例：显示计算机上的所有软件，包括哪些不是由 Chocolatey  管理的
+
+```cmd
+choco list -i
+```
+
+![](./assets/60.gif)
 
 ### 3.4.5 卸载软件
 
+* 命令：
+
+```shell
+choco uninstall <软件名> [可选参数]
+```
+
+> [!NOTE]
+>
+> 可选参数：
+>
+> * `-f、--force`：强制安装，忽略已安装的相同版本。
+> * `-d、--debug`：启用调试模式。
+> * `-v、--verbose`：启用详细输出（verbose logging）。
+> * `-y, --yes, --confirm`：确认所有提示。
+> * `--version`：卸载软件的指定版本。
+> * `--all-versions`：卸载软件的所有版本。
+
+
+
+* 示例：卸载指定的软件
+
+```cmd
+choco uninstall git
+```
+
+![](./assets/61.gif)
+
+
+
+* 示例：批量卸载软件
+
+```cmd
+choco uninstall notepadplusplus googlechrome -dv
+```
+
+![](./assets/62.gif)
+
+
+
+* 示例：卸载软件的指定版本
+
+```shell
+choco uninstall nodejs --version 23.6.0 -fy
+```
+
+![](./assets/63.gif)
+
+
+
+* 示例：卸载软件的所有版本
+
+```shell
+choco uninstall nodejs --all-versions
+```
+
+![](./assets/64.gif)
+
+
+
+# 第四章：包管理器图形化解决方案 --- UniGetUI
+
+## 4.1 概述
+
+* UniGetUI 主要目标是为 Windows 10 和 11 的最常见 CLI 包管理器创建直观的 GUI，例如：[WinGet](https://learn.microsoft.com/en-us/windows/package-manager/) 、 [Scoop](https://scoop.sh/) 、 [Chocolatey](https://chocolatey.org/) 、 [Pip](https://pypi.org/) 、 [Npm](https://www.npmjs.com/) 、 [.NET Tool](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install) 、 [PowerShell Gallery](https://www.powershellgallery.com/) 等。
+* 使用此应用程序，我们可以轻松下载、安装、更新和卸载在受支持的包管理器上发布的任何软件 。
+
+## 4.2 安装
+
+* 可以通过 winget 等软件包管理器安装：
+
+::: code-group
+
+```cmd [winget]
+winget install --exact --id MartiCliment.UniGetUI --source winget
+```
+
+```cmd [choco]
+choco install wingetui
+```
+
+:::
+
+![](./assets/70.gif)
+
+## 4.3 使用
+
+* 使用方式很简单，就是在图形化界面上操作，如下所示：
+
+![](./assets/71.gif)
