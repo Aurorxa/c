@@ -1013,7 +1013,7 @@ choco uninstall nodejs --all-versions
 ## 4.1 概述
 
 * UniGetUI 主要目标是为 Windows 10 和 11 的最常见 CLI 包管理器创建直观的 GUI，例如：[WinGet](https://learn.microsoft.com/en-us/windows/package-manager/) 、 [Scoop](https://scoop.sh/) 、 [Chocolatey](https://chocolatey.org/) 、 [Pip](https://pypi.org/) 、 [Npm](https://www.npmjs.com/) 、 [.NET Tool](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install) 、 [PowerShell Gallery](https://www.powershellgallery.com/) 等。
-* 使用此应用程序，我们可以轻松下载、安装、更新和卸载在受支持的包管理器上发布的任何软件 。
+* 使用此应用程序，可以轻松下载、安装、更新和卸载在受支持的包管理器上发布的任何软件 。
 
 ## 4.2 安装
 
