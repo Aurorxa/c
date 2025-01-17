@@ -1,7 +1,6 @@
 <template>
   <div class="word">
     <p>
-      <NolebaseGitContributors />
       <span>🔥更新：{{ dayjs(date.toLocaleDateString()).format("YYYY-MM-DD") }}</span>
       <span>📝字数: {{ wordCount }} 字</span>
       <span>⏱时长: {{ readTime }} 分钟</span>
@@ -15,7 +14,6 @@ import { useData } from "vitepress";
 import { computed, ref, onMounted, watch } from "vue";
 import { countWord } from "../utils/functions";
 import { useRoute } from "vitepress";
-import { NolebaseGitContributors } from "@nolebase/vitepress-plugin-git-changelog/client";
 
 const route = useRoute(); // 使用 vitepress 提供的 useRoute
 
