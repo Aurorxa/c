@@ -87,8 +87,8 @@ export const sharedConfig = withMermaid(defineConfig({
       GitChangelogMarkdownSection({
         exclude: (id) => id.endsWith("index.md"),
         sections: {
-          disableChangelog: true,
-          disableContributors: true,
+          disableChangelog: false,
+          disableContributors: false,
         },
       }),
     ],
