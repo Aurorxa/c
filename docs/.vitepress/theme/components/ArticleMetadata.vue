@@ -15,7 +15,8 @@ import { computed, ref, onMounted, watch } from "vue";
 import { countWord } from "../utils/functions";
 import { useRoute } from "vitepress";
 
-const route = useRoute(); // 使用 vitepress 提供的 useRoute
+// 使用 vitepress 提供的 useRoute
+const route = useRoute();
 
 const { page } = useData();
 const date = computed(() => new Date(page.value.lastUpdated!));
