@@ -11,6 +11,7 @@ import {
 import {
   InlineLinkPreviewElementTransform
 } from '@nolebase/vitepress-plugin-inline-link-preview/markdown-it'
+import { hostname } from 'os'
 
 const mode = process.env.NODE_ENV || 'development'
 const { VITE_BASE_URL } = loadEnv(mode, process.cwd())
@@ -100,6 +101,9 @@ export const sharedConfig = withMermaid(defineConfig({
       }
     },
   },
+  sitemap: {
+    hostname: 'https://c.weiweixu.com',
+  },
   markdown: { // markdown 配置
     math: true,
     lineNumbers: true, // 行号显示
@@ -148,6 +152,7 @@ export const sharedConfig = withMermaid(defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Aurorxa/c' },
     ],
+    
     search: {
       provider: 'algolia',
       options: {
