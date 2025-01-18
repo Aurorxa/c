@@ -102,7 +102,7 @@ export const sharedConfig = withMermaid(defineConfig({
     },
   },
   sitemap: {
-    hostname: 'https://c.weiweixu.com',
+    hostname: 'https://c.weiweixu.cn/',
   },
   markdown: { // markdown 配置
     math: true,
