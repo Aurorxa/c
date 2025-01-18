@@ -11,7 +11,6 @@ import {
 import {
   InlineLinkPreviewElementTransform
 } from '@nolebase/vitepress-plugin-inline-link-preview/markdown-it'
-import { hostname } from 'os'
 
 const mode = process.env.NODE_ENV || 'development'
 const { VITE_BASE_URL } = loadEnv(mode, process.cwd())
