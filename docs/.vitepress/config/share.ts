@@ -4,6 +4,7 @@ import { groupIconMdPlugin, groupIconVitePlugin, localIconLoader } from 'vitepre
 import { figure } from '@mdit/plugin-figure'
 import { loadEnv } from 'vite'
 import { withMermaid } from 'vitepress-plugin-mermaid'
+import removeConsole from 'vite-plugin-remove-console'
 import {
   GitChangelog,
   GitChangelogMarkdownSection,
@@ -88,6 +89,7 @@ export const sharedConfig = withMermaid(defineConfig({
           disableContributors: false,
         },
       }),
+      removeConsole()
     ],
     server: {
       port: 10089
@@ -161,7 +163,7 @@ export const sharedConfig = withMermaid(defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Aurorxa/c' },
     ],
-    
+
     search: {
       provider: 'algolia',
       options: {
