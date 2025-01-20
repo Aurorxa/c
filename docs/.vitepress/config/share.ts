@@ -92,7 +92,7 @@ export const sharedConfig = withMermaid(defineConfig({
       removeConsole()
     ],
     server: {
-      port: 10089
+      port: 20089
     },
     css: {
       preprocessorOptions: {
@@ -103,7 +103,7 @@ export const sharedConfig = withMermaid(defineConfig({
     },
   },
   sitemap: {
-    hostname: 'https://c.weiweixu.cn/',
+    hostname: `https://c.weiweixu.cn${VITE_BASE_URL}`,
   },
   markdown: { // markdown 配置
     math: true,
@@ -163,7 +163,7 @@ export const sharedConfig = withMermaid(defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Aurorxa/c' },
     ],
-
+    externalLinkIcon: true,
     search: {
       provider: 'algolia',
       options: {
