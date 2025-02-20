@@ -6,7 +6,10 @@
     <template #doc-before>
       <ArticleMetadata />
     </template>
-    
+    <template #layout-top>
+      <!-- <MouseFollower /> -->
+      <MouseClick />
+    </template>
     <template #doc-top>
       <NolebaseHighlightTargetedHeading />
     </template>
@@ -29,6 +32,8 @@ import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { nextTick, provide } from "vue";
 import { ShareButton } from "@theojs/lumen";
+import MouseClick from "./MouseClick.vue";
+// import MouseFollower from "./MouseFollower.vue";
 
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
