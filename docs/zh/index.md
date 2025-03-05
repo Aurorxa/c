@@ -34,7 +34,7 @@ hero:
       link: "/"        
     - theme: alt
       text: "🎉快速开始"
-      link: "/01_c-basic/01_xdx/"
+      link: "/01_c-se/c-basic/01_xdx/"
 
 # 按钮下方的描述
 features:
