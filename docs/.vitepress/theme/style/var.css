@@ -1,9 +1,9 @@
- .medium-zoom-overlay {
+.medium-zoom-overlay {
   z-index: 20;
 }
 
 .medium-zoom--opened .medium-zoom-image {
-  z-index: 199 !important;
+  z-index: 1999 !important;
 }
 
 .VPSocialLinks.VPNavBarSocialLinks.social-links {
@@ -47,8 +47,7 @@
   --vp-shadow-2: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
   --vp-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
   --vp-shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.12);
-  --vp-shadow-5: 0 18px 56px rgba(0, 0, 0, 0.16),
-    0 4px 12px rgba(0, 0, 0, 0.16) 
+  --vp-shadow-5: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
 }
 
 .dark {
@@ -74,10 +73,11 @@
 body,
 html {
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-  
   touch-action: manipulation;
   -webkit-touch-callout: none;
   -ms-touch-action: manipulation;
+  touch-action: pan-x pan-y;
+  user-scalable: no;
 }
 
 .VPSidebarItem.is-link.is-active.has-active .text {
@@ -86,57 +86,81 @@ html {
   transition: color 0.25s !important;
 }
 
-/* checkbox 颜色设置 */
-li.task-list-item {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  margin: 8px 0 0;
-  list-style: inherit;
+/* 自定义 md 文件 */
+.rendered-md img {
+  max-width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Target the last child element to push it to the next line */
-li.task-list-item  ul:last-child {
-  flex-basis: 100%; 
-  margin-right: 0; 
+.rendered-md {
+  display: none;  /* 默认隐藏 */
 }
 
-li.task-list-item input[type="checkbox"] {
-  position: relative;
-  width: 13px;
-  height: 13px;
-  line-height: 13px;
-  margin-right: 8px;
-  border: 1px solid #949494;
-
-  -webkit-appearance: none;
-  appearance: none;
-  -moz-appearance: none;
+.rendered-md.active {
+  display: block; /* 只有在 active 状态下才显示 */
+  max-width: 100%;
 }
 
-li.task-list-item input[type="checkbox"]:after {
-  position: absolute;
-  top: 0;
-  color: #000;
-  width: 13px;
-  height: 13px;
-  display: inline-block;
-  visibility: visible;
-  padding-left: 0;
-  text-align: center;
-  content: " ";
-  border-radius: 3px;
+
+/* 侧边栏缩放 */
+.group:has([role='button']) .VPSidebarItem.level-0 .items {
+  padding-left: 15px !important;
+  border-left: 1px solid var(--vp-c-divider);
+  border-radius: 2px;
+  transition: background-color 0.25s;
 }
 
-li.task-list-item input[type="checkbox"]:checked {
-  background-color: var(--vp-c-brand);
+/* 侧边栏图标 */
+/* 选中所有 .VPSidebarItem 元素，排除带有 .is-link 类的 */
+#VPSidebarNav .VPSidebarItem:not(.is-link).collapsed >.item {
+    display: inline-flex;
+    align-items: center;  /* 垂直居中对齐图标和文本 */
 }
 
-li.task-list-item input[type="checkbox"]:checked::after {
-  content: "✓";
-  color: #fff;
-  line-height: 13px;
-  font-size: 10px;
-  font-weight: 700;
-  text-align: center;
+/* 为所有不带 .is-link 的 .VPSidebarItem 折叠状态添加图标 */
+#VPSidebarNav .VPSidebarItem:not(.is-link).collapsed >.item::before {
+    content: '';
+    background-image: url('/svg/document.svg'); /* 设置图标路径 */
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;  /* 确保图标与文本垂直居中 */
+    background-size: cover;
+    margin-right: 4px;  /* 给图标和文本之间增加间距 */
+}
+
+#VPSidebarNav .VPSidebarItem:not(.is-link) >.item {
+    display: inline-flex;
+    align-items: center;  /* 垂直居中对齐图标和文本 */
+}
+
+/* 为所有不带 .is-link 的 .VPSidebarItem 非折叠状态添加图标 */
+#VPSidebarNav .VPSidebarItem:not(.is-link) >.item::before {
+    content: '';
+    background-image: url('/svg/document-open.svg'); /* 设置图标路径 */
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;  /* 确保图标与文本垂直居中 */
+    background-size: cover;
+    margin-right: 4px;  /* 给图标和文本之间增加间距 */
+}
+
+/* 选中带有 .is-link 的 .VPSidebarItem 的直接子元素 .item */
+#VPSidebarNav .VPSidebarItem.is-link > .item {
+    display: inline-flex;
+    align-items: center;  /* 垂直居中图标和文字 */
+}
+
+/* 为选中的 .item 添加图标 */
+#VPSidebarNav .VPSidebarItem.is-link > .item::before {
+    content: '';
+    background-image: url('/svg/file.svg'); /* 图标路径 */
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    background-size: cover;
+    margin-right: 4px;  /* 图标与文字间距 */
 }

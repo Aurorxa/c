@@ -9,7 +9,7 @@ export const enConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
     sidebar: enSidebar, // 侧边栏
     footer: { // 页脚
       message: 'Released under the MIT License.',
-      copyright: `Copyright © ${dayjs().format("YYYY")} xudaxian`
+      copyright: `Copyright © ${dayjs().format("YYYY")} 许大仙`
     },
     outline: { // 大纲显示 1-6 级标题
       level: [1, 6],

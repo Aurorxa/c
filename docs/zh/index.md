@@ -34,7 +34,7 @@ hero:
       link: "/"        
     - theme: alt
       text: "🎉快速开始"
-      link: "/01_c-se/c-basic/01_xdx/"
+      link: "/guide"
 
 # 按钮下方的描述
 features:
@@ -49,6 +49,3 @@ features:
     details: "注意事项就这么几点：边界值、等价类、数据完整性原子性、死锁、空转、……"
 ---
 
-<confetti />
-<HomeUnderline />
-<TypeIt />

@@ -1,26 +1,31 @@
 <template>
   <DefaultTheme.Layout>
     <template #doc-footer-before>
-      <BackTop />
+      <BackTop/>
     </template>
     <template #doc-before>
-      <ArticleMetadata />
-    </template>
-    <template #layout-top>
-      <!-- <MouseFollower /> -->
-      <MouseClick />
+      <ArticleMetadata/>
     </template>
     <template #doc-top>
-      <NolebaseHighlightTargetedHeading />
+      <NolebaseHighlightTargetedHeading/>
     </template>
     <template #aside-outline-before>
-      <ShareButton />
+      <ShareButton/>
     </template>
     <template #nav-bar-content-after>
-      <NolebaseEnhancedReadabilitiesMenu />
+      <NolebaseEnhancedReadabilitiesMenu/>
     </template>
     <template #nav-screen-content-after>
-      <NolebaseEnhancedReadabilitiesScreenMenu />
+      <NolebaseEnhancedReadabilitiesScreenMenu/>
+    </template>
+    <template #layout-top>
+      <MouseClick/>
+    </template>
+    <template #home-features-after>
+      <Confetti/>
+      <TypeIt/>
+      <HomeUnderline/>
+      <LogoAnimate/>
     </template>
   </DefaultTheme.Layout>
 </template>
@@ -28,15 +33,17 @@
 <script lang="ts" setup>
 import BackTop from "./BackTop.vue";
 import ArticleMetadata from "./ArticleMetadata.vue";
-import { useData } from "vitepress";
+import {useData} from "vitepress";
 import DefaultTheme from "vitepress/theme";
-import { nextTick, provide } from "vue";
-import { ShareButton } from "@theojs/lumen";
+import {nextTick, provide} from "vue";
+import {ShareButton} from "@theojs/lumen";
 import MouseClick from "./MouseClick.vue";
-// import MouseFollower from "./MouseFollower.vue";
-
+import Confetti from "./Confetti.vue";
+import TypeIt from "./TypeIt.vue";
+import HomeUnderline from "./HomeUnderline.vue";
+import LogoAnimate from "./LogoAnimate.vue";
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
-import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
+import {NolebaseHighlightTargetedHeading} from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
 
 import {
   NolebaseEnhancedReadabilitiesMenu,
@@ -45,13 +52,15 @@ import {
 
 import "@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css";
 
-const { isDark } = useData();
+const {isDark,theme} = useData();
+
+console.log('@@@',theme.value)
 
 const enableTransitions = () =>
-  "startViewTransition" in document &&
-  window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+    "startViewTransition" in document &&
+    window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
 
-provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
+provide("toggle-appearance", async ({clientX: x, clientY: y}: MouseEvent) => {
   if (!enableTransitions()) {
     isDark.value = !isDark.value;
     return;
@@ -60,8 +69,8 @@ provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
   const clipPath = [
     `circle(0px at ${x}px ${y}px)`,
     `circle(${Math.hypot(
-      Math.max(x, innerWidth - x),
-      Math.max(y, innerHeight - y)
+        Math.max(x, innerWidth - x),
+        Math.max(y, innerHeight - y)
     )}px at ${x}px ${y}px)`,
   ];
 
@@ -71,12 +80,12 @@ provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
   }).ready;
 
   document.documentElement.animate(
-    { clipPath: isDark.value ? clipPath.reverse() : clipPath } as AnimationKeyFrame,
-    {
-      duration: 300,
-      easing: "ease-in",
-      pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
-    } as any
+      {clipPath: isDark.value ? clipPath.reverse() : clipPath} as AnimationKeyFrame,
+      {
+        duration: 300,
+        easing: "ease-in",
+        pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
+      } as any
   );
 });
 </script>
