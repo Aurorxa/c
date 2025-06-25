@@ -7,7 +7,6 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
   themeConfig: { // 主题设置
     lastUpdatedText: '上次更新', // 上次更新显示文本
     returnToTopLabel: '返回顶部', // 更改手机端菜单文字显示
-    nav: zhNav,
     docFooter: { // 自定义上下页名
       prev: '上一篇', next: '下一篇'
     },
