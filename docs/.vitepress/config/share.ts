@@ -1,4 +1,4 @@
-import {defineConfig, type UserConfig} from 'vitepress'
+import {defineConfig} from 'vitepress'
 import timeline from "vitepress-markdown-timeline"
 import {groupIconMdPlugin, groupIconVitePlugin, localIconLoader} from 'vitepress-plugin-group-icons'
 import {figure} from '@mdit/plugin-figure'
@@ -162,9 +162,6 @@ const vitePressOptions = withMermaid(defineConfig({
       md.use(InlineLinkPreviewElementTransform)
       md.use(figure, {figcaption: 'alt', copyAttrs: '^class$', lazy: true})
       md.use(markdownItTaskCheckbox)
-      md.use(vitepressDemoPlugin, {
-        demoDir: path.resolve(__dirname, '../demos'),
-      })
     }
   },
   themeConfig: { // 主题设置

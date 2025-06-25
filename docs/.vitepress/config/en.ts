@@ -1,5 +1,4 @@
 import { enNav } from '../navbar'
-import { enSidebar } from '../sidebar'
 import dayjs from 'dayjs'
 import type { DefaultTheme, LocaleSpecificConfig } from 'vitepress'
 
