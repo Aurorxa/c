@@ -8,9 +8,9 @@ li.task-list-item {
 }
 
 /* Target the last child element to push it to the next line */
-li.task-list-item  ul:last-child {
-  flex-basis: 100%; 
-  margin-right: 0; 
+li.task-list-item ul:last-child {
+  flex-basis: 100%;
+  margin-right: 0;
 }
 
 li.task-list-item input[type="checkbox"] {
@@ -20,7 +20,7 @@ li.task-list-item input[type="checkbox"] {
   line-height: 12px;
   margin-right: 8px;
   border: 1px solid #949494;
-
+  margin-left: 0 !important;
   -webkit-appearance: none;
   appearance: none;
   -moz-appearance: none;
@@ -53,17 +53,24 @@ li.task-list-item input[type="checkbox"]:checked::after {
   text-align: center;
 }
 
-.timeline-dot{
-  color: #7f8c8d; 
+.timeline-dot {
+  color: #7f8c8d;
 }
 
 .task-list {
   margin: 0 !important;
+  margin-top: -4px !important;
+  padding-left: 0 !important;
 }
 
 li.task-list-item p {
   display: flex;
-  margin: 0 ;
+  margin: 0;
+  margin-top: -12px !important;
   align-items: center;
 }
 
+li.task-list-item > ul.task-list,
+li.task-list-item > ol.task-list {
+  padding-left: 20px !important;
+}

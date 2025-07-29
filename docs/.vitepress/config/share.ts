@@ -75,11 +75,25 @@ const vitePressOptions = withMermaid(defineConfig({
       (groupIconVitePlugin({
         customIcon: {
           'c': localIconLoader(import.meta.url, '../../public/iconify/c.svg'),
-          'java': localIconLoader(import.meta.url, '../../public/iconify/java.svg'),
+          'idea': localIconLoader(import.meta.url, '../../public/iconify/idea.svg'),
+          'webstorm': localIconLoader(import.meta.url, '../../public/iconify/webstorm.svg'),
+          'h': localIconLoader(import.meta.url, '../../public/iconify/c.svg'),
+          'cpp': localIconLoader(import.meta.url, '../../public/iconify/cpp.svg'),
+          'java': 'vscode-icons:file-type-java',
           'winget': 'vscode-icons:file-type-shell',
           'choco': localIconLoader(import.meta.url, '../../public/iconify/choco.svg'),
+          "控制台": localIconLoader(import.meta.url, '../../public/iconify/terminal.svg'),
+          "AlmaLinux": localIconLoader(import.meta.url, '../../public/iconify/almaLinux.svg'),
+          "Ubuntu": localIconLoader(import.meta.url, '../../public/iconify/ubuntu.svg'),
           'cmd': 'vscode-icons:file-type-shell',
-          'powershell': 'vscode-icons:file-type-powershell'
+          'powershell': 'vscode-icons:file-type-powershell',
+          'maven': 'vscode-icons:file-type-apache',
+          'gradle': 'vscode-icons:file-type-light-gradle',
+          'git': 'vscode-icons:file-type-git',
+          'bash': 'vscode-icons:file-type-gnu',
+          'shell': 'vscode-icons:file-type-gnu',
+          'sh': 'vscode-icons:file-type-gnu',
+          'cpu': localIconLoader(import.meta.url, '../../public/iconify/cpu.svg'),
         }
       }) as any),
       Permalink(),

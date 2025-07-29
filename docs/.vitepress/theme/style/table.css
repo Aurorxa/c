@@ -1,0 +1,66 @@
+/* 自定义表格样式 */
+
+/* 扩展表格 */
+.vp-doc th {
+    white-space: nowrap;
+}
+
+.vp-doc table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* 表格头样式 - 保持默认颜色 */
+.vp-doc table thead th {
+    text-align: center;
+    background-color: var(--vp-c-bg-soft);
+    color: var(--vp-c-text-1);
+    font-weight: 600;
+    border-bottom: 1px solid var(--vp-c-divider);
+}
+
+/* 移除默认的斑马线效果 */
+.vp-doc table tbody tr:nth-child(2n) {
+    /*background-color: transparent;*/
+    background-color: var(--vp-c-bg);
+}
+
+/* 表格体统一背景色 */
+.vp-doc table tbody tr {
+    background-color: var(--vp-c-bg); /* 统一的表格体背景色 */
+}
+
+/* 鼠标悬停效果 */
+.vp-doc table tbody tr:hover {
+    background-color: var(--vp-c-bg-soft) !important; /* 悬停时的背景色 */
+    transition: background-color 0.2s ease;
+}
+
+/* 如果你想要更自定义的颜色，可以使用具体的颜色值 */
+
+.vp-doc table thead th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+}
+
+.vp-doc table tbody tr {
+    background-color: #ffffff;
+}
+
+.vp-doc table tbody tr:hover {
+    background-color: #e3f2fd !important;
+}
+
+/* 暗色模式适配 */
+.dark .vp-doc table thead th {
+    background-color: var(--vp-c-bg-soft);
+    color: var(--vp-c-text-1);
+}
+
+.dark .vp-doc table tbody tr {
+    background-color: var(--vp-c-bg);
+}
+
+.dark .vp-doc table tbody tr:hover {
+    background-color: var(--vp-c-bg-soft) !important;
+}

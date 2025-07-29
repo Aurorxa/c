@@ -9,15 +9,13 @@
 
 ## 1.1 Linux 中的软件包管理器
 
-* 如果你使用过 Linux，一定对 Linux 中的软件包管理器并不陌生，如：`apt` 和 `dnf` 等。
-
-* 其主要目标是用来`解决依赖管理，简化软件包的安装`，如下所示：
+* 如果你玩过 Linux，一定对 Linux 中的软件包管理器并不陌生，如：`apt` 和 `dnf` 等，其主要目标是用来`解决依赖管理，简化软件包的安装`。
 
 ![Linux 中的软件包管理器](./assets/1.png)
 
 ## 1.2 Windows 中的软件包管理器
 
-* Windows 操作系统本身就是以`图形用户界面（GUI）`为主，早期大多数人都是通过鼠标下一步来安装软件包（Windows 上的软件包的格式通常是 `.exe`、`.msi` 以及 `.zip`），一旦软件包更新之后（新版本的推出），还需要用户重新下载并进行安装，以便体验最新的功能。
+* Windows 操作系统本身就是以`图形用户界面（GUI）`为主，早期大多数人都是通过鼠标下一步来安装软件包，Windows 上的软件包的格式通常是 `.exe`、`.msi` 以及 `.zip`，一旦软件包更新之后（新版本的推出），还需要用户重新下载并进行安装，以便体验最新的功能。
 
 ![Windows 操作系统早期软件包的安装](./assets/2.png)
 
@@ -29,27 +27,24 @@
 > * ② 在 Windows 11、 Windows 10 1709（版本 16299）或更高版本上以及 Windows Server 2025 中，Windows 开箱支持 WinGet 程序包管理器。
 
 * Linux 中的软件包管理器有多种，如：`dnf` 和 `apt` 等，Windows 也不例外，如下所示：
-
   * ① `winget（Windows Package Manager）`：Windows 官方支持，非常稳定。
-
   * ② `Chocolatey`：社区支持，但是维护的大量的软件包。
-
   * ③ `Scoop`：社区支持，主打轻量化。
-
   * ④ `Ninite`：一次性安装并更新所有程序（如果你不熟悉命令行，可以选择该工具）。
 
-* Windows 软件包管理器的特点，如下所示：
+* WIndows 软件包管理器的特点，如下所示：
 
-| Windows软件包管理器 | 特点                                                         |
-| ------------------- | ------------------------------------------------------------ |
-| winget              | ① 官方提供，由微软开发。<br>② 命令行工具，可以快速安装、升级和卸载软件。<br>③ 包含常见的第三方软件包。 |
-| Chocolatey          | ① 长期流行的第三方软件包管理器。<br>② 支持许多开发工具、服务和常见软件。<br/>③ 提供商业版支持。 |
-| Scoop               | ① 专注于开发者工具，如：编程语言、数据库等。<br>② 无需管理员权限即可安装。<br>③ 使用简洁，易于扩展。 |
-| Ninite              | ① 简单易用，适合普通用户。<br>② 自动化安装和更新常见软件，如：浏览器、媒体播放器等。 |
+| Windows 软件包管理器 | 特点                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| winget               | ① 官方提供，由微软开发。<br>② 命令行工具，可以快速安装、升级和卸载软件。<br>③ 包含常见的第三方软件包。 |
+| Chocolatey           | ① 长期流行的第三方软件包管理器。<br>② 支持许多开发工具、服务和常见软件。<br/>③ 提供商业版支持。 |
+| Scoop                | ① 专注于开发者工具，如：编程语言、数据库等。<br>② 无需管理员权限即可安装。<br>③ 使用简洁，易于扩展。 |
+| Ninite               | ① 简单易用，适合普通用户。<br>② 自动化安装和更新常见软件，如：浏览器、媒体播放器等。 |
 
 ## 1.3 软件包管理器原理
 
-* 用户通过`命令行`执行一系列的`命令`操作，让软件包管理器去`远程仓库`下载指定的软件包并安装到本地计算机，如下所示：
+* ① 用户通过`命令行`执行`命令`。
+* ② `软件包管理器`去`远程仓库`下载对应的软件包并安装到本地计算机。
 
 ![](./assets/1.svg)
 
@@ -68,15 +63,31 @@
 
 * ① 使用 `win + x` 快捷键，选择 `Windows PowerShell（管理员）`：
 
+::: code-group
+
+```powershell 
+win + x
+```
+
+```md:img [cmd 控制台]
 ![](./assets/3.png)
+```
+
+:::
 
 * ② 修改安全策略：
 
-```powershell
+::: code-group
+
+```powershell 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/4.png)
+```
+
+:::
 
 * ③ 关闭终端，并重新打开：
 
@@ -86,15 +97,23 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
 
 * ① 打开 PowerShell ，并输入以下命令，在记事本中打开 `$PROFILE`：
 
-```powershell
+::: code-group
+
+```powershell 
 notepad.exe $PROFILE
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/6.gif)
+```
+
+:::
 
 * ② 将以下脚本复制并粘贴到已在记事本中打开的 `$PROFILE` 文件，保存并关闭 PowerShell ：
 
-```powershell
+::: code-group
+
+```powershell 
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
         [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
@@ -106,7 +125,11 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 }
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/7.gif)
+```
+
+:::
 
 * ③ 重新打开 PowerShell ，就会发现 `winget tab` 可以自动补全：
 
@@ -139,31 +162,49 @@ winget search [可选参数] [-q] <软件名>
 
 * 示例：查询指定的软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget search nodejs
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/1.gif)
+```
+
+:::
 
 
 
 * 示例：根据 id 查询指定的软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget search --id OpenJS.NodeJS
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/10.gif)
+```
+
+:::
 
 
 
 * 示例：根据 name 查询指定的软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget search --name Node.js
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/11.gif)
+```
+
+:::
 
 
 
@@ -171,37 +212,47 @@ winget search --name Node.js
 
 ::: code-group
 
-```cmd
+```cmd [cmd 命令]
 winget search -q ""
 ```
 
-```powershell
-winget search -q `"`"
+```md:img [cmd 控制台]
+![](./assets/12.gif)
 ```
 
 :::
-
-![](./assets/12.gif)
 
 
 
 * 示例：跨源搜索（结果范围缩小到特定源）
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget search "Visual Studio Code" -s msstore
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/13.gif)
+```
+
+:::
 
 
 
 * 示例：显示软件包的所有可用版本（软件包需要精确匹配）
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget search --id Microsoft.PowerToys --versions
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/14.gif)
+```
+
+:::
 
 ### 2.3.2 安装软件
 
@@ -229,31 +280,49 @@ winget install [可选参数] [-q] <软件名>
 
 * 示例：安装 powertoys（需要精确匹配）
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 winget install --id Microsoft.PowerToys
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/15.gif)
+```
+
+:::
 
 
 
 * 示例：安装指定版本的 powertoys
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 winget install --id Microsoft.PowerToys --version 0.17.0
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/16.gif)
+```
+
+:::
 
 
 
 * 示例：安装到指定位置
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget install --id Apache.Groovy.4 -l D:\develop\groovy
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/17.gif)
+```
+
+:::
 
 ### 2.3.3 升级软件
 
@@ -279,24 +348,33 @@ winget upgrade [可选参数] [-q] <软件名>
 
 * 示例：更新指定软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget upgrade --id Apache.Groovy.4
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/18.gif)
+```
+
+:::
+
+
 
 * 示例：更新所有软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget upgrade --all --force --unknown
 ```
 
-> [!NOTE]
->
-> * ① --force ：直接运行命令并继续处理非安全相关问题。
-> * ② --unknown ：升级包（即使无法确定其当前版本）。
-
+```md:img [cmd 控制台]
 ![](./assets/19.gif)
+```
+
+:::
 
 ### 2.3.4 查询本地已安装的软件
 
@@ -323,41 +401,65 @@ winget list  [可选参数] [-q] <软件名>
 
 * 示例：查询本地是否安装有 Git
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget list git
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/20.gif)
+```
+
+:::
 
 
 
 * 示例：查询本地安装的所有应用
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget list
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/21.gif)
+```
+
+:::
 
 
 
 * 示例：查询本地安装的所有应用，但是限制输出为 9 个
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget list -n 9
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/22.gif)
+```
+
+:::
 
 
 
 * 示例：查询本地安装有指定源的所有应用，但是限制输出为 9 个
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget list --source winget -n 9
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/23.gif)
+```
+
+:::
 
 ### 2.3.5 卸载软件
 
@@ -383,11 +485,17 @@ winget uninstall [可选参数] [-q] <软件名>
 
 * 示例：卸载指定的软件
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 winget uninstall --id Apache.Groovy.4
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/24.gif)
+```
+
+:::
 
 ## 2.4 winget 镜像源
 
@@ -424,21 +532,33 @@ winget source list [-name 镜像源名称]
 
 * 示例：查询所有的镜像源
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget source list
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/25.gif)
+```
+
+:::
 
 
 
 * 示例：查询指定镜像源的详细信息
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget source list --name winget
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/26.gif)
+```
+
+:::
 
 ### 2.4.3 添加 winget 镜像源
 
@@ -456,11 +576,17 @@ winget source add <镜像源名称> <镜像源的 URL 地址> --trust-level trus
 
 * 示例：
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget source add ustc https://mirrors.ustc.edu.cn/winget-source --trust-level trusted
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/27.gif)
+```
+
+:::
 
 ### 2.4.4 更新 winget 镜像源
 
@@ -474,21 +600,33 @@ winget source update [--name <镜像源名称>]
 
 * 示例：更新所有镜像源
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget source update
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/28.gif)
+```
+
+:::
 
 
 
 * 示例：更新指定镜像源
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget source update --name winget
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/29.gif)
+```
+
+:::
 
 ### 2.4.5 删除 winget 镜像源
 
@@ -506,11 +644,17 @@ winget source remove --name <镜像源名称>
 
 * 示例：
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 winget source remove --name winget
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/30.gif)
+```
+
+:::
 
 ### 2.4.6 重置 winget 镜像源
 
@@ -529,11 +673,17 @@ winget source reset --force
 
 * 示例：
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget source reset --force
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/31.gif)
+```
+
+:::
 
 ## 2.5 其余命令
 
@@ -559,11 +709,17 @@ winget show [可选参数] [-q] <软件名>
 
 * 示例：
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget show --name Apache.Groovy.4
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/32.gif)
+```
+
+:::
 
 ### 2.5.2 应用程序的批量导出和批量导入
 
@@ -585,11 +741,17 @@ winget import [-i] xxx.json # 导入要安装的应用的 JSON 文件
 
 * 示例：
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 winget export -o package.json
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/33.gif)
+```
+
+:::
 
 
 
@@ -614,11 +776,17 @@ winget export -o package.json
 
 * 使用 winget 命令进行安装：
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 winget install --id Chocolatey.Chocolatey
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/35.gif)
+```
+
+:::
 
 ### 3.2.2 手动执行命令安装 Chocolatey 
 
@@ -634,9 +802,11 @@ winget install --id Chocolatey.Chocolatey
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
-:::
-
+```md:img [cmd 控制台]
 ![](./assets/36.gif)
+```
+
+:::
 
 ## 3.3 Chocolatey 远程仓库的使用
 
@@ -644,7 +814,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 ![](./assets/37.png)
 
-* 之后，我们就可以在这个[可视化界面](https://community.chocolatey.org/packages)中搜索想要的软件包，获取软件包安装的命令，如下所示：
+* 我们就可以在这个[可视化界面](https://community.chocolatey.org/packages)中搜索想要的软件包，获取软件包安装的命令，如下所示：
 
 ![](./assets/38.png)
 
@@ -671,51 +841,81 @@ choco search <软件名> [可选参数]
 
 * 示例：查询指定的软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco search nodejs
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/39.gif)
+```
+
+:::
 
 
 
 * 示例：精确查找指定的软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco search nodejs --exact
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/40.gif)
+```
+
+:::
 
 
 
 * 示例：查询所有可用的软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco search ""
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/41.gif)
+```
+
+:::
 
 
 
 * 示例：分页搜索软件包
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 choco search jdk --page=0 --page-size=25
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/42.gif)
+```
+
+:::
 
 
 
 * 示例：显示软件包的所有可用版本（软件包需要精确匹配）
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco search 7zip --all-versions --exact
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/43.gif)
+```
+
+:::
 
 ### 3.4.2 安装软件
 
@@ -741,75 +941,113 @@ choco search <软件名> [可选参数]
 
 * 示例：安装 git 软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco install git
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/44.gif)
+```
+
+:::
 
 
 
 * 示例：一次性安装多个软件包，并确认所有提示
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco install notepadplusplus googlechrome 7zip -y
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/45.gif)
+```
+
+:::
 
 
 
 * 示例：强制重新安装软件，并强制重新安装其依赖项
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco install notepadplusplus --force --force-dependencies
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/46.gif)
+```
+
+:::
 
 
 
 * 示例：安装多个软件包，启用详细输出并强制安装
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco install notepadplusplus googlechrome 7zip -dvfy
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/47.gif)
+```
+
+:::
 
 
 
 * 示例：安装 Git ，并传递参数给 Git 
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco install git -y --params="'/GitAndUnixToolsOnPath'"
 ```
 
-> [!NOTE]
->
-> `/GitAndUnixToolsOnPath` ：在安装 Git 时，将 Git 添加到系统 PATH 环境变量中。
-
+```md:img [cmd 控制台]
 ![](./assets/48.gif)
+```
+
+:::
 
 
 
 * 示例：安装 Git ，指定额外的安装参数
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 choco install git -y --params="'/GitAndUnixToolsOnPath'" --install-arguments="'/DIR=C:\git'"
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/49.gif)
+```
+
+:::
 
 
 
 * 示例：安装指定版本的 Node.js
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 choco install nodejs --version 22.2.0
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/50.gif)
+```
+
+:::
 
 ### 3.4.3 升级软件
 
@@ -843,81 +1081,129 @@ choco upgrade <软件名> [可选参数]
 
 * 示例：更新 chocolatey
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade chocolatey
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/51.gif)
+```
+
+:::
 
 
 
 * 示例：批量更新多个软件包
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade notepadplusplus
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/52.gif)
+```
+
+:::
 
 
 
 * 示例：批量更新多个软件包，启用详细输出并强制安装
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade notepadplusplus  -dvfy
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/53.gif)
+```
+
+:::
 
 
 
 * 示例：更新软件包，并传递参数
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade git -y --params="'/GitAndUnixToolsOnPath /NoAutoCrlf'"
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/54.gif)
+```
+
+:::
 
 
 
 * 示例：更新软件包，并指定额外的安装参数
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade git -y --params="'/GitAndUnixToolsOnPath /NoAutoCrlf'" --install-args="'/DIR=C:\git'"
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/55.gif)
+```
+
+:::
 
 
 
 * 示例：将软件包更新到指定的版本
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade nodejs.install --version 23.6.0
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/56.gif)
+```
+
+:::
 
 
 
 * 示例：排除某些软件之后，更新剩下的全部软件
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade all --except="'git,notepadplusplus'"
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/57.gif)
+```
+
+:::
 
 
 
 * 示例：更新所有软件
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco upgrade all
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/58.gif)
+```
+
+:::
 
 ### 3.4.4 查询本地已安装的软件
 
@@ -937,21 +1223,33 @@ choco list <软件名> [可选参数]
 
 * 示例：显示通过 Chocolatey  安装到计算机上的软件
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco list 
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/59.gif)
+```
+
+:::
 
 
 
-* 示例：显示计算机上的所有软件，包括哪些不是由 Chocolatey  管理的
+* 示例：显示计算机上的所有软件，包括不是由 Chocolatey  管理的
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco list -i
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/60.gif)
+```
+
+:::
 
 ### 3.4.5 卸载软件
 
@@ -976,41 +1274,65 @@ choco uninstall <软件名> [可选参数]
 
 * 示例：卸载指定的软件
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco uninstall git
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/61.gif)
+```
+
+:::
 
 
 
 * 示例：批量卸载软件
 
-```cmd
+::: code-group
+
+```cmd [cmd 命令]
 choco uninstall notepadplusplus googlechrome -dv
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/62.gif)
+```
+
+:::
 
 
 
 * 示例：卸载软件的指定版本
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 choco uninstall nodejs --version 23.6.0 -fy
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/63.gif)
+```
+
+:::
 
 
 
 * 示例：卸载软件的所有版本
 
-```shell
+::: code-group
+
+```cmd [cmd 命令]
 choco uninstall nodejs --all-versions
 ```
 
+```md:img [cmd 控制台]
 ![](./assets/64.gif)
+```
+
+:::
 
 
 
@@ -1035,9 +1357,11 @@ winget install --exact --id MartiCliment.UniGetUI --source winget
 choco install wingetui
 ```
 
-:::
-
+```md:img [cmd 控制台]
 ![](./assets/70.gif)
+```
+
+:::
 
 ## 4.3 使用
 
